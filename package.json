@@ -1,0 +1,11 @@
+{
+  "name": "demoalias-root",
+  "private": true,
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "postinstall": "npm ci --prefix server",
+    "start": "node server/index.js"
+  }
+}
