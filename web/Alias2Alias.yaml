@@ -1,0 +1,517 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "3.0.1",
+    "title": "Alias2Alias API Documentation"
+  },
+  "servers": [
+    {
+      "url": "http://api-alias-preprod.itn.intraorange:443/v1",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/anbservices/{serviceId}/mirroredroutes": {
+      "get": {
+        "tags": [
+          "mirrored-routes-controller"
+        ],
+        "summary": "Get Mirrored Routes list with filters",
+        "operationId": "getMirroredRoutes",
+        "parameters": [
+          {
+            "name": "X-OAPI-Application-Id",
+            "in": "header",
+            "description": "The partner application ID (should be added by the API Factory)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "The ID of the service",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "The status of the Mirrored Route",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "The status of the Mirrored Route",
+              "enum": [
+                "ACTIVE",
+                "CLOSED",
+                "STANDBY"
+              ]
+            }
+          },
+          {
+            "name": "userNumber",
+            "in": "query",
+            "description": "filter on aUserNumber or bUserNumber<br>must be in international E164 format WITHOUT '+' sign (ex. 33123456789)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "filter on aUserNumber or bUserNumber<br>must be in international E164 format WITHOUT '+' sign (ex. 33123456789)",
+              "example": 33123456789
+            },
+            "example": 33123456789
+          },
+          {
+            "name": "aliasNumber",
+            "in": "query",
+            "description": "Filter on aAliasNumber or bAliasNumber<br>must be in international E164 format WITHOUT '+' sign (ex. 33123456789)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter on aAliasNumber or bAliasNumber<br>must be in international E164 format WITHOUT '+' sign (ex. 33123456789)",
+              "example": 33123456789
+            },
+            "example": 33123456789
+          },
+          {
+            "name": "creationDateFrom",
+            "in": "query",
+            "description": "Filter on creation date from. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter on creation date from. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+              "example": "1994-11-05T18:15:30.0Z"
+            },
+            "example": "1994-11-05T18:15:30.0Z"
+          },
+          {
+            "name": "creationDateTo",
+            "in": "query",
+            "description": "Filter on creation date to. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter on creation date to. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+              "example": "1994-11-05T18:15:30.0Z"
+            },
+            "example": "1994-11-05T18:15:30.0Z"
+          },
+          {
+            "name": "endDateFrom",
+            "in": "query",
+            "description": "Filter on end date from. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter on end date from. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+              "example": "1994-11-05T18:15:30.0Z"
+            },
+            "example": "1994-11-05T18:15:30.0Z"
+          },
+          {
+            "name": "endDateTo",
+            "in": "query",
+            "description": "Filter on end date to. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter on end date to. Date format: ISO-8601 with timezone (ex. '1994-11-05T18:15:30.0Z')",
+              "example": "1994-11-05T18:15:30.0Z"
+            },
+            "example": "1994-11-05T18:15:30.0Z"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The index of the first element to retrieve. Zero is the first element of the collection",
+            "required": false,
+            "schema": {
+              "minimum": 0,
+              "type": "string",
+              "description": "The index of the first element to retrieve. Zero is the first element of the collection",
+              "default": "0"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of elements to retrieve (capped at 100), minimum = 1\n",
+            "required": false,
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "string",
+              "description": "The maximum number of elements to retrieve (capped at 100), minimum = 1\n",
+              "default": "100"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found list of mirrored routes",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MirroredRouteResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "[28] INVALID_QUERY_PARAM_VALUE A query param is invalid (wrong format or undefined value)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "[50] ACCESS_DENIED. Application not registered<br>\n[1103] UNKNOWN_SERVICE. Unknown service\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "mirrored-routes-controller"
+        ],
+        "summary": "Create a Mirrored Route",
+        "description": "Create a Mirrored Route",
+        "operationId": "createMirroredRoute",
+        "parameters": [
+          {
+            "name": "X-OAPI-Application-Id",
+            "in": "header",
+            "description": "The partner application ID (should be added by the API Factory)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "The ID of the service",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MirroredRouteToCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The Mirrored Route has been created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MirroredRouteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "[24] the number has invalid type (ex: premium rate number) <br>\n      or country code is invalid<br>\n      invalid number prefix",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The application or service is not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "[1224] The mirrored route already exist with same user numbers <br>\n[1200] Not sufficient external numbers available",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/anbservices/{serviceId}/mirroredroutes/{mirroredRouteId}": {
+      "get": {
+        "tags": [
+          "mirrored-routes-controller"
+        ],
+        "summary": "Get Mirrored Route by id",
+        "operationId": "getMirroredRouteById",
+        "parameters": [
+          {
+            "name": "X-OAPI-Application-Id",
+            "in": "header",
+            "description": "The partner application ID (should be added by the API Factory)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "The ID of the service",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mirroredRouteId",
+            "in": "path",
+            "description": "The ID of the Mirrored Route",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mirrored Route found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MirroredRouteResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "[50] ACCESS_DENIED. Application not registered<br>\n[1103] UNKNOWN_SERVICE. Unknown service\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "[60] NOT_FOUND Mirrored Route does not exist for service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "mirrored-routes-controller"
+        ],
+        "summary": "Delete a Mirrored Route",
+        "operationId": "deleteMirroredRoute",
+        "parameters": [
+          {
+            "name": "X-OAPI-Application-Id",
+            "in": "header",
+            "description": "The partner application ID (should be added by the API Factory)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "serviceId",
+            "in": "path",
+            "description": "The ID of the service",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "mirroredRouteId",
+            "in": "path",
+            "description": "The ID of the Mirrored Route",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Mirrored Route has been deleted"
+          },
+          "403": {
+            "description": "[50] ACCESS_DENIED. Application not registered <br> [1103] UNKNOWN_SERVICE. Unknown service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "[60] NOT_FOUND Mirrored Route does not exist for service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "[1225] Mirrored Route already closed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MirroredRouteToCreateRequest": {
+        "required": [
+          "aUserNumber",
+          "bUserNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "aUserNumber": {
+            "type": "string",
+            "description": "The first phone (real) number must be cell phone numbers or landline numbers<br> in international E164 format (ex. +33123456789)",
+            "example": "+33123456789"
+          },
+          "bUserNumber": {
+            "type": "string",
+            "description": "The second phone (real) number must be cell phone numbers or landline numbers<br> in international E164 format (ex. +33123456789)",
+            "example": "+33123456788"
+          }
+        },
+        "description": "The Mirrored Route to create."
+      },
+      "ApiError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "CallPartyResponse": {
+        "required": [
+          "aliasNumber",
+          "userNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "userNumber": {
+            "type": "string",
+            "description": "The user number of the call party",
+            "example": "+33123456789"
+          },
+          "aliasNumber": {
+            "type": "string",
+            "description": "The alias number of the call party",
+            "example": "+33123456788"
+          }
+        }
+      },
+      "MirroredRouteResponse": {
+        "required": [
+          "creationDate",
+          "endDate",
+          "id",
+          "serviceId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The Mirrored Route UUID",
+            "example": " 9c821fe5-26dc-407a-b326-dd26fd827746"
+          },
+          "serviceId": {
+            "type": "string",
+            "description": "The ID of the service",
+            "example": " 78347a7d-2fec-4da9-84f3-30dfc3881cb4"
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "The creation date of the Mirrored Route",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The end date of the Mirrored Route (null if mirrored route is active)",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "description": "The status of the Mirrored Route",
+            "enum": [
+              "ACTIVE",
+              "CLOSED",
+              "STANDBY"
+            ]
+          },
+          "callPartyA": {
+            "$ref": "#/components/schemas/CallPartyResponse"
+          },
+          "callPartyB": {
+            "$ref": "#/components/schemas/CallPartyResponse"
+          }
+        }
+      }
+    }
+  }
+}

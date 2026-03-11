@@ -1,0 +1,3361 @@
+<!doctype html>
+<html lang="fr" data-bs-theme="light">
+  <head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Démonstrateur Alias Numbers</title>
+
+	<!-- Boosted (Orange) via CDN -->
+	<link
+	  href="https://cdn.jsdelivr.net/npm/boosted@5.3.8/dist/css/orange-helvetica.min.css"
+	  rel="stylesheet"
+	  integrity="sha384-A0Qk1uKfS1i83/YuU13i2nx5pk79PkIfNFOVzTcjCMPGKIDj9Lqx9lJmV7cdBVQZ"
+	  crossorigin="anonymous"
+	/>
+	<link
+	  href="https://cdn.jsdelivr.net/npm/boosted@5.3.8/dist/css/boosted.min.css"
+	  rel="stylesheet"
+	  integrity="sha384-kwpgedOHSHo219WTezLqyMOgCWremFb5TML711U5X8c4TJMMBAyhHFf2gNv78IpY"
+	  crossorigin="anonymous"
+	/>
+
+	<style>
+	  .container-narrow { max-width: 980px; }
+	  .page-content { padding-top: 1rem; }
+	  .mono { font-variant-numeric: tabular-nums; }
+	  .icon-btn {
+		width: 40px; height: 40px;
+		display: inline-flex; align-items: center; justify-content: center;
+	  }
+	  .delete-icon-btn {
+		border: 0;
+		background: transparent;
+		color: #000;
+		border-radius: 0.25rem;
+	  }
+	  .delete-icon-btn:hover,
+	  .delete-icon-btn:focus-visible {
+		background: var(--bs-secondary-bg);
+		color: #000;
+	  }
+	  .tag-md {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.3rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.875rem;
+		line-height: 1.2;
+	  }
+	  .user-tag-hide {
+		background: var(--bs-secondary-bg);
+		color: var(--bs-emphasis-color);
+		border: 1px solid var(--bs-border-color);
+	  }
+	  .user-tag-hide .solaris-icon {
+		width: 1rem;
+		height: 1rem;
+		flex: 0 0 auto;
+	  }
+	  .alias-tag-medium {
+		background: var(--bs-emphasis-color);
+		color: var(--bs-body-bg);
+		border: 1px solid var(--bs-emphasis-color);
+	  }
+	  .detail-token {
+		display: inline-flex;
+		margin-top: 0.25rem;
+	  }
+	  .view-toggle .btn.active {
+		background: #000;
+		border-color: #000;
+		color: #fff;
+	  }
+	  .context-cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 1rem;
+	  }
+	  .context-card {
+		position: relative;
+		border: 1px solid var(--bs-border-color);
+		background: var(--bs-body-bg);
+		padding: 0;
+		height: 100%;
+		cursor: pointer;
+		overflow: hidden;
+	  }
+	  .context-card.selected {
+		border-color: #ff7900;
+		box-shadow: 0 0 0 1px rgba(255, 121, 0, 0.35);
+	  }
+	  .context-card-banner {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.9rem 1rem 0.85rem;
+		padding-right: 3.5rem;
+		background: #ff7900;
+		color: #fff;
+	  }
+	  .context-card-banner .solaris-icon {
+		width: 1.25rem;
+		height: 1.25rem;
+		flex: 0 0 auto;
+	  }
+	  .context-card-banner-name {
+		font-weight: 700;
+		line-height: 1.2;
+	  }
+	  .context-card-check {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+	  }
+	  .context-card-meta {
+		display: grid;
+		gap: 0.75rem;
+		padding: 1rem;
+	  }
+	  .context-card-label {
+		display: block;
+		font-size: 0.75rem;
+		color: var(--bs-secondary-color);
+		margin-bottom: 0.25rem;
+	  }
+	  .alias-trigger-btn {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+	  }
+	  .alias-trigger-btn:hover .tag-md,
+	  .alias-trigger-btn:focus-visible .tag-md {
+		box-shadow: 0 0 0 2px rgba(255, 121, 0, 0.45);
+	  }
+	  .inbound-json {
+		max-height: 240px;
+		overflow: auto;
+		background: #f7f7f8;
+		border: 1px solid var(--bs-border-color);
+		border-radius: 0.6rem;
+		padding: 0.7rem;
+		font-size: 0.76rem;
+	  }
+	  .tree-toggle-btn {
+		width: 1.75rem;
+		height: 1.75rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border: 0;
+		background: transparent;
+		border-radius: 999px;
+	  }
+	  .tree-toggle-btn:hover,
+	  .tree-toggle-btn:focus-visible {
+		background: var(--bs-secondary-bg);
+	  }
+	  .tree-toggle-btn svg {
+		width: 1rem;
+		height: 1rem;
+		transition: transform 0.2s ease;
+	  }
+	  .tree-toggle-btn[aria-expanded="true"] svg {
+		transform: rotate(90deg);
+	  }
+	  .context-tree-cell {
+		padding: 0 !important;
+		border-top: 0;
+	  }
+	  .context-tree-panel {
+		padding: 1rem 1rem 1rem 3rem;
+		background: var(--bs-secondary-bg);
+	  }
+	  .context-calls-grid {
+		font-size: 0.85rem;
+	  }
+	  .context-calls-grid th {
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		white-space: nowrap;
+	  }
+	  .context-calls-grid td {
+		vertical-align: middle;
+	  }
+	  .agent-mobile-wrap {
+		display: flex;
+		justify-content: center;
+		padding: 1rem 0;
+	  }
+	  .agent-selector-wrap {
+		max-width: 420px;
+		margin: 0 auto 0.75rem;
+	  }
+	  .iphone-frame {
+		width: 320px;
+		max-width: 100%;
+		border-radius: 2.4rem;
+		padding: 0.65rem;
+		background: linear-gradient(165deg, #1a1a1a, #3b3b3b);
+		box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+	  }
+	  .iphone-screen {
+		border-radius: 1.9rem;
+		overflow: hidden;
+		background: #f7f7f8;
+		min-height: 620px;
+		position: relative;
+	  }
+	  .iphone-notch {
+		position: absolute;
+		top: 0.35rem;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 42%;
+		height: 1.5rem;
+		border-radius: 0.95rem;
+		background: #121212;
+		z-index: 3;
+	  }
+	  .mobile-app {
+		padding-top: 2.4rem;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	  }
+	  .mobile-app-header {
+		padding: 1rem 1rem 0.85rem;
+		background: linear-gradient(180deg, #ff7900, #ff8a1a);
+		color: #fff;
+	  }
+	  .mobile-app-title {
+		font-size: 1rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .mobile-app-subtitle {
+		font-size: 0.78rem;
+		opacity: 0.9;
+		margin-top: 0.2rem;
+	  }
+	  .mobile-list {
+		flex: 1;
+		padding: 0.9rem;
+	  }
+	  .mobile-intervention {
+		border: 1px solid #e3e3e5;
+		border-radius: 0.8rem;
+		background: #fff;
+		padding: 0.6rem 0.7rem;
+	  }
+	  .mobile-intervention + .mobile-intervention {
+		margin-top: 0.6rem;
+	  }
+	  .mobile-intervention-title {
+		font-size: 0.82rem;
+		font-weight: 700;
+		margin-bottom: 0.15rem;
+	  }
+	  .mobile-intervention-meta {
+		font-size: 0.74rem;
+		color: #69696e;
+	  }
+	  .mobile-intervention-actions {
+		margin-top: 0.45rem;
+	  }
+	  .mobile-clicktocall-btn {
+		width: 100%;
+		font-size: 0.75rem;
+		font-weight: 700;
+	  }
+	  .mobile-empty {
+		border: 1px dashed #c9c9cc;
+		border-radius: 0.9rem;
+		background: #fff;
+		padding: 1rem;
+		font-size: 0.87rem;
+		color: #6f6f73;
+		text-align: center;
+	  }
+	  .intervention-manager {
+		border: 1px solid var(--bs-border-color);
+		border-radius: 0.75rem;
+		padding: 1rem;
+		background: var(--bs-body-bg);
+	  }
+	  .sim-phones {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.25rem;
+		align-items: start;
+	  }
+	  .sim-phone-col {
+		display: flex;
+		justify-content: center;
+	  }
+	  .sim-samsung-frame {
+		width: 320px;
+		max-width: 100%;
+		border-radius: 2rem;
+		padding: 0.55rem;
+		background: linear-gradient(165deg, #101114, #3a3d45);
+		box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+	  }
+	  .sim-samsung-screen {
+		border-radius: 1.6rem;
+		overflow: hidden;
+		background: #f7f7f8;
+		min-height: 620px;
+		position: relative;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	  }
+	  .sim-samsung-camera {
+		position: absolute;
+		top: 0.55rem;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 0.6rem;
+		height: 0.6rem;
+		border-radius: 50%;
+		background: #111;
+		z-index: 3;
+		box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16);
+	  }
+	  .sim-chat-app {
+		padding-top: 2.2rem;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	  }
+	  .sim-chat-header {
+		padding: 0.95rem 1rem 0.8rem;
+		background: linear-gradient(180deg, #111, #2b2b2f);
+		color: #fff;
+		border-bottom: 2px solid #ff7900;
+	  }
+	  .sim-chat-title {
+		font-size: 0.96rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .sim-chat-subtitle {
+		font-size: 0.74rem;
+		opacity: 0.85;
+		margin-top: 0.2rem;
+	  }
+	  .sim-chat-meta {
+		font-size: 0.72rem;
+		color: #6f6f73;
+		margin-bottom: 0.45rem;
+	  }
+	  .sim-offer-card {
+		background: #fff;
+		border: 1px solid #e1e3e7;
+		border-left: 4px solid #ff7900;
+		border-radius: 0.85rem;
+		padding: 0.6rem 0.7rem;
+		font-size: 0.78rem;
+		color: #222228;
+		margin-bottom: 0.6rem;
+	  }
+	  .sim-chat-thread {
+		flex: 1;
+		padding: 0.75rem;
+		overflow: auto;
+		background:
+		  radial-gradient(circle at 20% 0%, rgba(255, 121, 0, 0.08), transparent 35%),
+		  #f4f5f7;
+	  }
+	  .sim-msg-row {
+		display: flex;
+		margin-bottom: 0.5rem;
+	  }
+	  .sim-msg-row.self {
+		justify-content: flex-end;
+	  }
+	  .sim-msg-bubble {
+		max-width: 82%;
+		padding: 0.45rem 0.6rem;
+		border-radius: 0.8rem;
+		font-size: 0.8rem;
+		line-height: 1.35;
+		white-space: pre-wrap;
+		word-break: break-word;
+	  }
+	  .sim-msg-row.self .sim-msg-bubble {
+		background: #111;
+		color: #fff;
+		border-bottom-right-radius: 0.2rem;
+	  }
+	  .sim-msg-row.other .sim-msg-bubble {
+		background: #fff;
+		color: #1f1f22;
+		border: 1px solid #e1e3e7;
+		border-bottom-left-radius: 0.2rem;
+	  }
+	  .sim-chat-compose {
+		padding: 0.65rem;
+		background: #fff;
+		border-top: 1px solid #e0e2e6;
+	  }
+	  .sim-chat-compose .form-control {
+		font-size: 0.84rem;
+	  }
+	  .sim-chat-compose-readonly {
+		font-size: 0.78rem;
+		color: #6f6f73;
+		background: #f7f7f8;
+		border: 1px solid #e2e3e7;
+		border-radius: 0.55rem;
+		padding: 0.45rem 0.55rem;
+	  }
+	  .sim-chat-typing {
+		font-size: 0.72rem;
+		color: #6f6f73;
+		padding: 0.15rem 0.3rem 0.35rem;
+	  }
+	  .sim-portal-app {
+		padding-top: 2.4rem;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		background: #f5f6f8;
+	  }
+	  .sim-portal-header {
+		padding: 0.95rem 1rem 0.85rem;
+		background: linear-gradient(180deg, #111, #2b2b2f);
+		color: #fff;
+		border-bottom: 2px solid #ff7900;
+	  }
+	  .sim-portal-title {
+		font-size: 0.98rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .sim-portal-subtitle {
+		font-size: 0.75rem;
+		opacity: 0.88;
+		margin-top: 0.2rem;
+	  }
+	  .sim-portal-content {
+		flex: 1;
+		overflow: auto;
+		padding: 0.75rem;
+	  }
+	  .sim-listing-card {
+		display: block;
+		width: 100%;
+		text-align: left;
+		border: 1px solid #e2e3e7;
+		border-radius: 0.9rem;
+		background: #fff;
+		padding: 0.7rem;
+		color: inherit;
+	  }
+	  .sim-listing-card + .sim-listing-card {
+		margin-top: 0.6rem;
+	  }
+	  .sim-listing-price {
+		font-size: 0.86rem;
+		font-weight: 700;
+		color: #ff7900;
+	  }
+	  .sim-listing-title {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: #1f1f23;
+		margin-top: 0.15rem;
+	  }
+	  .sim-listing-meta {
+		font-size: 0.74rem;
+		color: #6b6b70;
+		margin-top: 0.2rem;
+	  }
+	  .sim-detail-card {
+		border: 1px solid #e2e3e7;
+		border-radius: 0.9rem;
+		background: #fff;
+		padding: 0.8rem;
+	  }
+	  .sim-detail-back {
+		font-size: 0.74rem;
+		color: #ff7900;
+		border: 0;
+		background: transparent;
+		padding: 0;
+	  }
+	  .sim-side-panel {
+		border: 1px solid var(--bs-border-color);
+		border-radius: 0.8rem;
+		padding: 1rem;
+		background: var(--bs-body-bg);
+	  }
+	  .sim-fixed-phone-wrap {
+		width: 340px;
+		flex: 0 0 340px;
+	  }
+	  .sim-fixed-phone-wrap .iphone-frame {
+		width: 340px;
+		max-width: none;
+	  }
+	  .sim-fixed-phone-wrap .iphone-screen {
+		height: 620px;
+		min-height: 620px;
+	  }
+	  .sim-fixed-phone-wrap .sim-portal-content {
+		overflow-y: auto;
+		overflow-x: hidden;
+	  }
+	  .sim-call-modal .modal-content {
+		border-radius: 0.75rem;
+	  }
+	  .sim-call-modal .modal-header,
+	  .sim-call-modal .modal-body,
+	  .sim-call-modal .modal-footer {
+		padding: 0.75rem 0.85rem;
+	  }
+	  .sim-call-modal .modal-footer {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: nowrap;
+	  }
+	  .sim-call-modal .modal-footer .btn {
+		flex: 1 1 0;
+		font-size: 0.85rem;
+	  }
+	  @media (max-width: 991.98px) {
+		.sim-phones {
+		  grid-template-columns: 1fr;
+		}
+		.agent-mobile-wrap {
+		  overflow-x: auto;
+		  justify-content: flex-start;
+		}
+	  }
+	  .status-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.55rem;
+		border-radius: 999px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+		border: 1px solid transparent;
+	  }
+	  .status-pill-active {
+		background: rgba(25, 135, 84, 0.12);
+		color: #146c43;
+		border-color: rgba(25, 135, 84, 0.3);
+	  }
+	  .status-pill-inactive,
+	  .status-pill-suspended {
+		background: rgba(220, 53, 69, 0.1);
+		color: #b02a37;
+		border-color: rgba(220, 53, 69, 0.25);
+	  }
+	  .status-pill-pending {
+		background: rgba(255, 121, 0, 0.12);
+		color: #b35a00;
+		border-color: rgba(255, 121, 0, 0.3);
+	  }
+	  .status-pill-unknown {
+		background: var(--bs-secondary-bg);
+		color: var(--bs-secondary-color);
+		border-color: var(--bs-border-color);
+	  }
+	  .phone-stack > div + div {
+		margin-top: 0.35rem;
+	  }
+	  .cursor-pointer {
+		cursor: pointer;
+	  }
+	  .btn-sticky-mobile {
+		position: sticky; bottom: 0; z-index: 1020;
+		padding: 12px 0;
+		background: linear-gradient(to top, rgba(255,255,255,0.98), rgba(255,255,255,0.7));
+		backdrop-filter: blur(4px);
+	  }
+	  .demo-hero {
+		position: relative;
+		padding: 1.25rem 1.25rem 1rem;
+		margin-bottom: 1rem;
+		border: 1px solid var(--bs-border-color);
+		border-left: 4px solid #ff7900;
+		background:
+		  linear-gradient(135deg, rgba(255,121,0,0.08), rgba(255,255,255,0) 55%),
+		  var(--bs-tertiary-bg);
+	  }
+	  .demo-hero-grid {
+		display: grid;
+		gap: 1.25rem;
+		align-items: center;
+	  }
+	  .demo-hero-media {
+		margin: 0;
+	  }
+	  .demo-hero-media img {
+		display: block;
+		width: 100%;
+		height: auto;
+	  }
+	  .click2call-hero-img {
+		width: 52.5%;
+		max-width: 165px;
+		height: auto;
+		background: transparent !important;
+		margin: 0;
+		transform: none;
+	  }
+	  .click2call-hero-media {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	  }
+	  .click2call-hero .text-body-secondary {
+		max-width: 100% !important;
+		width: 100%;
+		display: block;
+	  }
+	  .demo-label {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.35rem 0.65rem;
+		background: #000;
+		color: #fff;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	  }
+	  .demo-hero h2 {
+		margin: 0.75rem 0 0.35rem;
+		font-size: clamp(1.4rem, 2vw, 1.85rem);
+		line-height: 1.1;
+	  }
+	  .demo-hero p {
+		margin: 0;
+		max-width: 44rem;
+	  }
+	  .navbar-actions .nav-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0;
+		color: #fff;
+		border-radius: 999px;
+		transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+	  }
+	  .navbar-actions .nav-link svg {
+		flex: 0 0 auto;
+		display: block;
+	  }
+	  .navbar-actions .dropdown-menu {
+		min-width: 10.5rem;
+	  }
+	  .navbar-actions .dropdown-item svg {
+		flex: 0 0 auto;
+	  }
+	  .navbar-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		height: 100%;
+	  }
+	  .navbar-actions .nav-item {
+		display: flex;
+		align-items: center;
+	  }
+	  .navbar-actions .nav-link.nav-link-portal {
+		background: #000;
+	  }
+	  .navbar-actions .nav-link:hover,
+	  .navbar-actions .nav-link:focus-visible {
+		background: #ff7900;
+		color: #fff;
+		transform: translateY(-1px);
+	  }
+	  .navbar-actions .nav-link.nav-link-portal:hover,
+	  .navbar-actions .nav-link.nav-link-portal:focus-visible {
+		background: #ff7900;
+		color: #fff;
+	  }
+	  @media (min-width: 992px) {
+		.global-nav-links {
+		  align-self: flex-end;
+		  margin-bottom: 0.2rem;
+		}
+		.global-nav-links .nav-link {
+		  padding-top: 0.75rem;
+		  padding-bottom: 0.35rem;
+		}
+		.demo-hero-grid {
+		  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 420px);
+		}
+		.click2call-hero .demo-hero-grid {
+		  grid-template-columns: 70% 30%;
+		}
+	  }
+	  input[type="tel"] { letter-spacing: 0.2px; }
+	</style>
+  </head>
+
+  <body>
+	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+	  <symbol id="stop-secret" viewBox="0 0 24 24">
+		<path d="M12 2a5 5 0 0 1 5 5v2h1a2 2 0 0 1 2 2v3.17l1.7 1.7-1.4 1.41-.3-.3V19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-5.17L2.7 10.53l1.4-1.41L20.9 25l-1.4 1.41-2.06-2.06A2 2 0 0 1 16 25H8a4 4 0 0 1-4-4v-5.17l-.7-.7L2 16.53l2 2V11a4 4 0 0 1 4-4h1V7a5 5 0 0 1 5-5zm3 7V7a3 3 0 0 0-6 0v2h6z"/>
+	  </symbol>
+	  <symbol id="theme-auto" viewBox="0 0 24 24">
+		<path d="M12 3a9 9 0 1 0 0 18V3z" fill="currentColor"></path>
+		<path d="M12 3a9 9 0 0 1 0 18" fill="none" stroke="currentColor" stroke-width="2"></path>
+	  </symbol>
+	  <symbol id="theme-light" viewBox="0 0 24 24">
+		<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"></circle>
+		<path d="M12 2v3M12 19v3M22 12h-3M5 12H2M19.07 4.93l-2.12 2.12M7.05 16.95l-2.12 2.12M19.07 19.07l-2.12-2.12M7.05 7.05L4.93 4.93" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+	  </symbol>
+	  <symbol id="theme-dark" viewBox="0 0 24 24">
+		<path d="M20 14.5A7.5 7.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path>
+	  </symbol>
+	  <symbol id="solaris-technician" viewBox="0 0 24 24">
+		<path d="M12 2.5a4.25 4.25 0 1 1 0 8.5a4.25 4.25 0 0 1 0-8.5Zm0 10.5c4.286 0 7.75 2.543 7.75 5.68c0 .456-.37.82-.824.82H5.074a.822.822 0 0 1-.824-.82C4.25 15.543 7.714 13 12 13Zm5.97-4.33l1.71 1.71l-2.268 2.268l1.61 1.61l-1.237 1.237l-1.61-1.61l-1.236 1.237l-1.238-1.237l1.237-1.236l-1.61-1.61l1.237-1.237l1.61 1.61L17.97 8.67Z"></path>
+	  </symbol>
+	  <symbol id="chevron-right" viewBox="0 0 24 24">
+		<path d="m9 6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+	  </symbol>
+	</svg>
+
+	<!-- Orange Business navbar (Boosted Orange navbar pattern) -->
+	<header data-bs-theme="dark">
+	  <nav class="navbar navbar-expand-lg" aria-label="Orange Business global navigation">
+			<div class="container-xxl align-items-center">
+		  <div class="navbar-brand me-auto">
+			<a class="stretched-link" href="#alias" aria-label="Orange Business - Alias Numbers">
+			  <img src="https://boosted.orange.com/docs/5.3/assets/brand/OBS-logo.svg" width="50" height="50" alt="Orange Business" loading="lazy" />
+			</a>
+		  </div>
+		  <button
+			class="navbar-toggler collapsed"
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target="#globalNav"
+			aria-controls="globalNav"
+			aria-expanded="false"
+			aria-label="Afficher la navigation"
+		  >
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div id="globalNav" class="navbar-collapse collapse justify-content-lg-end me-lg-5 global-nav-links">
+			<ul class="navbar-nav ms-lg-auto">
+			  <li class="nav-item">
+				<a class="nav-link active" id="nav-alias" href="#alias" data-view="alias" aria-current="page">Alias2Alias</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link" id="nav-ctc" href="#ctc" data-view="ctc">Click2Call</a>
+			  </li>
+			</ul>
+		  </div>
+		  <div class="d-none d-lg-flex align-items-center">
+			<ul class="navbar-nav flex-row navbar-actions ms-lg-auto">
+			  <li class="nav-item">
+				<a href="#" class="nav-link nav-icon" aria-label="Search">
+				  <svg width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"></circle>
+					<path d="M20 20L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+				  </svg>
+				  <span class="visually-hidden">Search</span>
+				</a>
+			  </li>
+			  <li class="nav-item">
+				<a
+				  href="https://developer.orange.com/solutions/protect-your-users/"
+				  class="nav-link nav-icon nav-link-portal"
+				  aria-label="Orange Developer Portal"
+				  target="_blank"
+				  rel="noopener noreferrer"
+				>
+				  <svg width="1.25rem" height="1.25rem" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+					<path d="M14 5h5v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+					<path d="M10 14L19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+					<path d="M19 13v4a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+				  </svg>
+				  <span class="visually-hidden">Orange Developer Portal</span>
+				</a>
+			  </li>
+			  <li class="nav-item dropdown">
+				<button
+				  class="nav-link nav-icon dropdown-toggle"
+				  id="themeSelector"
+				  type="button"
+				  data-bs-toggle="dropdown"
+				  aria-expanded="false"
+				  aria-label="Theme selector"
+				>
+				  <svg width="1.25rem" height="1.25rem" aria-hidden="true">
+					<use href="#theme-auto"></use>
+				  </svg>
+				  <span class="visually-hidden">Theme selector</span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="themeSelector">
+				  <li>
+					<button type="button" class="dropdown-item d-flex align-items-center active" data-theme-value="light" aria-pressed="true">
+					  <svg width="1rem" height="1rem" class="me-2" aria-hidden="true"><use href="#theme-light"></use></svg>
+					  Light
+					</button>
+				  </li>
+				  <li>
+					<button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="dark" aria-pressed="false">
+					  <svg width="1rem" height="1rem" class="me-2" aria-hidden="true"><use href="#theme-dark"></use></svg>
+					  Dark
+					</button>
+				  </li>
+				  <li>
+					<button type="button" class="dropdown-item d-flex align-items-center" data-theme-value="auto" aria-pressed="false">
+					  <svg width="1rem" height="1rem" class="me-2" aria-hidden="true"><use href="#theme-auto"></use></svg>
+					  Auto
+					</button>
+				  </li>
+				</ul>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </nav>
+	</header>
+
+	<main class="container container-narrow my-4">
+	  <div class="page-content">
+		<!-- VIEW 1 -->
+		<section
+		  id="view-alias"
+		  role="region"
+		  aria-labelledby="nav-alias"
+		  tabindex="0"
+		>
+		  <div class="demo-hero">
+			<div class="demo-hero-grid">
+			  <div>
+				<span class="demo-label">Demo Alias2Alias</span>
+				<h2>Association d’alias entre deux lignes</h2>
+				<p class="text-body-secondary">Gerer des Alias entre deux numeros fixes ou mobiles, tous operateurs francais confondus, depuis une interface unique ou depuis votre systeme via une API Rest/JSON ultra simple. Prise en charge des numeros etrangers BTalk prevue au T3 2026.</p>
+				<div class="mt-3">
+				  <a class="btn btn-outline-dark btn-sm" href="/docs.html" target="_blank" rel="noopener noreferrer">Documentation API</a>
+				</div>
+			  </div>
+			  <figure class="demo-hero-media">
+				<img src="/alias2alias.png" alt="Illustration de deux correspondants relies par une route miroir securisee" />
+			  </figure>
+			</div>
+		  </div>
+		  <div class="mt-3">
+			<ul class="nav nav-tabs" id="aliasInnerTabs" role="tablist">
+			  <li class="nav-item" role="presentation">
+				<button class="nav-link active" id="alias-sim-tab" data-bs-toggle="tab" data-bs-target="#alias-sim-pane" type="button" role="tab" aria-controls="alias-sim-pane" aria-selected="true">Simulation Plateforme Immo</button>
+			  </li>
+			  <li class="nav-item ms-auto" role="presentation">
+				<button class="nav-link" id="alias-list-tab" data-bs-toggle="tab" data-bs-target="#alias-list-pane" type="button" role="tab" aria-controls="alias-list-pane" aria-selected="false">Configuration Alias Numbers</button>
+			  </li>
+			</ul>
+			<div class="tab-content border border-top-0 rounded-bottom p-3">
+			  <div class="tab-pane fade" id="alias-list-pane" role="tabpanel" aria-labelledby="alias-list-tab" tabindex="0">
+				<div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between gap-2">
+				  <h2 class="h5 mb-0">Liste des Alias générés</h2>
+				  <div class="d-flex gap-2">
+				  <button
+					class="btn btn-primary btn-sm"
+					type="button"
+					data-bs-toggle="offcanvas"
+					data-bs-target="#offcanvasAdd"
+					aria-controls="offcanvasAdd"
+				  >
+					Ajouter
+				  </button>
+				  <button id="btnRefresh" class="btn btn-outline-secondary btn-sm" type="button">Rafraîchir</button>
+				  <button id="btnDeleteSelected" class="btn btn-danger btn-sm" type="button" disabled>Supprimer sélection</button>
+				  </div>
+				</div>
+
+				<div id="stateLoading" class="mt-3 d-none">
+				<div class="d-flex align-items-center gap-2">
+				  <div class="spinner-border" role="status" aria-label="Chargement"></div>
+				  <span>Chargement…</span>
+				</div>
+				</div>
+
+				<div id="stateError" class="mt-3 d-none">
+				<div class="alert alert-danger mb-0" role="alert">
+				  Impossible de charger la liste.
+				  <div class="small text-body-secondary mt-1">Vérifie que le proxy tourne et que le token est valide.</div>
+				  <button id="btnRetry" class="btn btn-danger btn-sm mt-2" type="button">Réessayer</button>
+				</div>
+				</div>
+
+				<div id="stateEmpty" class="mt-3 d-none">
+				<div class="alert alert-info mb-0" role="alert">
+				  Aucun alias pour le moment.
+				  <button
+					class="btn btn-primary btn-sm ms-2"
+					type="button"
+					data-bs-toggle="offcanvas"
+					data-bs-target="#offcanvasAdd"
+					aria-controls="offcanvasAdd"
+				  >
+					Ajouter
+				  </button>
+				</div>
+				</div>
+
+				<div id="stateOk" class="mt-3">
+				<div class="table-responsive">
+				  <table class="table align-middle">
+					<thead>
+					  <tr>
+						<th scope="col" class="text-center" style="width: 1%;">#</th>
+						<th scope="col" style="width: 190px;">Date de Création</th>
+						<th scope="col">Numéro A</th>
+						<th scope="col">Numéro B</th>
+						<th scope="col" style="width: 120px;">Statut</th>
+						<th scope="col" class="text-center" style="width: 90px;">
+						  <input id="selectAllAliases" class="form-check-input" type="checkbox" aria-label="Tout sélectionner" />
+						</th>
+					  </tr>
+					</thead>
+					<tbody id="aliasTbody"></tbody>
+				  </table>
+				</div>
+				<div class="form-text">Les colonnes A et B affichent le N° User en haut et le N° Alias en bas</div>
+				</div>
+			  </div>
+			  <div class="tab-pane fade show active" id="alias-sim-pane" role="tabpanel" aria-labelledby="alias-sim-tab" tabindex="0">
+				<div class="row g-3 align-items-start">
+				  <div class="col-lg-7">
+					<div class="agent-mobile-wrap py-0">
+					  <div class="sim-fixed-phone-wrap">
+						<div class="iphone-frame" aria-label="Simulateur portail immobilier">
+						  <div class="iphone-screen">
+							<div class="iphone-notch" aria-hidden="true"></div>
+							<div class="sim-portal-app">
+							  <div class="sim-portal-header">
+								<h3 class="sim-portal-title">Portail Prestige</h3>
+								<div class="sim-portal-subtitle">Annonces de biens haut de gamme</div>
+							  </div>
+							  <div id="simRealEstateView" class="sim-portal-content"></div>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				  <div class="col-lg-5">
+					<div class="sim-side-panel">
+					  <h3 class="h6 mb-3">Paramètres de la démo</h3>
+					  <div class="mb-2">
+						<label for="simAgencyNumber" class="form-label">Numéro de l'agence</label>
+						<input id="simAgencyNumber" type="tel" inputmode="tel" class="form-control mono" value="+33 1 42 55 80 70" />
+						<div class="form-text">Modifiable à tout moment avant l'appel protégé.</div>
+					  </div>
+					  <div id="simClientAliasWrap" class="d-none">
+						<div class="form-label mb-1">N° Alias du client</div>
+						<div id="simClientAliasToken" class="tag-md alias-tag-medium mono">—</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+		  <div class="btn-sticky-mobile d-md-none mt-3">
+			<div class="d-grid">
+			  <button
+				class="btn btn-primary"
+				type="button"
+				data-bs-toggle="offcanvas"
+				data-bs-target="#offcanvasAdd"
+				aria-controls="offcanvasAdd"
+			  >
+				Ajouter un alias
+			  </button>
+			</div>
+		  </div>
+		</section>
+
+		<!-- VIEW 2 -->
+		<section
+		  class="d-none"
+		  id="view-ctc"
+		  role="region"
+		  aria-labelledby="nav-ctc"
+		  tabindex="0"
+		>
+		  <div class="demo-hero click2call-hero">
+			<div class="demo-hero-grid">
+			  <div>
+				<span class="demo-label">Demo Click2Call</span>
+				<h2>Déclenchement rapide d’un appel protégé en Click2Call</h2>
+				<p class="text-body-secondary">Simulation d’un parcours Click2Call entre un Agent terrain en intervention et un numéro d'un client depuis l'interface de l'agent. Le numéro du client n'est jamais visible de l'agent et inversement. La configuration permet de gerer les cas de rappel en cas d'absence et de renvoi vers une messagerie SpeechToText dynamiquement ou un numéro callcenter contextualisé.</p>
+			  </div>
+			  <figure class="demo-hero-media click2call-hero-media">
+				<img class="click2call-hero-img" src="/click2call.png" alt="Illustration Click2Call sécurisé entre un agent et un client" />
+			  </figure>
+			</div>
+		  </div>
+		  <ul class="nav nav-tabs" id="ctcInnerTabs" role="tablist">
+			<li class="nav-item" role="presentation">
+			  <button class="nav-link active" id="ctc-agent-tab" data-bs-toggle="tab" data-bs-target="#ctc-agent-pane" type="button" role="tab" aria-controls="ctc-agent-pane" aria-selected="true">Vue Agent Intervention</button>
+			</li>
+			<li class="nav-item" role="presentation">
+			  <button class="nav-link" id="ctc-manager-tab" data-bs-toggle="tab" data-bs-target="#ctc-manager-pane" type="button" role="tab" aria-controls="ctc-manager-pane" aria-selected="false">Vue Gestionnaire</button>
+			</li>
+			<li class="nav-item ms-auto" role="presentation">
+			  <button class="nav-link" id="ctc-callcenter-tab" data-bs-toggle="tab" data-bs-target="#ctc-callcenter-pane" type="button" role="tab" aria-controls="ctc-callcenter-pane" aria-selected="false">Configuration Alias Numbers</button>
+			</li>
+		  </ul>
+
+		  <div class="tab-content pt-3">
+			<div class="tab-pane fade" id="ctc-callcenter-pane" role="tabpanel" aria-labelledby="ctc-callcenter-tab" tabindex="0">
+			  <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between gap-2">
+				<h3 class="h5 mb-0">Liste des Contextes</h3>
+				<div class="d-flex flex-wrap gap-2 align-items-center">
+				  <div class="btn-group btn-group-sm view-toggle" role="group" aria-label="Mode d'affichage">
+					<button id="contextsViewTable" type="button" class="btn btn-outline-secondary active" aria-pressed="true">Grille</button>
+					<button id="contextsViewCards" type="button" class="btn btn-outline-secondary" aria-pressed="false">Vignette</button>
+				  </div>
+				  <button id="btnAddContext" class="btn btn-primary btn-sm" type="button">Ajouter un context</button>
+				  <button id="btnDeleteSelectedContexts" class="btn btn-danger btn-sm" type="button" disabled>Supprimer sélection</button>
+				  <button id="btnRefreshContexts" class="btn btn-outline-secondary btn-sm" type="button">Rafraîchir</button>
+				</div>
+			  </div>
+
+			  <div id="contextsLoading" class="mt-3 d-none">
+				<div class="d-flex align-items-center gap-2">
+				  <div class="spinner-border" role="status" aria-label="Chargement"></div>
+				  <span>Chargement…</span>
+				</div>
+			  </div>
+
+			  <div id="contextsError" class="mt-3 d-none">
+				<div class="alert alert-danger mb-0" role="alert">
+				  Impossible de charger les contexts agents.
+				  <button id="btnRetryContexts" class="btn btn-danger btn-sm mt-2" type="button">Réessayer</button>
+				</div>
+			  </div>
+
+			  <div id="contextsEmpty" class="mt-3 d-none">
+				<div class="alert alert-info mb-0" role="alert">
+				  Aucun context agent actif.
+				</div>
+			  </div>
+
+			  <div id="contextsOk" class="mt-3">
+				<div id="contextsTableView" class="table-responsive">
+				  <table class="table align-middle">
+					<thead>
+					  <tr>
+						<th scope="col" class="text-center" style="width: 1%;">#</th>
+						<th scope="col" style="width: 190px;">Date de création</th>
+						<th scope="col">Nom de l'agent</th>
+						<th scope="col">N° Agent</th>
+						<th scope="col">N° Alias</th>
+						<th scope="col" class="text-center" style="width: 1%;">
+						  <input id="selectAllContexts" class="form-check-input" type="checkbox" aria-label="Tout sélectionner" />
+						</th>
+					  </tr>
+					</thead>
+					<tbody id="contextsTbody"></tbody>
+				  </table>
+				</div>
+				<div id="contextsCardsView" class="context-cards d-none"></div>
+				<div class="form-text">Cliquez sur une ligne pour ouvrir son detail dans la vue Agent.</div>
+			  </div>
+			</div>
+
+			<div class="tab-pane fade show active" id="ctc-agent-pane" role="tabpanel" aria-labelledby="ctc-agent-tab" tabindex="0">
+			  <div class="agent-mobile-wrap">
+				<div class="iphone-frame" aria-label="Simulateur iPhone">
+				  <div class="iphone-screen">
+					<div class="iphone-notch" aria-hidden="true"></div>
+					<div class="mobile-app">
+					  <div class="mobile-app-header">
+						<h3 class="mobile-app-title">Mes Interventions</h3>
+						<div id="mobileAgentSubtitle" class="mobile-app-subtitle">Agent</div>
+					  </div>
+					  <div class="mobile-list">
+						<div id="mobileInterventionsContainer">
+						  <div class="mobile-empty">
+							Aucune intervention pour le moment.
+							<div class="mt-2">La liste sera alimentee ensuite.</div>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			  <div class="agent-selector-wrap">
+				<label for="agentContextSelect" class="form-label">Changer d'agent</label>
+				<select id="agentContextSelect" class="form-select"></select>
+				<div class="form-text">Selectionnez un agent pour charger ses interventions dans l'application mobile.</div>
+			  </div>
+			</div>
+
+			<div class="tab-pane fade" id="ctc-manager-pane" role="tabpanel" aria-labelledby="ctc-manager-tab" tabindex="0">
+			  <div class="mt-3">
+				<div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between gap-2 mb-2">
+				  <h3 class="h5 mb-0">Liste des interventions</h3>
+				  <div class="d-flex gap-2">
+					<button id="btnDeleteSelectedInterventions" type="button" class="btn btn-danger btn-sm" disabled>Supprimer sélection</button>
+					<button
+					  type="button"
+					  class="btn btn-primary btn-sm"
+					  data-bs-toggle="offcanvas"
+					  data-bs-target="#offcanvasIntervention"
+					  aria-controls="offcanvasIntervention"
+					>
+					  Ajouter une intervention
+					</button>
+				  </div>
+				</div>
+				<div class="table-responsive">
+				  <table class="table table-sm align-middle">
+					<thead>
+					  <tr>
+						<th scope="col" class="text-center" style="width: 1%;">
+						  <input id="selectAllInterventions" class="form-check-input" type="checkbox" aria-label="Tout sélectionner" />
+						</th>
+						<th scope="col" style="width: 170px;">Date</th>
+						<th scope="col">Type</th>
+						<th scope="col">Agent</th>
+						<th scope="col">Client</th>
+						<th scope="col">Telephone</th>
+						<th scope="col">Adresse</th>
+					  </tr>
+					</thead>
+					<tbody id="interventionTbody">
+					  <tr>
+						<td colspan="7" class="text-body-secondary">Aucune intervention pour le moment.</td>
+					  </tr>
+					</tbody>
+				  </table>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</section>
+	  </div>
+	</main>
+
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasIntervention" aria-labelledby="offcanvasInterventionLabel">
+	  <div class="offcanvas-header">
+		<h2 class="offcanvas-title h5" id="offcanvasInterventionLabel">Ajouter une intervention</h2>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	  </div>
+	  <div class="offcanvas-body">
+		<form id="interventionForm" class="row g-3" novalidate>
+		  <div class="col-12">
+			<label for="interventionType" class="form-label">Type</label>
+			<select id="interventionType" class="form-select" required>
+			  <option value="">Choisir un type...</option>
+			  <option value="Reparation">Réparation</option>
+			  <option value="Livraison Colis">Livraison Colis</option>
+			  <option value="RDV Devis">RDV Devis</option>
+			</select>
+			<div class="invalid-feedback">Le type est requis.</div>
+		  </div>
+		  <div class="col-12">
+			<label for="interventionAgentSelect" class="form-label">Agent</label>
+			<select id="interventionAgentSelect" class="form-select" required>
+			  <option value="">Choisir un agent...</option>
+			</select>
+			<div class="invalid-feedback">L'agent est requis.</div>
+		  </div>
+		  <div class="col-12">
+			<label for="interventionClientName" class="form-label">Nom du client</label>
+			<input id="interventionClientName" type="text" class="form-control" required />
+			<div class="invalid-feedback">Le nom est requis.</div>
+		  </div>
+		  <div class="col-12">
+			<label for="interventionClientAddress" class="form-label">Adresse du client</label>
+			<input id="interventionClientAddress" type="text" class="form-control" required />
+			<div class="invalid-feedback">L'adresse est requise.</div>
+		  </div>
+		  <div class="col-12">
+			<label for="interventionClientPhone" class="form-label">Numero de telephone</label>
+			<input id="interventionClientPhone" type="tel" inputmode="tel" class="form-control mono" placeholder="+33 6 73 69 69 10" required />
+			<div class="invalid-feedback">Numero invalide.</div>
+		  </div>
+		  <div class="col-12">
+			<div class="d-flex gap-2">
+			  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Annuler</button>
+			  <button id="interventionSubmit" type="submit" class="btn btn-primary">Ajouter a la liste</button>
+			</div>
+		  </div>
+		</form>
+	  </div>
+	</div>
+
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasContextDetail" aria-labelledby="offcanvasContextDetailLabel">
+	  <div class="offcanvas-header">
+		<h2 class="offcanvas-title h5" id="offcanvasContextDetailLabel">Detail du contexte</h2>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	  </div>
+	  <div class="offcanvas-body">
+		<div class="row g-3">
+		  <div class="col-12 col-md-7">
+			<label for="contextDetailAlias" class="form-label d-block">Numero Alias</label>
+			<div id="contextDetailAlias" class="tag-md alias-tag-medium mono detail-token">—</div>
+		  </div>
+		  <div class="col-12 col-md-5">
+			<label class="form-label d-block">Statut</label>
+			<div id="contextDetailStatus" class="detail-token"></div>
+		  </div>
+		  <div class="col-12">
+			<label class="form-label">Capacite</label>
+			<div id="contextDetailCapabilities" class="d-flex flex-wrap gap-2"></div>
+		  </div>
+		  <div class="col-12">
+			<label for="contextDetailUserInput" class="form-label d-block">Numero de l'agent</label>
+			<div id="contextDetailUserDisplay" class="tag-md user-tag-hide mono detail-token">—</div>
+			<input id="contextDetailUserInput" type="tel" inputmode="tel" class="form-control mono d-none mt-1" placeholder="+33 6 73 69 69 10" />
+			<div id="contextDetailUserFeedback" class="invalid-feedback">Numero de l'agent invalide.</div>
+		  </div>
+		  <div class="col-12">
+			<label for="contextDetailLogin" class="form-label">Nom de l'agent</label>
+			<input id="contextDetailLogin" type="text" class="form-control" />
+		  </div>
+		  <div class="col-12">
+			<label for="contextDetailEmail" class="form-label">Email de l'agent</label>
+			<input id="contextDetailEmail" type="email" class="form-control" />
+		  </div>
+		  <div class="col-12">
+			<label for="contextDetailNote" class="form-label">Description du contexte</label>
+			<textarea id="contextDetailNote" class="form-control" rows="4"></textarea>
+		  </div>
+		  <div class="col-12">
+			<div class="form-check form-switch">
+			  <input class="form-check-input" type="checkbox" role="switch" id="contextDetailConfirmation" />
+			  <label class="form-check-label" for="contextDetailConfirmation">Confirmation avec la touche *</label>
+			</div>
+		  </div>
+		  <div class="col-12 pt-2">
+			<div class="d-flex gap-2">
+			  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Fermer</button>
+			  <button type="button" class="btn btn-primary" id="contextDetailSaveBtn">Enregistrer</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInboundRules" aria-labelledby="offcanvasInboundRulesLabel">
+	  <div class="offcanvas-header">
+		<h2 class="offcanvas-title h5" id="offcanvasInboundRulesLabel">Règles d'appels entrants</h2>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	  </div>
+	  <div class="offcanvas-body">
+		<div class="row g-3">
+		  <div class="col-12">
+			<label class="form-label d-block">Numéro Alias</label>
+			<div id="inboundAliasToken" class="tag-md alias-tag-medium mono detail-token">—</div>
+		  </div>
+		  <div id="inboundRulesLoading" class="col-12 d-none">
+			<div class="d-flex align-items-center gap-2">
+			  <div class="spinner-border spinner-border-sm" role="status" aria-label="Chargement"></div>
+			  <span>Chargement des règles…</span>
+			</div>
+		  </div>
+		  <div id="inboundRulesError" class="col-12 d-none">
+			<div class="alert alert-danger mb-0" role="alert">Impossible de charger les règles entrantes.</div>
+		  </div>
+		  <div id="inboundRulesContent" class="col-12 d-none">
+			<div class="row g-3">
+			  <div class="col-12">
+				<label class="form-label">Délai avant redirection Message (minutes)</label>
+				<input id="inboundFailureDelayInput" type="number" min="0" class="form-control" />
+			  </div>
+			  <div class="col-12">
+				<label class="form-label">Message SpeechToText</label>
+				<textarea id="inboundFailureMessageInput" class="form-control" rows="3"></textarea>
+			  </div>
+			  <div class="col-12 col-md-4">
+				<label class="form-label">Voix</label>
+				<input id="inboundVoiceInput" type="number" min="1" class="form-control" />
+			  </div>
+			  <div class="col-12 col-md-4">
+				<label class="form-label">Genre</label>
+				<select id="inboundGenderInput" class="form-select">
+				  <option value="FEMALE">Femme</option>
+				  <option value="MALE">Homme</option>
+				</select>
+			  </div>
+			  <div class="col-12 col-md-4">
+				<label class="form-label">Langage</label>
+				<select id="inboundLanguageInput" class="form-select">
+				  <option value="fr">Français</option>
+				  <option value="en">Anglais</option>
+				  <option value="es">Espagnol</option>
+				</select>
+			  </div>
+			  <div class="col-12 pt-2">
+				<div class="d-flex gap-2">
+				  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Fermer</button>
+				  <button type="button" class="btn btn-primary" id="inboundRulesSaveBtn">Enregistrer</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<div class="modal fade" id="simCallModal" tabindex="-1" aria-labelledby="simCallModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm modal-dialog-centered sim-call-modal">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h2 class="modal-title h6 mb-0" id="simCallModalLabel">Appeler l'agence</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+		  </div>
+		  <div class="modal-body">
+			<label for="simPersonalNumberInput" class="form-label">Votre numéro personnel</label>
+			<input id="simPersonalNumberInput" type="tel" inputmode="tel" class="form-control mono" placeholder="+33 6 12 34 56 78" />
+			<div class="form-text">Un alias sera créé et ni votre numéro ni celui de l'agence ne seront affichés</div>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Annuler</button>
+			<button type="button" class="btn btn-primary" id="simCreateAliasBtn">Créer alias protégé</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<!-- Offcanvas Add -->
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAdd" aria-labelledby="offcanvasAddLabel">
+	  <div class="offcanvas-header">
+		<h2 class="offcanvas-title h5" id="offcanvasAddLabel">Ajouter un alias</h2>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+	  </div>
+	  <div class="offcanvas-body">
+		<p class="text-body-secondary">Saisissez deux numéros <strong>user</strong> différents.</p>
+
+		<form id="addForm" novalidate>
+		  <div class="mb-3">
+			<label for="addA" class="form-label">Numéro A (user)</label>
+			<input id="addA" type="tel" inputmode="tel" class="form-control" placeholder="+33 6 73 69 69 10" required />
+			<div class="form-text">Ex: +33 6 73 69 69 10</div>
+			<div class="invalid-feedback">Numéro A invalide.</div>
+		  </div>
+
+		  <div class="mb-3">
+			<label for="addB" class="form-label">Numéro B (user)</label>
+			<input id="addB" type="tel" inputmode="tel" class="form-control" placeholder="+33 6 73 09 96 35" required />
+			<div class="form-text">Ex: +33 6 73 09 96 35</div>
+			<div class="invalid-feedback">Numéro B invalide.</div>
+		  </div>
+
+		  <div id="addCrossError" class="alert alert-danger d-none" role="alert">
+			Les deux numéros doivent être différents.
+		  </div>
+
+		  <fieldset class="mb-3">
+			<legend class="form-label mb-2">Expiration de l'alias</legend>
+			<div class="d-flex flex-column gap-2">
+			  <div class="form-check">
+				<input class="form-check-input" type="radio" name="aliasExpiry" id="aliasExpiryDay" value="1" checked />
+				<label class="form-check-label" for="aliasExpiryDay">1 jour</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="radio" name="aliasExpiry" id="aliasExpiryWeek" value="7" />
+				<label class="form-check-label" for="aliasExpiryWeek">1 semaine</label>
+			  </div>
+			  <div class="form-check">
+				<input class="form-check-input" type="radio" name="aliasExpiry" id="aliasExpiryMonth" value="30" />
+				<label class="form-check-label" for="aliasExpiryMonth">1 mois</label>
+			  </div>
+			</div>
+			<div class="form-text">Le champ <span class="mono">endDate</span> sera calcule automatiquement a partir de cette duree.</div>
+		  </fieldset>
+
+		  <div class="d-flex gap-2">
+			<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">Annuler</button>
+			<button id="addSubmit" type="submit" class="btn btn-primary">Ajouter</button>
+		  </div>
+		</form>
+	  </div>
+	</div>
+
+	<!-- Toast -->
+	<div class="toast-container position-fixed bottom-0 end-0 p-3">
+	  <div id="appToast" class="toast" role="status" aria-live="polite" aria-atomic="true">
+		<div class="toast-header">
+		  <strong class="me-auto">Info</strong>
+		  <small id="toastTime">à l’instant</small>
+		  <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fermer"></button>
+		</div>
+		<div id="toastBody" class="toast-body">—</div>
+	  </div>
+	</div>
+
+	<!-- Boosted JS bundle -->
+	<script
+	  src="https://cdn.jsdelivr.net/npm/boosted@5.3.8/dist/js/boosted.bundle.min.js"
+	  integrity="sha384-lSjE7ZAWc1Wiua5r2jyHbPL07FiKkHPWCXugD3qTq4o4M4YZQzLTrDF1CXrjxU/m"
+	  crossorigin="anonymous"
+	></script>
+
+	<script>
+	  // ============================
+	  // Config
+	  // ============================
+	  const API_BASE = "http://localhost:3001"; // proxy local
+
+	  // ============================
+	  // Navbar navigation
+	  // ============================
+	  const navAlias = document.getElementById("nav-alias");
+	  const navCtc = document.getElementById("nav-ctc");
+	  const viewAlias = document.getElementById("view-alias");
+	  const viewCtc = document.getElementById("view-ctc");
+
+	  function switchView(view, updateHash = true) {
+		const showAlias = view !== "ctc";
+
+		viewAlias.classList.toggle("d-none", !showAlias);
+		viewCtc.classList.toggle("d-none", showAlias);
+
+		navAlias.classList.toggle("active", showAlias);
+		navCtc.classList.toggle("active", !showAlias);
+		if (showAlias) {
+		  navAlias.setAttribute("aria-current", "page");
+		  navCtc.removeAttribute("aria-current");
+		} else {
+		  navCtc.setAttribute("aria-current", "page");
+		  navAlias.removeAttribute("aria-current");
+		}
+
+		if (updateHash) {
+		  const nextHash = showAlias ? "#alias" : "#ctc";
+		  history.replaceState(null, "", nextHash);
+		}
+	  }
+
+	  navAlias.addEventListener("click", (e) => {
+		e.preventDefault();
+		switchView("alias");
+	  });
+
+	  navCtc.addEventListener("click", (e) => {
+		e.preventDefault();
+		switchView("ctc");
+	  });
+
+	  document.querySelectorAll('.navbar-actions a[href="#"]').forEach((link) => {
+		link.addEventListener("click", (e) => e.preventDefault());
+	  });
+
+	  const themeButtons = Array.from(document.querySelectorAll("[data-theme-value]"));
+	  const themeIcon = document.querySelector("#themeSelector use");
+
+	  function applyTheme(theme) {
+		const normalized = theme === "dark" || theme === "light" ? theme : "light";
+		document.documentElement.setAttribute("data-bs-theme", normalized);
+		themeButtons.forEach((button) => {
+		  const active = button.getAttribute("data-theme-value") === theme;
+		  button.classList.toggle("active", active);
+		  button.setAttribute("aria-pressed", active ? "true" : "false");
+		});
+		if (themeIcon) {
+		  const symbol = theme === "dark" ? "#theme-dark" : theme === "light" ? "#theme-light" : "#theme-auto";
+		  themeIcon.setAttribute("href", symbol);
+		}
+		window.localStorage.setItem("demo-theme", theme);
+	  }
+
+	  themeButtons.forEach((button) => {
+		button.addEventListener("click", () => {
+		  applyTheme(button.getAttribute("data-theme-value") || "auto");
+		});
+	  });
+
+	  window.addEventListener("hashchange", () => {
+		switchView(location.hash === "#ctc" ? "ctc" : "alias", false);
+	  });
+
+	  // ============================
+	  // UI helpers
+	  // ============================
+	  function setState(state) {
+		const ok = document.getElementById("stateOk");
+		const loading = document.getElementById("stateLoading");
+		const empty = document.getElementById("stateEmpty");
+		const error = document.getElementById("stateError");
+
+		ok.classList.toggle("d-none", state !== "ok");
+		loading.classList.toggle("d-none", state !== "loading");
+		empty.classList.toggle("d-none", state !== "empty");
+		error.classList.toggle("d-none", state !== "error");
+	  }
+
+	  function fmtDate(iso) {
+		const d = new Date(iso);
+		if (isNaN(d.getTime())) return { date: "—", time: "" };
+		const pad = (n) => String(n).padStart(2, "0");
+		return {
+		  date: `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`,
+		  time: `${pad(d.getHours())}:${pad(d.getMinutes())}`,
+		};
+	  }
+
+	  function escapeHtml(s) {
+		return String(s ?? "")
+		  .replaceAll("&", "&amp;")
+		  .replaceAll("<", "&lt;")
+		  .replaceAll(">", "&gt;")
+		  .replaceAll('"', "&quot;")
+		  .replaceAll("'", "&#039;");
+	  }
+
+	  function formatPhoneFr(value) {
+		const raw = String(value ?? "").trim();
+		if (!raw || raw === "—") return raw || "—";
+		const compact = raw.replace(/[.\s()-]/g, "");
+		const formatLocal = (digits) => {
+		  if (!digits) return raw;
+		  if (digits.length === 1) return digits;
+		  const parts = [digits.slice(0, 1)];
+		  for (let i = 1; i < digits.length; i += 2) {
+			parts.push(digits.slice(i, i + 2));
+		  }
+		  return parts.join(" ").trim();
+		};
+		if (/^\+33\d{6,}$/.test(compact)) {
+		  return `+33 ${formatLocal(compact.slice(3))}`;
+		}
+		if (/^33\d{6,}$/.test(compact)) {
+		  return `33 ${formatLocal(compact.slice(2))}`;
+		}
+		if (/^\+\d{6,}$/.test(compact)) {
+		  const digits = compact.slice(1);
+		  const prefix = digits.length > 10 ? digits.slice(0, digits.length - 10) : digits.slice(0, 2);
+		  const local = digits.slice(prefix.length);
+		  return `+${prefix} ${formatLocal(local)}`;
+		}
+		if (/^\d{6,}$/.test(compact)) {
+		  return formatLocal(compact);
+		}
+		return raw;
+	  }
+
+	  function normalizePhone(value) {
+		const raw = String(value ?? "").trim();
+		if (!raw) return "";
+		const compact = raw.replace(/[.\s()-]/g, "");
+		if (compact.startsWith("+")) return `+${compact.slice(1).replace(/\D/g, "")}`;
+		return compact.replace(/\D/g, "");
+	  }
+
+	  function formatPhoneInput(el) {
+		const normalized = normalizePhone(el.value);
+		if (!normalized) {
+		  el.value = "";
+		  return;
+		}
+		el.value = formatPhoneFr(normalized);
+	  }
+
+	  function enableTooltips() {
+		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
+		  const existing = boosted.Tooltip.getInstance(el);
+		  if (existing) existing.dispose();
+		  new boosted.Tooltip(el);
+		});
+	  }
+
+	  function formatStatus(status) {
+		const value = String(status ?? "").trim().toUpperCase();
+		if (!value) {
+		  return { label: "Inconnu", className: "status-pill status-pill-unknown" };
+		}
+		const map = {
+		  ACTIVE: { label: "Actif", className: "status-pill status-pill-active" },
+		  ACTIVATED: { label: "Actif", className: "status-pill status-pill-active" },
+		  INACTIVE: { label: "Inactif", className: "status-pill status-pill-inactive" },
+		  SUSPENDED: { label: "Suspendu", className: "status-pill status-pill-suspended" },
+		  PENDING: { label: "En attente", className: "status-pill status-pill-pending" },
+		};
+		return map[value] || { label: value, className: "status-pill status-pill-unknown" };
+	  }
+
+	  const toastEl = document.getElementById("appToast");
+	  const toast = new boosted.Toast(toastEl, { delay: 2200 });
+	  function showToast(message) {
+		document.getElementById("toastBody").textContent = message;
+		document.getElementById("toastTime").textContent = "à l’instant";
+		toast.show();
+	  }
+
+	  // ============================
+	  // Alias simulation - portail immobilier
+	  // ============================
+	  const simRealEstateView = document.getElementById("simRealEstateView");
+	  const simAgencyNumber = document.getElementById("simAgencyNumber");
+	  const simClientAliasWrap = document.getElementById("simClientAliasWrap");
+	  const simClientAliasToken = document.getElementById("simClientAliasToken");
+	  const simCallModalEl = document.getElementById("simCallModal");
+	  const simCallModal = simCallModalEl ? new boosted.Modal(simCallModalEl) : null;
+	  const simPersonalNumberInput = document.getElementById("simPersonalNumberInput");
+	  const simCreateAliasBtn = document.getElementById("simCreateAliasBtn");
+	  let selectedListingId = null;
+	  const simAgencyAliasByListing = new Map();
+	  const simListings = [
+		{ id: "apt-75016", title: "Appartement 6 pieces avec terrasse", city: "Paris 16e", surface: "185 m²", price: "2 450 000 €", agency: "Agence Arc de Seine" },
+		{ id: "villa-cannes", title: "Villa contemporaine vue mer", city: "Cannes", surface: "320 m²", price: "4 980 000 €", agency: "Riviera Collection" },
+		{ id: "loft-lyon", title: "Loft haut standing", city: "Lyon 2e", surface: "210 m²", price: "1 690 000 €", agency: "Rhone Prestige" },
+		{ id: "hotel-neuilly", title: "Hotel particulier avec jardin", city: "Neuilly-sur-Seine", surface: "410 m²", price: "6 700 000 €", agency: "Monceau Estates" },
+		{ id: "duplex-bordeaux", title: "Duplex quai des Chartrons", city: "Bordeaux", surface: "170 m²", price: "1 240 000 €", agency: "Girondins Fine Homes" },
+		{ id: "mas-aix", title: "Mas provencal renove", city: "Aix-en-Provence", surface: "290 m²", price: "2 980 000 €", agency: "Provence Signature" },
+		{ id: "penthouse-nice", title: "Penthouse front de mer", city: "Nice", surface: "240 m²", price: "3 550 000 €", agency: "Azur Collection" },
+		{ id: "chalet-megeve", title: "Chalet premium 8 couchages", city: "Megeve", surface: "265 m²", price: "5 100 000 €", agency: "Alpes Select" },
+		{ id: "maison-lille", title: "Maison d'architecte avec patio", city: "Lille", surface: "220 m²", price: "1 180 000 €", agency: "Nord Prestige" },
+		{ id: "app-montpellier", title: "Appartement rooftop avec piscine", city: "Montpellier", surface: "195 m²", price: "1 420 000 €", agency: "Occitanie Luxe" },
+	  ];
+
+	  function getSelectedListing() {
+		return simListings.find((item) => item.id === selectedListingId) || null;
+	  }
+
+	  function renderSimListingList() {
+		if (!simRealEstateView) return;
+		const cards = simListings.map((item) => `
+		  <button type="button" class="sim-listing-card" data-action="open-listing" data-id="${escapeHtml(item.id)}" aria-label="Ouvrir l'annonce ${escapeHtml(item.title)}">
+			<div class="sim-listing-price">${escapeHtml(item.price)}</div>
+			<div class="sim-listing-title">${escapeHtml(item.title)}</div>
+			<div class="sim-listing-meta">${escapeHtml(item.city)} · ${escapeHtml(item.surface)}</div>
+			<div class="sim-listing-meta">${escapeHtml(item.agency)}</div>
+		  </button>
+		`).join("");
+		simRealEstateView.innerHTML = cards;
+	  }
+
+	  function renderSimListingDetail() {
+		if (!simRealEstateView) return;
+		const listing = getSelectedListing();
+		if (!listing) {
+		  renderSimListingList();
+		  return;
+		}
+		const aliasToCall = simAgencyAliasByListing.get(listing.id) || null;
+		simRealEstateView.innerHTML = `
+		  <button type="button" class="sim-detail-back mb-2" data-action="back-list">← Retour aux annonces</button>
+		  <div class="sim-detail-card">
+			<div class="sim-listing-price">${escapeHtml(listing.price)}</div>
+			<div class="sim-listing-title">${escapeHtml(listing.title)}</div>
+			<div class="sim-listing-meta">${escapeHtml(listing.city)} · ${escapeHtml(listing.surface)}</div>
+			<div class="sim-listing-meta mb-3">Agence: ${escapeHtml(listing.agency)}</div>
+			<button type="button" class="btn btn-primary btn-sm w-100" data-action="call-protected">Appeler l'agence en protegeant votre numero personnel</button>
+			<div class="mt-3 text-center">
+			  ${aliasToCall ? `<div class="small text-body-secondary mb-1">N° Alias de l'agence</div><span class="tag-md alias-tag-medium mono">${escapeHtml(aliasToCall)}</span>` : ""}
+			</div>
+		  </div>
+		`;
+	  }
+
+	  function renderSimulationPortal() {
+		if (selectedListingId) renderSimListingDetail();
+		else renderSimListingList();
+	  }
+
+	  async function createProtectedAliasFromSimulation() {
+		const agency = normalizePhone(simAgencyNumber?.value || "");
+		const personal = normalizePhone(simPersonalNumberInput?.value || "");
+		const validAgency = looksLikePhone(agency);
+		const validPersonal = looksLikePhone(personal);
+
+		if (!validAgency || !validPersonal || agency === personal) {
+		  showToast("Verifier les numeros personnel et agence");
+		  return;
+		}
+
+		const oldText = simCreateAliasBtn.textContent;
+		simCreateAliasBtn.disabled = true;
+		simCreateAliasBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Creation…`;
+
+		try {
+		  const endDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+		  const r = await fetch(`${API_BASE}/api/mirroredroutes`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+			  aUserNumber: personal,
+			  bUserNumber: agency,
+			  endDate,
+			}),
+		  });
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok || !data?.item) {
+			console.error("Simulation alias create error:", data);
+			showToast("Creation d'alias echouee");
+			return;
+		  }
+
+		  const created = data.item;
+		  const agencyNormalized = normalizePhone(agency);
+		  const personalNormalized = normalizePhone(personal);
+		  const parties = [created?.callPartyA, created?.callPartyB].filter(Boolean);
+		  const matchedParty = parties.find((party) => normalizePhone(party?.userNumber || "") === agencyNormalized);
+		  const matchedClientParty = parties.find((party) => normalizePhone(party?.userNumber || "") === personalNormalized);
+		  const aliasToCall = formatPhoneFr(
+			matchedParty?.aliasNumber ||
+			created?.callPartyB?.aliasNumber ||
+			created?.callPartyA?.aliasNumber ||
+			"—"
+		  );
+		  const clientAlias = formatPhoneFr(
+			matchedClientParty?.aliasNumber ||
+			created?.callPartyA?.aliasNumber ||
+			created?.callPartyB?.aliasNumber ||
+			"—"
+		  );
+		  if (selectedListingId && aliasToCall !== "—") {
+			simAgencyAliasByListing.set(selectedListingId, aliasToCall);
+		  }
+		  if (simClientAliasWrap && simClientAliasToken && clientAlias !== "—") {
+			simClientAliasWrap.classList.remove("d-none");
+			simClientAliasToken.textContent = clientAlias;
+		  }
+		  simCallModal?.hide();
+		  renderSimulationPortal();
+		  showToast("Alias protege cree");
+		} catch (e) {
+		  console.error(e);
+		  showToast("Creation d'alias echouee");
+		} finally {
+		  simCreateAliasBtn.disabled = false;
+		  simCreateAliasBtn.textContent = oldText;
+		}
+	  }
+
+	  if (simRealEstateView) {
+		simRealEstateView.addEventListener("click", (event) => {
+		  const trigger = event.target.closest("[data-action]");
+		  if (!trigger) return;
+		  const action = trigger.dataset.action;
+		  if (action === "open-listing") {
+			selectedListingId = trigger.dataset.id || null;
+			renderSimulationPortal();
+			return;
+		  }
+		  if (action === "back-list") {
+			selectedListingId = null;
+			renderSimulationPortal();
+			return;
+		  }
+		  if (action === "call-protected") {
+			if (simPersonalNumberInput) {
+			  simPersonalNumberInput.value = "";
+			  simPersonalNumberInput.classList.remove("is-invalid", "is-valid");
+			}
+			simCallModal?.show();
+		  }
+		});
+	  }
+
+	  if (simAgencyNumber) {
+		simAgencyNumber.addEventListener("input", () => {
+		  formatPhoneInput(simAgencyNumber);
+		});
+	  }
+	  if (simPersonalNumberInput) {
+		simPersonalNumberInput.addEventListener("input", () => {
+		  formatPhoneInput(simPersonalNumberInput);
+		});
+	  }
+	  if (simCreateAliasBtn) {
+		simCreateAliasBtn.addEventListener("click", createProtectedAliasFromSimulation);
+	  }
+
+	  // Validation "raisonnable" (UI)
+	  function looksLikePhone(v) {
+		const s = String(v || "").trim();
+		if (!s) return false;
+		if (!/^[+0-9\s().-]{6,}$/.test(s)) return false;
+		const digits = s.replace(/\D/g, "");
+		return digits.length >= 6;
+	  }
+
+	  // ============================
+	  // Data
+	  // ============================
+	  let aliases = []; // items Orange bruts (avec id, callPartyA/B, creationDate...)
+	  let selectedAliasIds = new Set();
+
+	  function updateDeleteSelectedButton() {
+		const btn = document.getElementById("btnDeleteSelected");
+		if (!btn) return;
+		btn.disabled = selectedAliasIds.size === 0;
+	  }
+
+	  function syncSelectAllCheckbox() {
+		const selectAll = document.getElementById("selectAllAliases");
+		if (!selectAll) return;
+		const rowChecks = Array.from(document.querySelectorAll("#aliasTbody input.form-check-input"));
+		if (rowChecks.length === 0) {
+		  selectAll.checked = false;
+		  selectAll.indeterminate = false;
+		  return;
+		}
+		const checkedCount = rowChecks.filter((c) => c.checked).length;
+		selectAll.checked = checkedCount === rowChecks.length;
+		selectAll.indeterminate = checkedCount > 0 && checkedCount < rowChecks.length;
+	  }
+
+	  async function loadAliases() {
+		setState("loading");
+		try {
+		  const r = await fetch(`${API_BASE}/api/mirroredroutes?status=ACTIVE`);
+		  const data = await r.json().catch(() => ({}));
+
+		  if (!r.ok || !data?.ok) {
+			console.error("Load error:", data);
+			setState("error");
+			return;
+		  }
+
+		  aliases = Array.isArray(data.items) ? data.items : [];
+		  aliases.sort((x, y) => new Date(y.creationDate) - new Date(x.creationDate));
+		  selectedAliasIds = new Set(
+			Array.from(selectedAliasIds).filter((id) => aliases.some((x) => x.id === id))
+		  );
+		  updateDeleteSelectedButton();
+
+		  if (aliases.length === 0) {
+			setState("empty");
+			return;
+		  }
+
+		  renderTable();
+		} catch (e) {
+		  console.error(e);
+		  setState("error");
+		}
+	  }
+
+	  function renderTable() {
+		const tbody = document.getElementById("aliasTbody");
+		tbody.innerHTML = "";
+
+		const filtered = aliases;
+
+		if (filtered.length === 0) {
+		  setState("empty");
+		  return;
+		}
+
+		setState("ok");
+
+		filtered.forEach((row, idx) => {
+		  const tr = document.createElement("tr");
+
+		  // 1) index
+		  const tdIdx = document.createElement("td");
+		  tdIdx.className = "text-center mono";
+		  tdIdx.textContent = String(idx + 1);
+		  tr.appendChild(tdIdx);
+
+		  // 2) Date
+		  const tdD = document.createElement("td");
+		  tdD.className = "mono";
+		  const createdAt = fmtDate(row?.creationDate);
+		  tdD.innerHTML = `<div>${createdAt.date}</div><div class="text-body-secondary">${createdAt.time}</div>`;
+		  tr.appendChild(tdD);
+
+		  // 3) A
+		  const tdA = document.createElement("td");
+		  const aAlias = row?.callPartyA?.aliasNumber ?? "—";
+		  const aUser = row?.callPartyA?.userNumber ?? "—";
+		  tdA.innerHTML = `
+			<div class="phone-stack">
+			  <div><span class="tag-md user-tag-hide mono">${escapeHtml(formatPhoneFr(aUser))}</span></div>
+			  <div><span class="tag-md alias-tag-medium mono">${escapeHtml(formatPhoneFr(aAlias))}</span></div>
+			</div>
+		  `;
+		  tr.appendChild(tdA);
+
+		  // 4) B
+		  const tdB = document.createElement("td");
+		  const bAlias = row?.callPartyB?.aliasNumber ?? "—";
+		  const bUser = row?.callPartyB?.userNumber ?? "—";
+		  tdB.innerHTML = `
+			<div class="phone-stack">
+			  <div><span class="tag-md user-tag-hide mono">${escapeHtml(formatPhoneFr(bUser))}</span></div>
+			  <div><span class="tag-md alias-tag-medium mono">${escapeHtml(formatPhoneFr(bAlias))}</span></div>
+			</div>
+		  `;
+		  tr.appendChild(tdB);
+
+		  // 5) Status
+		  const tdStatus = document.createElement("td");
+		  const status = formatStatus(row?.status);
+		  tdStatus.innerHTML = `<span class="${status.className}">${escapeHtml(status.label)}</span>`;
+		  tr.appendChild(tdStatus);
+
+		  // 6) Selection checkbox
+		  const tdDel = document.createElement("td");
+		  tdDel.className = "text-center";
+
+		  const check = document.createElement("input");
+		  check.type = "checkbox";
+		  check.className = "form-check-input";
+		  check.setAttribute("aria-label", `Sélectionner l'alias ${idx + 1}`);
+		  check.dataset.rowId = row.id;
+		  check.checked = selectedAliasIds.has(row.id);
+		  check.addEventListener("change", () => {
+			if (check.checked) {
+			  selectedAliasIds.add(row.id);
+			} else {
+			  selectedAliasIds.delete(row.id);
+			}
+			updateDeleteSelectedButton();
+		  });
+		  tdDel.appendChild(check);
+		  tr.appendChild(tdDel);
+
+		  tbody.appendChild(tr);
+		});
+
+		syncSelectAllCheckbox();
+		enableTooltips();
+	  }
+
+	  // ============================
+	  // Add (Offcanvas) -> POST
+	  // ============================
+	  const addForm = document.getElementById("addForm");
+	  const addA = document.getElementById("addA");
+	  const addB = document.getElementById("addB");
+	  const addCrossError = document.getElementById("addCrossError");
+	  const addExpiryInputs = Array.from(document.querySelectorAll('input[name="aliasExpiry"]'));
+	  const offcanvasEl = document.getElementById("offcanvasAdd");
+	  const offcanvas = new boosted.Offcanvas(offcanvasEl);
+
+	  function setFieldValidity(el, ok) {
+		el.classList.toggle("is-invalid", !ok);
+		el.classList.toggle("is-valid", ok);
+	  }
+
+	  function validateAddForm() {
+		const a = addA.value.trim();
+		const b = addB.value.trim();
+
+		const okA = looksLikePhone(a);
+		const okB = looksLikePhone(b);
+		setFieldValidity(addA, okA);
+		setFieldValidity(addB, okB);
+
+		const crossOk = a && b && a !== b;
+		addCrossError.classList.toggle("d-none", crossOk || !a || !b);
+
+		return okA && okB && crossOk;
+	  }
+
+	  function computeAliasEndDate() {
+		const selected = addExpiryInputs.find((input) => input.checked);
+		const days = Number(selected?.value || 1);
+		const endDate = new Date();
+		endDate.setDate(endDate.getDate() + days);
+		return endDate.toISOString();
+	  }
+
+	  addA.addEventListener("input", () => {
+		formatPhoneInput(addA);
+		validateAddForm();
+	  });
+	  addB.addEventListener("input", () => {
+		formatPhoneInput(addB);
+		validateAddForm();
+	  });
+
+	  addForm.addEventListener("submit", async (e) => {
+		e.preventDefault();
+
+		const ok = validateAddForm();
+		if (!ok) return;
+
+		const aUserNumber = normalizePhone(addA.value);
+		const bUserNumber = normalizePhone(addB.value);
+		const endDate = computeAliasEndDate();
+
+		// loading UI
+		const submitBtn = document.getElementById("addSubmit");
+		submitBtn.disabled = true;
+		const oldText = submitBtn.textContent;
+		submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Ajout…`;
+
+		try {
+		  const r = await fetch(`${API_BASE}/api/mirroredroutes`, {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ aUserNumber, bUserNumber, endDate }),
+		  });
+
+		  const data = await r.json().catch(() => ({}));
+
+		  if (!r.ok || !data?.ok || !data?.item) {
+			showToast("Ajout échoué (voir console)");
+			console.error("Create error:", data);
+			return;
+		  }
+
+		  const created = data.item; // contains id + aliasNumber + creationDate...
+
+		  aliases = [created, ...aliases];
+		  aliases.sort((x, y) => new Date(y.creationDate) - new Date(x.creationDate));
+
+		  addForm.reset();
+		  addA.classList.remove("is-valid", "is-invalid");
+		  addB.classList.remove("is-valid", "is-invalid");
+		  addCrossError.classList.add("d-none");
+
+		  offcanvas.hide();
+		  showToast("Alias ajouté");
+		  renderTable();
+		} catch (err) {
+		  showToast("Ajout échoué (réseau)");
+		  console.error(err);
+		} finally {
+		  submitBtn.disabled = false;
+		  submitBtn.textContent = oldText;
+		}
+	  });
+
+	  // ============================
+	  // Bulk delete -> DELETE (204)
+	  // ============================
+	  async function deleteAliasById(id) {
+		const r = await fetch(`${API_BASE}/api/mirroredroutes/${encodeURIComponent(id)}`, {
+		  method: "DELETE",
+		});
+		if (r.status === 204) return true;
+		if (!r.ok) {
+		  const data = await r.json().catch(() => ({}));
+		  throw new Error(data?.message || `DELETE ${id} failed with ${r.status}`);
+		}
+		return true;
+	  }
+
+	  // ============================
+	  // Buttons
+	  // ============================
+	  document.getElementById("selectAllAliases").addEventListener("change", (e) => {
+		const checked = e.target.checked;
+		const rowChecks = Array.from(document.querySelectorAll("#aliasTbody input.form-check-input"));
+		rowChecks.forEach((check) => {
+		  check.checked = checked;
+		  const id = check.dataset.rowId;
+		  if (!id) return;
+		  if (checked) selectedAliasIds.add(id);
+		  else selectedAliasIds.delete(id);
+		});
+		updateDeleteSelectedButton();
+		syncSelectAllCheckbox();
+	  });
+
+	  document.getElementById("btnRefresh").addEventListener("click", loadAliases);
+	  document.getElementById("btnDeleteSelected").addEventListener("click", async () => {
+		if (selectedAliasIds.size === 0) return;
+
+		const ids = Array.from(selectedAliasIds);
+		const ok = window.confirm(`Supprimer ${ids.length} alias ? Cette action est irréversible.`);
+		if (!ok) return;
+
+		const btn = document.getElementById("btnDeleteSelected");
+		btn.disabled = true;
+		const oldText = btn.textContent;
+		btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Suppression…`;
+
+		try {
+		  const results = await Promise.allSettled(ids.map((id) => deleteAliasById(id)));
+		  const successIds = results
+			.map((r, i) => (r.status === "fulfilled" ? ids[i] : null))
+			.filter(Boolean);
+		  const failed = results.length - successIds.length;
+
+		  aliases = aliases.filter((x) => !successIds.includes(x.id));
+		  successIds.forEach((id) => selectedAliasIds.delete(id));
+
+		  if (aliases.length === 0) {
+			setState("empty");
+		  } else {
+			renderTable();
+		  }
+
+		  if (failed > 0) {
+			showToast(`Suppression partielle: ${successIds.length} ok, ${failed} erreur(s)`);
+		  } else {
+			showToast(`${successIds.length} alias supprimé(s)`);
+		  }
+		} catch (e) {
+		  console.error(e);
+		  showToast("Suppression échouée");
+		} finally {
+		  btn.textContent = oldText;
+		  updateDeleteSelectedButton();
+		}
+	  });
+	  document.getElementById("btnRetry").addEventListener("click", loadAliases);
+
+	  // Click To Call - contexts agents
+	  const contextsTbody = document.getElementById("contextsTbody");
+	  const contextsCardsView = document.getElementById("contextsCardsView");
+	  const contextsTableView = document.getElementById("contextsTableView");
+	  const contextsViewTable = document.getElementById("contextsViewTable");
+	  const contextsViewCards = document.getElementById("contextsViewCards");
+	  const agentContextSelect = document.getElementById("agentContextSelect");
+	  const interventionAgentSelect = document.getElementById("interventionAgentSelect");
+	  const interventionForm = document.getElementById("interventionForm");
+	  const interventionOffcanvas = new boosted.Offcanvas(document.getElementById("offcanvasIntervention"));
+	  const interventionType = document.getElementById("interventionType");
+	  const interventionClientName = document.getElementById("interventionClientName");
+	  const interventionClientAddress = document.getElementById("interventionClientAddress");
+	  const interventionClientPhone = document.getElementById("interventionClientPhone");
+	  const interventionTbody = document.getElementById("interventionTbody");
+	  const selectAllInterventions = document.getElementById("selectAllInterventions");
+	  const btnDeleteSelectedInterventions = document.getElementById("btnDeleteSelectedInterventions");
+	  const mobileInterventionsContainer = document.getElementById("mobileInterventionsContainer");
+	  const mobileAgentSubtitle = document.getElementById("mobileAgentSubtitle");
+	  const btnAddContext = document.getElementById("btnAddContext");
+	  const btnRefreshContexts = document.getElementById("btnRefreshContexts");
+	  const btnRetryContexts = document.getElementById("btnRetryContexts");
+	  const btnDeleteSelectedContexts = document.getElementById("btnDeleteSelectedContexts");
+	  let agentContexts = [];
+	  let selectedAgentContext = null;
+	  let selectedContextIds = new Set();
+	  let expandedContextIds = new Set();
+	  let interventions = [];
+	  let selectedInterventionIds = new Set();
+	  const contextCallsCache = new Map();
+	  const contextCallsLoading = new Set();
+	  const contextCallsError = new Map();
+	  let contextsDisplayMode = window.localStorage.getItem("contexts-display-mode") === "cards" ? "cards" : "table";
+	  let contextDetailMode = "edit";
+	  let lastFakeClientIndex = -1;
+	  const fakeClients = [
+		{ name: "Gaston Lagaffe", address: "12 rue du Retard, 75000 Paris" },
+		{ name: "Jeanne d'Arcade", address: "8 avenue des Pixels, 69000 Lyon" },
+		{ name: "Marcel Pneucreve", address: "3 impasse du Crac, 31000 Toulouse" },
+		{ name: "Nora Boulot", address: "17 boulevard du Cafard, 44000 Nantes" },
+		{ name: "Theo Rizon", address: "5 rue du Raccourci, 59000 Lille" },
+		{ name: "Camille Ote", address: "21 quai du Glouglou, 33000 Bordeaux" },
+		{ name: "Hugo Bossu", address: "14 passage des Escaliers, 67000 Strasbourg" },
+		{ name: "Lola Gique", address: "9 allee du Clignotant, 34000 Montpellier" },
+		{ name: "Basile Tique", address: "2 rue de la Pause Cafe, 35000 Rennes" },
+		{ name: "Ariane Fuite", address: "28 chemin des Travaux, 13000 Marseille" },
+		{ name: "Mona Gaffe", address: "6 place de l'Oups, 21000 Dijon" },
+		{ name: "Rene Troviseur", address: "11 rue du Detour, 76000 Rouen" },
+		{ name: "Zoe Kiki", address: "4 square des Trottinettes, 80000 Amiens" },
+		{ name: "Yvan Tard", address: "31 route du Bouchon, 45000 Orleans" },
+		{ name: "Pia Nissimo", address: "13 rue des Fausses Notes, 37000 Tours" },
+		{ name: "Nino Tabene", address: "7 avenue du Klaxon, 54000 Nancy" },
+		{ name: "Sacha Chargeur", address: "18 boulevard de la Batterie Faible, 68000 Colmar" },
+		{ name: "Lea Panne", address: "26 rue du Depanneur, 51100 Reims" },
+		{ name: "Maxi Mome", address: "1 impasse des Dimanches, 86000 Poitiers" },
+		{ name: "Cleo Patte", address: "15 chemin des Croquettes, 14000 Caen" },
+		{ name: "Rita Chou", address: "10 rue de la Baguette Froide, 25000 Besancon" },
+		{ name: "Lucie Nette", address: "20 allee des Moustiques, 81000 Albi" },
+		{ name: "Noe Deme", address: "34 rue du Ventilo, 64000 Pau" },
+		{ name: "Paul Isse", address: "22 avenue des Pannes Wifi, 73000 Chambery" },
+		{ name: "Iris Tance", address: "16 quai de l'Embouteillage, 17000 La Rochelle" },
+		{ name: "Lino Cident", address: "24 rue des Cascades, 72000 Le Mans" },
+		{ name: "Elie Mination", address: "30 boulevard des Devis, 66000 Perpignan" },
+		{ name: "Aude Dela", address: "27 rue de la Visseuse, 12000 Rodez" },
+		{ name: "Sam Sung", address: "19 place du Chargeur Oublie, 49400 Saumur" },
+		{ name: "Mimi Kcracra", address: "25 rue du Nettoyage Demain, 89000 Auxerre" },
+	  ];
+	  const defaultContextPayload = {
+		aliasNumber: "+33969370203",
+		capabilities: ["CALL_IN", "CALL_OUT"],
+		selectAnUnassignedNumber: {
+		  active: false,
+		  countryPrefix: "FR",
+		},
+	  };
+	  const contextDetailOffcanvas = new boosted.Offcanvas(document.getElementById("offcanvasContextDetail"));
+	  const offcanvasContextDetailLabel = document.getElementById("offcanvasContextDetailLabel");
+	  const selectAllContexts = document.getElementById("selectAllContexts");
+	  const contextDetailStatus = document.getElementById("contextDetailStatus");
+	  const contextDetailUserDisplay = document.getElementById("contextDetailUserDisplay");
+	  const contextDetailUserInput = document.getElementById("contextDetailUserInput");
+	  const contextDetailUserFeedback = document.getElementById("contextDetailUserFeedback");
+	  const contextDetailAlias = document.getElementById("contextDetailAlias");
+	  const contextDetailCapabilities = document.getElementById("contextDetailCapabilities");
+	  const contextDetailLogin = document.getElementById("contextDetailLogin");
+	  const contextDetailEmail = document.getElementById("contextDetailEmail");
+	  const contextDetailNote = document.getElementById("contextDetailNote");
+	  const contextDetailConfirmation = document.getElementById("contextDetailConfirmation");
+	  const contextDetailSaveBtn = document.getElementById("contextDetailSaveBtn");
+	  const inboundRulesOffcanvas = new boosted.Offcanvas(document.getElementById("offcanvasInboundRules"));
+	  const inboundAliasToken = document.getElementById("inboundAliasToken");
+	  const inboundRulesLoading = document.getElementById("inboundRulesLoading");
+	  const inboundRulesError = document.getElementById("inboundRulesError");
+	  const inboundRulesContent = document.getElementById("inboundRulesContent");
+	  const inboundFailureDelayInput = document.getElementById("inboundFailureDelayInput");
+	  const inboundFailureMessageInput = document.getElementById("inboundFailureMessageInput");
+	  const inboundVoiceInput = document.getElementById("inboundVoiceInput");
+	  const inboundGenderInput = document.getElementById("inboundGenderInput");
+	  const inboundLanguageInput = document.getElementById("inboundLanguageInput");
+	  const inboundRulesSaveBtn = document.getElementById("inboundRulesSaveBtn");
+	  let currentInboundRules = null;
+	  const inboundRulesDefaults = {
+		mode: "LAST_CALL_SEARCH",
+		config: {
+		  lastCallHandling: {
+			delayBeforePreferredRedirection: null,
+			delayBeforeFailureRedirection: 2,
+			unknownCallerHandlingMode: "FAILURE",
+		  },
+		  failureHandling: {
+			mode: "REDIRECT_TO_MESSAGE",
+			failureRedirectionMessage: {
+			  speak: [
+				{
+				  message: "Message à diffuser",
+				  voice: 1,
+				  gender: "FEMALE",
+				  language: "fr",
+				},
+			  ],
+			},
+			failureRedirectionNumber: null,
+			mirroredRouteFailureMessages: null,
+		  },
+		  smsFailureHandling: null,
+		},
+		preferredRedirectionNumber: null,
+	  };
+
+	  function getByPath(obj, path) {
+		return String(path)
+		  .split(".")
+		  .reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+	  }
+
+	  function pickContextValue(row, candidates) {
+		for (const candidate of candidates) {
+		  const value = getByPath(row, candidate);
+		  if (value !== undefined && value !== null && String(value).trim() !== "") {
+			return value;
+		  }
+		}
+		return "";
+	  }
+
+	  function formatOwnerInfo(value) {
+		if (!value) return "—";
+		if (typeof value === "object") {
+		  const label = String(value.login || "").trim();
+		  if (label) return label;
+		  return String(value.email || "").trim() || "—";
+		}
+		return String(value).trim() || "—";
+	  }
+
+	  function setInboundRulesState(state) {
+		if (!inboundRulesLoading || !inboundRulesError || !inboundRulesContent) return;
+		inboundRulesLoading.classList.toggle("d-none", state !== "loading");
+		inboundRulesError.classList.toggle("d-none", state !== "error");
+		inboundRulesContent.classList.toggle("d-none", state !== "content");
+	  }
+
+	  function firstDefined(...values) {
+		for (const value of values) {
+		  if (value !== undefined && value !== null && String(value).trim() !== "") return value;
+		}
+		return "—";
+	  }
+
+	  function cloneJson(data) {
+		try {
+		  return JSON.parse(JSON.stringify(data ?? {}));
+		} catch (_e) {
+		  return {};
+		}
+	  }
+
+	  function parseNullableInt(value) {
+		const trimmed = String(value ?? "").trim();
+		if (!trimmed) return null;
+		const n = Number(trimmed);
+		return Number.isFinite(n) ? Math.max(0, Math.round(n)) : null;
+	  }
+
+	  function ensureInboundStructure(target) {
+		target.config = target.config || {};
+		target.config.lastCallHandling = target.config.lastCallHandling || {};
+		target.config.failureHandling = target.config.failureHandling || {};
+		target.config.failureHandling.failureRedirectionMessage = target.config.failureHandling.failureRedirectionMessage || {};
+		target.config.failureHandling.failureRedirectionMessage.speak =
+		  Array.isArray(target.config.failureHandling.failureRedirectionMessage.speak)
+			? target.config.failureHandling.failureRedirectionMessage.speak
+			: [];
+		if (target.config.failureHandling.failureRedirectionMessage.speak.length === 0) {
+		  target.config.failureHandling.failureRedirectionMessage.speak.push({
+			message: "",
+			voice: 1,
+			gender: "FEMALE",
+			language: "fr",
+		  });
+		}
+	  }
+
+	  function buildInboundPayloadFromForm() {
+		const payload = cloneJson(inboundRulesDefaults);
+		ensureInboundStructure(payload);
+		payload.config.lastCallHandling.delayBeforeFailureRedirection = parseNullableInt(inboundFailureDelayInput.value);
+		payload.config.failureHandling.failureRedirectionMessage.speak[0].message =
+		  String(inboundFailureMessageInput.value || "").trim();
+		const voice = parseNullableInt(inboundVoiceInput.value);
+		payload.config.failureHandling.failureRedirectionMessage.speak[0].voice = voice || 1;
+		const gender = String(inboundGenderInput.value || "").trim().toUpperCase();
+		payload.config.failureHandling.failureRedirectionMessage.speak[0].gender =
+		  gender === "MALE" ? "MALE" : "FEMALE";
+		const language = String(inboundLanguageInput.value || "").trim();
+		payload.config.failureHandling.failureRedirectionMessage.speak[0].language = language || "fr";
+		return payload;
+	  }
+
+	  async function openInboundRules(aliasNumber) {
+		if (
+		  !inboundAliasToken ||
+		  !inboundFailureDelayInput ||
+		  !inboundFailureMessageInput ||
+		  !inboundVoiceInput ||
+		  !inboundGenderInput ||
+		  !inboundLanguageInput
+		) {
+		  showToast("Popup regles entrantes indisponible");
+		  return;
+		}
+		const normalizedAlias = normalizePhone(aliasNumber).replace(/^\+/, "");
+		const aliasFormatted = formatPhoneFr(aliasNumber || "—");
+		inboundAliasToken.textContent = aliasFormatted;
+		inboundFailureDelayInput.value = "";
+		inboundFailureMessageInput.value = "";
+		inboundVoiceInput.value = "";
+		inboundGenderInput.value = "FEMALE";
+		inboundLanguageInput.value = "fr";
+		currentInboundRules = null;
+		setInboundRulesState("loading");
+		inboundRulesOffcanvas.show();
+
+		try {
+		  const r = await fetch(`${API_BASE}/api/inbound-rules/${encodeURIComponent(normalizedAlias)}`);
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok || !data?.item) {
+			console.error("Inbound rules load error:", data);
+			setInboundRulesState("error");
+			return;
+		  }
+		  const item = data.item;
+		  currentInboundRules = { aliasExternal: normalizedAlias, item: cloneJson(item) };
+		  const delayValue = firstDefined(item?.config?.lastCallHandling?.delayBeforeFailureRedirection, inboundRulesDefaults.config.lastCallHandling.delayBeforeFailureRedirection);
+		  inboundFailureDelayInput.value = String(delayValue).replace(/^—$/, "");
+		  const firstSpeak = item?.config?.failureHandling?.failureRedirectionMessage?.speak?.[0] || {};
+		  inboundFailureMessageInput.value = String(firstSpeak.message || inboundRulesDefaults.config.failureHandling.failureRedirectionMessage.speak[0].message);
+		  inboundVoiceInput.value = String(firstSpeak.voice ?? inboundRulesDefaults.config.failureHandling.failureRedirectionMessage.speak[0].voice);
+		  inboundGenderInput.value = String(firstSpeak.gender || inboundRulesDefaults.config.failureHandling.failureRedirectionMessage.speak[0].gender).toUpperCase() === "MALE" ? "MALE" : "FEMALE";
+		  inboundLanguageInput.value = String(firstSpeak.language || inboundRulesDefaults.config.failureHandling.failureRedirectionMessage.speak[0].language);
+		  setInboundRulesState("content");
+		} catch (e) {
+		  console.error(e);
+		  setInboundRulesState("error");
+		}
+	  }
+
+	  async function saveInboundRules() {
+		if (!currentInboundRules?.aliasExternal || !currentInboundRules?.item) return;
+		const payload = buildInboundPayloadFromForm();
+		const oldText = inboundRulesSaveBtn.textContent;
+		inboundRulesSaveBtn.disabled = true;
+		inboundRulesSaveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Enregistrement…`;
+
+		try {
+		  const r = await fetch(`${API_BASE}/api/inbound-rules/${encodeURIComponent(currentInboundRules.aliasExternal)}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		  });
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok) {
+			console.error("Inbound rules update error:", data);
+			showToast("Mise a jour des regles echouee");
+			return;
+		  }
+		  const item = data.item || payload;
+		  currentInboundRules.item = cloneJson(item);
+		  showToast("Regles entrantes mises a jour");
+		} catch (e) {
+		  console.error(e);
+		  showToast("Mise a jour des regles echouee");
+		} finally {
+		  inboundRulesSaveBtn.disabled = false;
+		  inboundRulesSaveBtn.textContent = oldText;
+		}
+	  }
+
+	  function prefillFakeClient(force = false) {
+		if (!interventionClientName || !interventionClientAddress) return;
+		if (!force && interventionClientName.value.trim() && interventionClientAddress.value.trim()) return;
+		if (!Array.isArray(fakeClients) || fakeClients.length === 0) return;
+		let index = Math.floor(Math.random() * fakeClients.length);
+		if (fakeClients.length > 1 && index === lastFakeClientIndex) {
+		  index = (index + 1) % fakeClients.length;
+		}
+		lastFakeClientIndex = index;
+		interventionClientName.value = fakeClients[index].name;
+		interventionClientAddress.value = fakeClients[index].address;
+	  }
+
+	  function formatDateTimeLine(date) {
+		const dt = fmtDate(date);
+		return `${dt.date} ${dt.time}`;
+	  }
+
+	  function updateDeleteSelectedInterventionsButton() {
+		if (!btnDeleteSelectedInterventions) return;
+		btnDeleteSelectedInterventions.disabled = selectedInterventionIds.size === 0;
+	  }
+
+	  function syncSelectAllInterventionsCheckbox() {
+		if (!selectAllInterventions) return;
+		const checks = Array.from(document.querySelectorAll("#interventionTbody input.form-check-input"));
+		if (checks.length === 0) {
+		  selectAllInterventions.checked = false;
+		  selectAllInterventions.indeterminate = false;
+		  return;
+		}
+		const checkedCount = checks.filter((x) => x.checked).length;
+		selectAllInterventions.checked = checkedCount === checks.length;
+		selectAllInterventions.indeterminate = checkedCount > 0 && checkedCount < checks.length;
+	  }
+
+	  function setContextsState(state) {
+		document.getElementById("contextsLoading").classList.toggle("d-none", state !== "loading");
+		document.getElementById("contextsError").classList.toggle("d-none", state !== "error");
+		document.getElementById("contextsEmpty").classList.toggle("d-none", state !== "empty");
+		document.getElementById("contextsOk").classList.toggle("d-none", state !== "ok");
+	  }
+
+	  function applyContextsDisplayMode() {
+		const showCards = contextsDisplayMode === "cards";
+		contextsTableView.classList.toggle("d-none", showCards);
+		contextsCardsView.classList.toggle("d-none", !showCards);
+		contextsViewTable.classList.toggle("active", !showCards);
+		contextsViewCards.classList.toggle("active", showCards);
+		contextsViewTable.setAttribute("aria-pressed", showCards ? "false" : "true");
+		contextsViewCards.setAttribute("aria-pressed", showCards ? "true" : "false");
+		window.localStorage.setItem("contexts-display-mode", contextsDisplayMode);
+	  }
+
+	  function updateDeleteSelectedContextsButton() {
+		if (!btnDeleteSelectedContexts) return;
+		btnDeleteSelectedContexts.disabled = selectedContextIds.size === 0;
+	  }
+
+	  function syncSelectAllContextsCheckbox() {
+		if (!selectAllContexts) return;
+		const rowChecks = Array.from(document.querySelectorAll("#contextsTbody input.form-check-input"));
+		if (rowChecks.length === 0) {
+		  selectAllContexts.checked = false;
+		  selectAllContexts.indeterminate = false;
+		  return;
+		}
+		const checkedCount = rowChecks.filter((c) => c.checked).length;
+		selectAllContexts.checked = checkedCount === rowChecks.length;
+		selectAllContexts.indeterminate = checkedCount > 0 && checkedCount < rowChecks.length;
+	  }
+
+	  function formatContextDate(row) {
+		return fmtDate(
+		  pickContextValue(row, ["creationDate", "createdAt", "createdDate", "startDate", "date"])
+		);
+	  }
+
+	  function getContextTimestamp(row) {
+		const rawDate = pickContextValue(row, ["creationDate", "createdAt", "createdDate", "startDate", "date"]);
+		const timestamp = Date.parse(String(rawDate || ""));
+		return Number.isNaN(timestamp) ? 0 : timestamp;
+	  }
+
+	  function sortAgentContextsByRecency(items) {
+		return [...items].sort((a, b) => getContextTimestamp(b) - getContextTimestamp(a));
+	  }
+
+	  function renderCapabilityTokens(capabilities) {
+		if (!Array.isArray(capabilities) || capabilities.length === 0) {
+		  return `<span class="tag-md user-tag-hide mono">—</span>`;
+		}
+		return capabilities
+		  .map((capability) => `<span class="tag-md user-tag-hide mono">${escapeHtml(String(capability || "").trim() || "—")}</span>`)
+		  .join("\n");
+	  }
+
+	  function extractContextJournal(row) {
+		const direct = ["callJournal", "calls", "events", "logs"];
+		for (const key of direct) {
+		  if (Array.isArray(row?.[key])) return row[key];
+		}
+		if (Array.isArray(row?.journal?.calls)) return row.journal.calls;
+		if (Array.isArray(row?.callHistory?.items)) return row.callHistory.items;
+		return [];
+	  }
+
+	  function pickCallValue(call, candidates) {
+		for (const candidate of candidates) {
+		  const value = getByPath(call, candidate);
+		  if (value !== undefined && value !== null && String(value).trim() !== "") return value;
+		}
+		return "—";
+	  }
+
+	  function formatCallDuration(value) {
+		if (value === undefined || value === null || value === "") return "—";
+		const num = Number(value);
+		if (Number.isNaN(num)) return String(value);
+		return `${Math.max(0, Math.round(num))} s`;
+	  }
+
+	  function formatCallDateTime(call) {
+		const raw = pickCallValue(call, ["startDate", "createdAt", "date", "timestamp", "callDate", "startTime"]);
+		if (raw === "—") return "—";
+		const dt = fmtDate(raw);
+		if (dt.date === "—" && dt.time === "—") return String(raw);
+		return `${dt.date} ${dt.time}`;
+	  }
+
+	  function renderCallsGrid(calls) {
+		if (!Array.isArray(calls) || calls.length === 0) {
+		  return `<div class="text-body-secondary">Aucun appel disponible pour ce context.</div>`;
+		}
+		const rows = calls.map((call, index) => {
+		  const dateTime = formatCallDateTime(call);
+		  const direction = pickCallValue(call, ["direction", "callDirection", "type", "callType"]);
+		  const from = pickCallValue(call, ["from", "fromNumber", "caller", "callerNumber", "source", "sourceNumber", "userNumber"]);
+		  const to = pickCallValue(call, ["to", "toNumber", "callee", "calleeNumber", "destination", "destinationNumber", "aliasNumber"]);
+		  const status = pickCallValue(call, ["status", "state", "result", "callStatus"]);
+		  const duration = formatCallDuration(pickCallValue(call, ["durationSeconds", "duration", "talkDuration", "callDuration"]));
+		  return `
+			<tr>
+			  <td class="text-center mono">${index + 1}</td>
+			  <td class="mono">${escapeHtml(dateTime)}</td>
+			  <td>${escapeHtml(String(direction))}</td>
+			  <td class="mono">${escapeHtml(formatPhoneFr(from))}</td>
+			  <td class="mono">${escapeHtml(formatPhoneFr(to))}</td>
+			  <td>${escapeHtml(String(status))}</td>
+			  <td class="mono text-end">${escapeHtml(duration)}</td>
+			</tr>
+		  `;
+		}).join("");
+		return `
+		  <div>
+			<div class="small fw-semibold mb-2">Journal des appels</div>
+			<div class="table-responsive">
+			  <table class="table table-sm align-middle mb-0 context-calls-grid">
+				<thead>
+				  <tr>
+					<th class="text-center" style="width: 1%;">#</th>
+					<th style="min-width: 160px;">Date / Heure</th>
+					<th>Direction</th>
+					<th style="min-width: 130px;">De</th>
+					<th style="min-width: 130px;">Vers</th>
+					<th>Statut</th>
+					<th class="text-end">Duree</th>
+				  </tr>
+				</thead>
+				<tbody>${rows}</tbody>
+			  </table>
+			</div>
+		  </div>
+		`;
+	  }
+
+	  function getContextJournalHtml(contextId, row) {
+		if (contextCallsLoading.has(contextId)) {
+		  return `<div class="d-flex align-items-center gap-2"><span class="spinner-border spinner-border-sm" aria-hidden="true"></span><span>Chargement du journal des appels…</span></div>`;
+		}
+		if (contextCallsError.has(contextId)) {
+		  return `<div class="text-danger">Impossible de charger le journal des appels.</div>`;
+		}
+		const calls = contextCallsCache.get(contextId);
+		if (Array.isArray(calls)) {
+		  return renderCallsGrid(calls);
+		}
+		return renderCallsGrid(extractContextJournal(row));
+	  }
+
+	  async function loadContextCalls(contextId) {
+		if (!contextId || contextCallsLoading.has(contextId) || contextCallsCache.has(contextId)) return;
+		contextCallsLoading.add(contextId);
+		contextCallsError.delete(contextId);
+		renderContextsTable();
+		try {
+		  const r = await fetch(`${API_BASE}/api/agent-contexts/${encodeURIComponent(contextId)}/calls`);
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok) {
+			contextCallsError.set(contextId, true);
+			return;
+		  }
+		  contextCallsCache.set(contextId, Array.isArray(data.items) ? data.items : []);
+		} catch (_e) {
+		  contextCallsError.set(contextId, true);
+		} finally {
+		  contextCallsLoading.delete(contextId);
+		  renderContextsTable();
+		}
+	  }
+
+	  function setContextDetailMode(mode) {
+		contextDetailMode = mode === "create" ? "create" : "edit";
+		const isCreate = contextDetailMode === "create";
+		offcanvasContextDetailLabel.textContent = isCreate ? "Ajouter un context" : "Detail du contexte";
+		contextDetailSaveBtn.textContent = isCreate ? "Créer le context" : "Enregistrer";
+		contextDetailUserDisplay.classList.toggle("d-none", isCreate);
+		contextDetailUserInput.classList.toggle("d-none", !isCreate);
+		contextDetailStatus.parentElement.classList.toggle("d-none", isCreate);
+	  }
+
+	  function openCreateContextDetail() {
+		setContextDetailMode("create");
+		selectedAgentContext = null;
+		contextDetailAlias.textContent = formatPhoneFr(defaultContextPayload.aliasNumber);
+		contextDetailCapabilities.innerHTML = renderCapabilityTokens(defaultContextPayload.capabilities);
+		contextDetailStatus.innerHTML = "";
+		contextDetailUserDisplay.textContent = "—";
+		contextDetailUserInput.value = "";
+		contextDetailUserInput.classList.remove("is-invalid", "is-valid");
+		contextDetailUserFeedback.style.display = "";
+		contextDetailLogin.value = "";
+		contextDetailEmail.value = "";
+		contextDetailNote.value = "";
+		contextDetailConfirmation.checked = false;
+		contextDetailOffcanvas.show();
+	  }
+
+	  function openContextDetail(row) {
+		setContextDetailMode("edit");
+		const status = formatStatus(pickContextValue(row, ["status", "state"]) || "UNKNOWN");
+		const ownerInfo = row?.ownerInfo || {};
+		contextDetailStatus.innerHTML = `<span class="${status.className}">${escapeHtml(status.label)}</span>`;
+		contextDetailUserDisplay.textContent = formatPhoneFr(pickContextValue(row, ["userNumber"]) || "—");
+		contextDetailUserInput.value = "";
+		contextDetailUserInput.classList.remove("is-invalid", "is-valid");
+		contextDetailAlias.textContent = formatPhoneFr(pickContextValue(row, ["aliasNumber"]) || "—");
+		contextDetailCapabilities.innerHTML = renderCapabilityTokens(row?.capabilities);
+		contextDetailLogin.value = ownerInfo.login || "";
+		contextDetailEmail.value = ownerInfo.email || "";
+		contextDetailNote.value = pickContextValue(row, ["note"]) || "";
+		contextDetailConfirmation.checked = Boolean(row?.callConfirmation?.clickToCallConfirmation);
+		contextDetailOffcanvas.show();
+	  }
+
+	  async function saveContextDetail() {
+		const isCreate = contextDetailMode === "create";
+		const note = contextDetailNote.value.trim();
+		const clickToCallConfirmation = contextDetailConfirmation.checked;
+		const ownerInfo = {
+		  login: contextDetailLogin.value.trim(),
+		  email: contextDetailEmail.value.trim(),
+		};
+		let payload;
+		let requestUrl;
+		let requestMethod;
+
+		if (isCreate) {
+		  const userNumber = normalizePhone(contextDetailUserInput.value);
+		  const okUserNumber = looksLikePhone(userNumber);
+		  contextDetailUserInput.classList.toggle("is-invalid", !okUserNumber);
+		  contextDetailUserInput.classList.toggle("is-valid", okUserNumber);
+		  if (!okUserNumber) return;
+
+		  payload = {
+			...defaultContextPayload,
+			userNumber,
+			note,
+			ownerInfo,
+			smsNotificationEmail: contextDetailEmail.value.trim() || null,
+			callConfirmation: { clickToCallConfirmation },
+		  };
+		  requestUrl = `${API_BASE}/api/agent-contexts`;
+		  requestMethod = "POST";
+		} else {
+		  if (!selectedAgentContext) return;
+		  const id = pickContextValue(selectedAgentContext, ["id"]);
+		  if (!id) return;
+		  payload = {
+			note,
+			ownerInfo,
+			callConfirmation: { clickToCallConfirmation },
+		  };
+		  requestUrl = `${API_BASE}/api/agent-contexts/${encodeURIComponent(id)}`;
+		  requestMethod = "PATCH";
+		}
+
+		const oldText = contextDetailSaveBtn.textContent;
+		contextDetailSaveBtn.disabled = true;
+		contextDetailSaveBtn.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>${isCreate ? "Creation…" : "Enregistrement…"}`;
+
+		try {
+		  const r = await fetch(requestUrl, {
+			method: requestMethod,
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(payload),
+		  });
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok || !data?.item) {
+			console.error("Update context error:", data);
+			showToast("Enregistrement echoue");
+			return;
+		  }
+
+		  if (isCreate) {
+			agentContexts = sortAgentContextsByRecency([data.item, ...agentContexts]);
+			selectedAgentContext = data.item;
+			renderContextsTable();
+			contextDetailOffcanvas.hide();
+			showToast("Context cree");
+		  } else {
+			const id = pickContextValue(selectedAgentContext, ["id"]);
+			selectedAgentContext = data.item;
+			agentContexts = sortAgentContextsByRecency(agentContexts.map((row) =>
+			  pickContextValue(row, ["id"]) === id ? data.item : row
+			));
+			renderContextsTable();
+			openContextDetail(selectedAgentContext);
+			showToast("Context mis a jour");
+		  }
+		} catch (e) {
+		  console.error(e);
+		  showToast(isCreate ? "Creation du context echouee" : "Enregistrement echoue");
+		} finally {
+		  contextDetailSaveBtn.disabled = false;
+		  contextDetailSaveBtn.textContent = oldText;
+		}
+	  }
+
+	  function syncAgentPreview() {
+		return;
+	  }
+
+	  function getAgentDisplayLabel(row) {
+		const owner = formatOwnerInfo(row?.ownerInfo);
+		return owner !== "—" ? owner : "Agent sans nom";
+	  }
+
+	  function syncAgentMobileSubtitle() {
+		if (!mobileAgentSubtitle) return;
+		if (!selectedAgentContext) {
+		  mobileAgentSubtitle.textContent = "Aucun agent selectionne";
+		  return;
+		}
+		mobileAgentSubtitle.textContent = getAgentDisplayLabel(selectedAgentContext);
+	  }
+
+	  function renderAgentSelectors() {
+		const selectedId = selectedAgentContext ? String(pickContextValue(selectedAgentContext, ["id"])) : "";
+		const latestId = agentContexts[0] ? String(pickContextValue(agentContexts[0], ["id"])) : "";
+		const selectedExists = selectedId && agentContexts.some((row) => String(pickContextValue(row, ["id"])) === selectedId);
+		const effectiveSelectedId = selectedExists ? selectedId : latestId;
+		if (effectiveSelectedId) {
+		  selectedAgentContext = agentContexts.find((row) => String(pickContextValue(row, ["id"])) === effectiveSelectedId) || selectedAgentContext;
+		}
+		const options = agentContexts.map((row) => {
+		  const id = String(pickContextValue(row, ["id"]));
+		  const label = getAgentDisplayLabel(row);
+		  return `<option value="${escapeHtml(id)}">${escapeHtml(label)}</option>`;
+		}).join("");
+		if (agentContextSelect) {
+		  agentContextSelect.innerHTML = options;
+		  if (effectiveSelectedId) agentContextSelect.value = effectiveSelectedId;
+		}
+		if (interventionAgentSelect) {
+		  const current = interventionAgentSelect.value;
+		  interventionAgentSelect.innerHTML = `<option value="">Choisir un agent...</option>${options}`;
+		  const stillExists = current && agentContexts.some((row) => String(pickContextValue(row, ["id"])) === current);
+		  if (stillExists) {
+			interventionAgentSelect.value = current;
+		  } else if (effectiveSelectedId) {
+			interventionAgentSelect.value = effectiveSelectedId;
+		  }
+		}
+		syncAgentMobileSubtitle();
+	  }
+
+	  function renderInterventionsList() {
+		if (!interventionTbody) return;
+		selectedInterventionIds = new Set(
+		  Array.from(selectedInterventionIds).filter((id) => interventions.some((item) => item.id === id))
+		);
+		if (!Array.isArray(interventions) || interventions.length === 0) {
+		  interventionTbody.innerHTML = `<tr><td colspan="7" class="text-body-secondary">Aucune intervention pour le moment.</td></tr>`;
+		  updateDeleteSelectedInterventionsButton();
+		  syncSelectAllInterventionsCheckbox();
+		  return;
+		}
+		interventionTbody.innerHTML = interventions.map((item) => `
+		  <tr>
+			<td class="text-center"><input class="form-check-input" type="checkbox" data-intervention-id="${escapeHtml(item.id)}" ${selectedInterventionIds.has(item.id) ? "checked" : ""} aria-label="Selectionner l'intervention ${escapeHtml(item.id)}" /></td>
+			<td class="mono">${escapeHtml(formatDateTimeLine(item.createdAt))}</td>
+			<td>${escapeHtml(item.type)}</td>
+			<td>${escapeHtml(item.agentLabel)}</td>
+			<td>${escapeHtml(item.clientName)}</td>
+			<td class="mono">${escapeHtml(item.clientPhone)}</td>
+			<td>${escapeHtml(item.clientAddress)}</td>
+		  </tr>
+		`).join("");
+		interventionTbody.querySelectorAll("input.form-check-input").forEach((checkbox) => {
+		  checkbox.addEventListener("change", () => {
+			const id = checkbox.dataset.interventionId;
+			if (!id) return;
+			if (checkbox.checked) selectedInterventionIds.add(id);
+			else selectedInterventionIds.delete(id);
+			updateDeleteSelectedInterventionsButton();
+			syncSelectAllInterventionsCheckbox();
+		  });
+		});
+		updateDeleteSelectedInterventionsButton();
+		syncSelectAllInterventionsCheckbox();
+	  }
+
+	  function renderMobileInterventions() {
+		if (!mobileInterventionsContainer) return;
+		const currentId = agentContextSelect?.value || "";
+		const filtered = currentId
+		  ? interventions.filter((item) => item.agentContextId === currentId)
+		  : interventions;
+		if (filtered.length === 0) {
+		  mobileInterventionsContainer.innerHTML = `
+			<div class="mobile-empty">
+			  Aucune intervention pour le moment.
+			  <div class="mt-2">La liste sera alimentee ensuite.</div>
+			</div>
+		  `;
+		  return;
+		}
+		mobileInterventionsContainer.innerHTML = filtered.map((item) => `
+		  <div class="mobile-intervention">
+			<div class="mobile-intervention-title">${escapeHtml(item.type)}</div>
+			<div class="mobile-intervention-meta">${escapeHtml(item.clientName)}</div>
+			<div class="mobile-intervention-meta">${escapeHtml(item.clientAddress)}</div>
+			<div class="mobile-intervention-actions">
+			  <button type="button" class="btn btn-primary btn-sm mobile-clicktocall-btn" data-intervention-id="${escapeHtml(item.id)}">ClickToCall</button>
+			</div>
+		  </div>
+		`).join("");
+	  }
+
+	  async function triggerInterventionClickToCall(interventionId, buttonEl) {
+		const intervention = interventions.find((item) => item.id === interventionId);
+		if (!intervention) return;
+		const contextId = String(intervention.agentContextId || "").trim();
+		const number = normalizePhone(intervention.clientPhone).replace(/^\+/, "");
+		if (!contextId || !number) {
+		  showToast("ClickToCall impossible: contexte ou numero manquant");
+		  return;
+		}
+
+		const oldText = buttonEl ? buttonEl.textContent : "";
+		if (buttonEl) {
+		  buttonEl.disabled = true;
+		  buttonEl.textContent = "Appel…";
+		}
+
+		try {
+		  const r = await fetch(
+			`${API_BASE}/api/agent-contexts/${encodeURIComponent(contextId)}/click-to-call?number=${encodeURIComponent(number)}`,
+			{
+			  method: "POST",
+			  headers: { "Content-Type": "application/json" },
+			  body: JSON.stringify({ note: "Appel lors d'une intervention client" }),
+			}
+		  );
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok) {
+			console.error("ClickToCall error:", data);
+			showToast("Echec ClickToCall");
+			return;
+		  }
+		  showToast(`ClickToCall lance pour ${intervention.clientName}`);
+		} catch (e) {
+		  console.error(e);
+		  showToast("Echec ClickToCall");
+		} finally {
+		  if (buttonEl) {
+			buttonEl.disabled = false;
+			buttonEl.textContent = oldText || "ClickToCall";
+		  }
+		}
+	  }
+
+	  function renderContextsTable() {
+		contextsTbody.innerHTML = "";
+		contextsCardsView.innerHTML = "";
+		if (agentContexts.length === 0) {
+		  setContextsState("empty");
+		  renderAgentSelectors();
+		  renderMobileInterventions();
+		  syncAgentPreview();
+		  updateDeleteSelectedContextsButton();
+		  syncSelectAllContextsCheckbox();
+		  return;
+		}
+
+		setContextsState("ok");
+
+		agentContexts.forEach((row, idx) => {
+		  const tr = document.createElement("tr");
+		  tr.className = "cursor-pointer";
+
+		  const createdAt = formatContextDate(row);
+		  const ownerInfo = formatOwnerInfo(row?.ownerInfo);
+		  const userNumber = formatPhoneFr(pickContextValue(row, ["userNumber"]) || "—");
+		  const aliasNumber = formatPhoneFr(pickContextValue(row, ["aliasNumber"]) || "—");
+		  const note = pickContextValue(row, ["note"]) || "—";
+		  const contextId = String(pickContextValue(row, ["id"]));
+		  const isSelectedContext = selectedAgentContext && pickContextValue(selectedAgentContext, ["id"]) === contextId;
+		  const isExpanded = expandedContextIds.has(contextId);
+		  const journalHtml = getContextJournalHtml(contextId, row);
+
+		  tr.innerHTML = `
+			<td class="text-center mono">
+			  <div class="d-inline-flex align-items-center gap-1">
+				<button type="button" class="tree-toggle-btn" aria-label="Afficher le journal du context ${idx + 1}" aria-expanded="${isExpanded ? "true" : "false"}">
+				  <svg aria-hidden="true"><use href="#chevron-right"></use></svg>
+				</button>
+				<span>${idx + 1}</span>
+			  </div>
+			</td>
+			<td class="mono"><div>${createdAt.date}</div><div class="text-body-secondary">${createdAt.time}</div></td>
+			<td>${escapeHtml(ownerInfo)}</td>
+			<td><span class="tag-md user-tag-hide mono">${escapeHtml(userNumber)}</span></td>
+			<td><button type="button" class="alias-trigger-btn" data-alias-number="${escapeHtml(aliasNumber)}" aria-label="Gérer les règles entrantes du ${escapeHtml(aliasNumber)}"><span class="tag-md alias-tag-medium mono">${escapeHtml(aliasNumber)}</span></button></td>
+			<td class="text-center"></td>
+		  `;
+		  tr.classList.toggle("table-active", Boolean(isSelectedContext));
+
+		  const checkbox = document.createElement("input");
+		  checkbox.type = "checkbox";
+		  checkbox.className = "form-check-input";
+		  checkbox.setAttribute("aria-label", `Selectionner le context ${idx + 1}`);
+		  checkbox.dataset.rowId = contextId;
+		  checkbox.checked = selectedContextIds.has(checkbox.dataset.rowId);
+		  checkbox.addEventListener("click", (event) => event.stopPropagation());
+		  checkbox.addEventListener("change", () => {
+			if (checkbox.checked) {
+			  selectedContextIds.add(checkbox.dataset.rowId);
+			} else {
+			  selectedContextIds.delete(checkbox.dataset.rowId);
+			}
+			const linkedCardCheckbox = Array.from(
+			  contextsCardsView.querySelectorAll("input.form-check-input")
+			).find((input) => input.dataset.rowId === checkbox.dataset.rowId);
+			if (linkedCardCheckbox) linkedCardCheckbox.checked = checkbox.checked;
+			updateDeleteSelectedContextsButton();
+			syncSelectAllContextsCheckbox();
+		  });
+		  tr.lastElementChild.appendChild(checkbox);
+
+		  const toggleButton = tr.querySelector(".tree-toggle-btn");
+		  const aliasButton = tr.querySelector(".alias-trigger-btn");
+		  aliasButton?.addEventListener("click", (event) => {
+			event.stopPropagation();
+			openInboundRules(aliasNumber);
+		  });
+		  toggleButton.addEventListener("click", (event) => {
+			event.stopPropagation();
+			if (expandedContextIds.has(contextId)) {
+			  expandedContextIds.delete(contextId);
+			} else {
+			  expandedContextIds.add(contextId);
+			  loadContextCalls(contextId);
+			}
+			renderContextsTable();
+		  });
+
+		  tr.addEventListener("click", () => {
+			selectedAgentContext = row;
+			syncAgentPreview();
+			openContextDetail(row);
+		  });
+
+		  contextsTbody.appendChild(tr);
+
+		  const detailTr = document.createElement("tr");
+		  detailTr.className = isExpanded ? "" : "d-none";
+		  detailTr.innerHTML = `
+			<td colspan="6" class="context-tree-cell">
+			  <div class="context-tree-panel">
+				${journalHtml}
+			  </div>
+			</td>
+		  `;
+		  contextsTbody.appendChild(detailTr);
+
+		  const card = document.createElement("article");
+		  card.className = `context-card${isSelectedContext ? " selected" : ""}`;
+		  card.innerHTML = `
+			<div class="context-card-check"></div>
+			<div class="context-card-banner">
+			  <svg class="solaris-icon" aria-hidden="true"><use href="#solaris-technician"></use></svg>
+			  <div class="context-card-banner-name">${escapeHtml(ownerInfo)}</div>
+			</div>
+			<div class="context-card-meta">
+			  <div>
+				<span class="context-card-label">Date de creation</span>
+				<div class="mono">${escapeHtml(createdAt.date)} <span class="text-body-secondary">${escapeHtml(createdAt.time)}</span></div>
+			  </div>
+			  <div>
+				<span class="context-card-label">Description du contexte</span>
+				<div>${escapeHtml(note)}</div>
+			  </div>
+			  <div>
+				<span class="context-card-label">N° Agent</span>
+				<span class="tag-md user-tag-hide mono">${escapeHtml(userNumber)}</span>
+			  </div>
+			  <div>
+				<span class="context-card-label">N° Alias</span>
+				<button type="button" class="alias-trigger-btn" data-alias-number="${escapeHtml(aliasNumber)}" aria-label="Gérer les règles entrantes du ${escapeHtml(aliasNumber)}"><span class="tag-md alias-tag-medium mono">${escapeHtml(aliasNumber)}</span></button>
+			  </div>
+			</div>
+		  `;
+
+		  const cardCheckbox = checkbox.cloneNode(true);
+		  cardCheckbox.dataset.rowId = contextId;
+		  cardCheckbox.checked = selectedContextIds.has(contextId);
+		  cardCheckbox.addEventListener("click", (event) => event.stopPropagation());
+		  cardCheckbox.addEventListener("change", () => {
+			if (cardCheckbox.checked) {
+			  selectedContextIds.add(contextId);
+			} else {
+			  selectedContextIds.delete(contextId);
+			}
+			const linkedTableCheckbox = Array.from(
+			  contextsTbody.querySelectorAll("input.form-check-input")
+			).find((input) => input.dataset.rowId === contextId);
+			if (linkedTableCheckbox) linkedTableCheckbox.checked = cardCheckbox.checked;
+			updateDeleteSelectedContextsButton();
+			syncSelectAllContextsCheckbox();
+		  });
+		  card.querySelector(".context-card-check").appendChild(cardCheckbox);
+		  const cardAliasButton = card.querySelector(".alias-trigger-btn");
+		  cardAliasButton?.addEventListener("click", (event) => {
+			event.stopPropagation();
+			openInboundRules(aliasNumber);
+		  });
+		  card.addEventListener("click", () => {
+			selectedAgentContext = row;
+			syncAgentPreview();
+			openContextDetail(row);
+		  });
+		  contextsCardsView.appendChild(card);
+		});
+
+		if (!selectedAgentContext && agentContexts[0]) {
+		  selectedAgentContext = agentContexts[0];
+		}
+		renderAgentSelectors();
+		renderMobileInterventions();
+		syncAgentPreview();
+		updateDeleteSelectedContextsButton();
+		syncSelectAllContextsCheckbox();
+		applyContextsDisplayMode();
+	  }
+
+	  async function loadAgentContexts() {
+		setContextsState("loading");
+		try {
+		  const r = await fetch(`${API_BASE}/api/agent-contexts`);
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok) {
+			console.error("Load agent contexts error:", data);
+			setContextsState("error");
+			return;
+		  }
+		  agentContexts = sortAgentContextsByRecency(Array.isArray(data.items) ? data.items : []);
+		  selectedContextIds = new Set(
+			Array.from(selectedContextIds).filter((id) =>
+			  agentContexts.some((row) => pickContextValue(row, ["id"]) === id)
+			)
+		  );
+		  expandedContextIds = new Set(
+			Array.from(expandedContextIds).filter((id) =>
+			  agentContexts.some((row) => pickContextValue(row, ["id"]) === id)
+			)
+		  );
+		  Array.from(contextCallsCache.keys()).forEach((id) => {
+			if (!agentContexts.some((row) => pickContextValue(row, ["id"]) === id)) {
+			  contextCallsCache.delete(id);
+			}
+		  });
+		  Array.from(contextCallsLoading.values()).forEach((id) => {
+			if (!agentContexts.some((row) => pickContextValue(row, ["id"]) === id)) {
+			  contextCallsLoading.delete(id);
+			}
+		  });
+		  Array.from(contextCallsError.keys()).forEach((id) => {
+			if (!agentContexts.some((row) => pickContextValue(row, ["id"]) === id)) {
+			  contextCallsError.delete(id);
+			}
+		  });
+		  if (
+			selectedAgentContext &&
+			pickContextValue(selectedAgentContext, ["id"])
+		  ) {
+			const selectedId = pickContextValue(selectedAgentContext, ["id"]);
+			selectedAgentContext = agentContexts.find((row) =>
+			  pickContextValue(row, ["id"]) === selectedId
+			) || agentContexts[0] || null;
+		  } else {
+			selectedAgentContext = agentContexts[0] || null;
+		  }
+		  renderContextsTable();
+		} catch (e) {
+		  console.error(e);
+		  setContextsState("error");
+		}
+	  }
+
+	  async function deleteAgentContextById(id) {
+		const r = await fetch(`${API_BASE}/api/agent-contexts/${encodeURIComponent(id)}`, {
+		  method: "DELETE",
+		});
+		if (!r.ok) {
+		  const payload = await r.json().catch(() => ({}));
+		  throw new Error(payload?.message || `HTTP ${r.status}`);
+		}
+	  }
+
+	  btnRefreshContexts.addEventListener("click", loadAgentContexts);
+	  btnRetryContexts.addEventListener("click", loadAgentContexts);
+	  contextsViewTable.addEventListener("click", () => {
+		contextsDisplayMode = "table";
+		applyContextsDisplayMode();
+	  });
+	  contextsViewCards.addEventListener("click", () => {
+		contextsDisplayMode = "cards";
+		applyContextsDisplayMode();
+	  });
+
+	  selectAllContexts.addEventListener("change", () => {
+		const checked = selectAllContexts.checked;
+		document.querySelectorAll("#contextsTbody input.form-check-input").forEach((input) => {
+		  input.checked = checked;
+		  const id = input.dataset.rowId;
+		  if (checked) selectedContextIds.add(id);
+		  else selectedContextIds.delete(id);
+		});
+		document.querySelectorAll("#contextsCardsView input.form-check-input").forEach((input) => {
+		  input.checked = checked;
+		});
+		updateDeleteSelectedContextsButton();
+		syncSelectAllContextsCheckbox();
+	  });
+
+	  btnDeleteSelectedContexts.addEventListener("click", async () => {
+		if (selectedContextIds.size === 0) return;
+		const ids = Array.from(selectedContextIds);
+		const ok = window.confirm(`Supprimer ${ids.length} context(s) ? Cette action est irreversible.`);
+		if (!ok) return;
+
+		const oldText = btnDeleteSelectedContexts.textContent;
+		btnDeleteSelectedContexts.disabled = true;
+		btnDeleteSelectedContexts.innerHTML = `<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Suppression…`;
+
+		try {
+		  const results = await Promise.allSettled(ids.map((id) => deleteAgentContextById(id)));
+		  const successIds = ids.filter((_, index) => results[index].status === "fulfilled");
+		  const failedCount = ids.length - successIds.length;
+
+		  if (successIds.length) {
+			agentContexts = agentContexts.filter(
+			  (row) => !successIds.includes(pickContextValue(row, ["id"]))
+			);
+			successIds.forEach((id) => selectedContextIds.delete(id));
+			successIds.forEach((id) => {
+			  expandedContextIds.delete(id);
+			  contextCallsCache.delete(id);
+			  contextCallsLoading.delete(id);
+			  contextCallsError.delete(id);
+			});
+
+			if (
+			  selectedAgentContext &&
+			  successIds.includes(pickContextValue(selectedAgentContext, ["id"]))
+			) {
+			  selectedAgentContext = agentContexts[0] || null;
+			}
+
+			renderContextsTable();
+		  }
+
+		  if (successIds.length && failedCount === 0) {
+			showToast(`${successIds.length} context(s) supprime(s)`);
+		  } else if (successIds.length && failedCount > 0) {
+			showToast(`${successIds.length} context(s) supprime(s), ${failedCount} en erreur`);
+		  } else {
+			showToast("Suppression impossible");
+		  }
+		} finally {
+		  btnDeleteSelectedContexts.innerHTML = oldText;
+		  updateDeleteSelectedContextsButton();
+		}
+	  });
+
+	  btnAddContext.addEventListener("click", openCreateContextDetail);
+
+	  agentContextSelect.addEventListener("change", () => {
+		const selectedId = agentContextSelect.value;
+		selectedAgentContext = selectedId
+		  ? (agentContexts.find((row) => String(pickContextValue(row, ["id"])) === selectedId) || null)
+		  : (agentContexts[0] || null);
+		renderContextsTable();
+	  });
+
+	  interventionClientPhone.addEventListener("input", () => {
+		formatPhoneInput(interventionClientPhone);
+	  });
+	  if (inboundRulesSaveBtn) {
+		inboundRulesSaveBtn.addEventListener("click", saveInboundRules);
+	  }
+
+	  interventionForm.addEventListener("submit", (event) => {
+		event.preventDefault();
+		const normalizedPhone = normalizePhone(interventionClientPhone.value);
+		const selectedAgentId = interventionAgentSelect.value;
+		const selectedAgent = agentContexts.find((row) => String(pickContextValue(row, ["id"])) === selectedAgentId);
+
+		const validType = Boolean(interventionType.value);
+		const validAgent = Boolean(selectedAgentId && selectedAgent);
+		const validName = interventionClientName.value.trim().length > 0;
+		const validAddress = interventionClientAddress.value.trim().length > 0;
+		const validPhone = looksLikePhone(normalizedPhone);
+
+		interventionType.classList.toggle("is-invalid", !validType);
+		interventionAgentSelect.classList.toggle("is-invalid", !validAgent);
+		interventionClientName.classList.toggle("is-invalid", !validName);
+		interventionClientAddress.classList.toggle("is-invalid", !validAddress);
+		interventionClientPhone.classList.toggle("is-invalid", !validPhone);
+		interventionClientPhone.classList.toggle("is-valid", validPhone);
+
+		if (!(validType && validAgent && validName && validAddress && validPhone)) return;
+
+		const intervention = {
+		  id: crypto.randomUUID(),
+		  createdAt: new Date().toISOString(),
+		  type: interventionType.value,
+		  agentContextId: selectedAgentId,
+		  agentLabel: getAgentDisplayLabel(selectedAgent),
+		  clientName: interventionClientName.value.trim(),
+		  clientAddress: interventionClientAddress.value.trim(),
+		  clientPhone: formatPhoneFr(normalizedPhone),
+		};
+
+		interventions = [intervention, ...interventions];
+		renderInterventionsList();
+		renderMobileInterventions();
+		interventionForm.reset();
+		interventionOffcanvas.hide();
+		interventionClientPhone.classList.remove("is-valid", "is-invalid");
+		interventionType.classList.remove("is-invalid");
+		interventionAgentSelect.classList.remove("is-invalid");
+		interventionClientName.classList.remove("is-invalid");
+		interventionClientAddress.classList.remove("is-invalid");
+		prefillFakeClient(true);
+		if (selectedAgentContext) {
+		  interventionAgentSelect.value = String(pickContextValue(selectedAgentContext, ["id"]));
+		}
+		showToast("Intervention ajoutee");
+	  });
+
+	  selectAllInterventions.addEventListener("change", () => {
+		const checked = selectAllInterventions.checked;
+		document.querySelectorAll("#interventionTbody input.form-check-input").forEach((input) => {
+		  input.checked = checked;
+		  const id = input.dataset.interventionId;
+		  if (!id) return;
+		  if (checked) selectedInterventionIds.add(id);
+		  else selectedInterventionIds.delete(id);
+		});
+		updateDeleteSelectedInterventionsButton();
+		syncSelectAllInterventionsCheckbox();
+	  });
+
+	  btnDeleteSelectedInterventions.addEventListener("click", () => {
+		if (selectedInterventionIds.size === 0) return;
+		const ids = Array.from(selectedInterventionIds);
+		const ok = window.confirm(`Supprimer ${ids.length} intervention(s) ?`);
+		if (!ok) return;
+		interventions = interventions.filter((item) => !selectedInterventionIds.has(item.id));
+		selectedInterventionIds.clear();
+		renderInterventionsList();
+		renderMobileInterventions();
+		showToast(`${ids.length} intervention(s) supprimee(s)`);
+	  });
+
+	  mobileInterventionsContainer.addEventListener("click", (event) => {
+		const button = event.target.closest("button[data-intervention-id]");
+		if (!button) return;
+		triggerInterventionClickToCall(button.dataset.interventionId, button);
+	  });
+
+	  contextDetailNote.addEventListener("input", () => {
+		if (!selectedAgentContext) return;
+		if (contextDetailMode === "create") return;
+		selectedAgentContext.note = contextDetailNote.value;
+		syncAgentPreview();
+	  });
+
+	  contextDetailLogin.addEventListener("input", () => {
+		if (!selectedAgentContext) return;
+		if (contextDetailMode === "create") return;
+		selectedAgentContext.ownerInfo = {
+		  ...(selectedAgentContext.ownerInfo || {}),
+		  login: contextDetailLogin.value,
+		};
+	  });
+	  contextDetailEmail.addEventListener("input", () => {
+		if (!selectedAgentContext) return;
+		if (contextDetailMode === "create") return;
+		selectedAgentContext.ownerInfo = {
+		  ...(selectedAgentContext.ownerInfo || {}),
+		  email: contextDetailEmail.value,
+		};
+	  });
+
+	  contextDetailConfirmation.addEventListener("change", () => {
+		if (!selectedAgentContext) return;
+		if (contextDetailMode === "create") return;
+		selectedAgentContext.callConfirmation = {
+		  ...(selectedAgentContext.callConfirmation || {}),
+		  clickToCallConfirmation: contextDetailConfirmation.checked,
+		};
+	  });
+
+	  contextDetailUserInput.addEventListener("input", () => {
+		formatPhoneInput(contextDetailUserInput);
+		contextDetailUserInput.classList.remove("is-invalid");
+	  });
+	  contextDetailSaveBtn.addEventListener("click", saveContextDetail);
+
+	  // Init
+	  applyTheme(window.localStorage.getItem("demo-theme") || "light");
+	  prefillFakeClient(true);
+	  renderSimulationPortal();
+	  syncAgentPreview();
+	  loadAgentContexts();
+	  switchView(location.hash === "#ctc" ? "ctc" : "alias", false);
+	  setState("loading");
+	  loadAliases();
+	</script>
+  </body>
+</html>

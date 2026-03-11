@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr" data-bs-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alias2Alias API Documentation</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/boosted@5.3.8/dist/css/orange-helvetica.min.css"
+      rel="stylesheet"
+      integrity="sha384-A0Qk1uKfS1i83/YuU13i2nx5pk79PkIfNFOVzTcjCMPGKIDj9Lqx9lJmV7cdBVQZ"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/boosted@5.3.8/dist/css/boosted.min.css"
+      rel="stylesheet"
+      integrity="sha384-kwpgedOHSHo219WTezLqyMOgCWremFb5TML711U5X8c4TJMMBAyhHFf2gNv78IpY"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css"
+    />
+
+    <style>
+      :root {
+        --doc-max-width: 1320px;
+      }
+      body {
+        background: var(--bs-body-bg);
+      }
+      .doc-shell {
+        max-width: var(--doc-max-width);
+        margin: 0 auto;
+        padding: 1.25rem 1rem 2rem;
+      }
+      .doc-hero {
+        position: relative;
+        padding: 1.25rem 1.25rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--bs-border-color);
+        border-left: 4px solid #ff7900;
+        background:
+          linear-gradient(135deg, rgba(255,121,0,0.08), rgba(255,255,255,0) 55%),
+          var(--bs-tertiary-bg);
+      }
+      .doc-label {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35rem 0.65rem;
+        background: #000;
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .doc-hero h1 {
+        margin: 0.75rem 0 0.35rem;
+        font-size: clamp(1.5rem, 2vw, 2rem);
+      }
+      .doc-breadcrumb {
+        margin-bottom: 1rem;
+      }
+      .doc-breadcrumb .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0.75rem 1rem;
+        list-style: none;
+        background: var(--bs-tertiary-bg);
+        border: 1px solid var(--bs-border-color);
+      }
+      .doc-breadcrumb .breadcrumb-item {
+        display: inline-flex;
+        align-items: center;
+        color: var(--bs-secondary-color);
+        font-size: 0.9375rem;
+      }
+      .doc-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+        content: "/";
+        margin-right: 0.5rem;
+        color: var(--bs-secondary-color);
+      }
+      .doc-breadcrumb .breadcrumb-item a {
+        color: #ff7900;
+        text-decoration: none;
+      }
+      .doc-breadcrumb .breadcrumb-item a:hover,
+      .doc-breadcrumb .breadcrumb-item a:focus-visible {
+        text-decoration: underline;
+      }
+      .doc-breadcrumb .breadcrumb-item.active {
+        color: var(--bs-emphasis-color);
+        font-weight: 700;
+      }
+      .doc-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+      .swagger-frame {
+        border: 1px solid var(--bs-border-color);
+        background: #fff;
+      }
+
+      .swagger-ui {
+        font-family: "Orange Helvetica", Helvetica, Arial, sans-serif;
+        color: #000;
+      }
+      .swagger-ui .topbar {
+        display: none;
+      }
+      .swagger-ui .info {
+        margin: 0;
+        padding: 1.5rem 1.5rem 0;
+      }
+      .swagger-ui .scheme-container {
+        box-shadow: none;
+        background: #fff7f0;
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #ffd2ad;
+        border-bottom: 1px solid #ffd2ad;
+      }
+      .swagger-ui .opblock.opblock-get {
+        border-color: #ff7900;
+        background: rgba(255, 121, 0, 0.05);
+      }
+      .swagger-ui .opblock.opblock-post {
+        border-color: #000;
+        background: rgba(0, 0, 0, 0.03);
+      }
+      .swagger-ui .opblock.opblock-delete {
+        border-color: #cd3c14;
+        background: rgba(205, 60, 20, 0.05);
+      }
+      .swagger-ui .btn.execute {
+        background: #ff7900;
+        border-color: #ff7900;
+        color: #fff;
+      }
+      .swagger-ui .btn.authorize {
+        border-color: #000;
+        color: #000;
+      }
+      .swagger-ui .opblock-tag {
+        border-bottom-color: var(--bs-border-color);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header data-bs-theme="dark">
+      <nav class="navbar navbar-expand-lg" aria-label="Orange Business global navigation">
+        <div class="container-xxl align-items-center">
+          <div class="navbar-brand me-auto">
+            <a class="stretched-link" href="/index.html#alias" aria-label="Orange Business - Alias Numbers">
+              <img src="https://boosted.orange.com/docs/5.3/assets/brand/OBS-logo.svg" width="50" height="50" alt="Orange Business" loading="lazy" />
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="doc-shell">
+      <nav class="doc-breadcrumb" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/index.html#alias">Alias2Alias</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Documentation API</li>
+        </ol>
+      </nav>
+      <section class="doc-hero">
+        <span class="doc-label">API Reference</span>
+        <h1>Alias2Alias REST API</h1>
+        <p class="text-body-secondary mb-0">
+          Documentation automatique generee a partir du fichier OpenAPI fourni. Cette page conserve l'habillage Boosted Orange tout en s'appuyant sur Swagger UI pour l'exploration des endpoints.
+        </p>
+        <div class="doc-actions">
+          <a class="btn btn-primary" href="./Alias2Alias.yaml" target="_blank" rel="noopener noreferrer">Voir le fichier source</a>
+          <a class="btn btn-outline-secondary" href="/index.html#alias">Retour a la demo</a>
+        </div>
+      </section>
+
+      <section class="swagger-frame">
+        <div id="swagger-ui"></div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-standalone-preset.js"></script>
+    <script>
+      window.addEventListener("load", () => {
+        window.ui = SwaggerUIBundle({
+          url: "./Alias2Alias.yaml",
+          dom_id: "#swagger-ui",
+          deepLinking: true,
+          docExpansion: "list",
+          defaultModelsExpandDepth: 1,
+          displayRequestDuration: true,
+          filter: true,
+          presets: [
+            SwaggerUIBundle.presets.apis,
+            SwaggerUIStandalonePreset,
+          ],
+          layout: "BaseLayout",
+        });
+      });
+    </script>
+  </body>
+</html>
