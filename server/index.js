@@ -709,6 +709,10 @@ app.delete("/api/mirroredroutes/:id", async (req, res) => {
   }
 });
 
+app.get("/healthz", (_req, res) => {
+  res.json({ ok: true });
+});
+
 app.listen(PORT, () => {
   console.log(`Proxy ready on http://localhost:${PORT}`);
 });
