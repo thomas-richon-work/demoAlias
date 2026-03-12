@@ -22,6 +22,8 @@ Utiliser `server/.env.example` comme reference, puis configurer ces variables da
 - `C2C_SECRET`
 - `C2C_SERVICE_ID`
 - `OPENAI_API_KEY`
+- `DEMO_USERNAME` (optionnel, active la Basic Auth)
+- `DEMO_PASSWORD` (optionnel, active la Basic Auth)
 
 Variables deja pre-remplies possibles (token URL, region, customer, etc.) selon ton contexte.
 
@@ -37,6 +39,8 @@ Variables deja pre-remplies possibles (token URL, region, customer, etc.) selon 
    - Ajouter `SCM_DO_BUILD_DURING_DEPLOYMENT=true`
 7. Redemarrer l'app
 
+Si `DEMO_USERNAME` et `DEMO_PASSWORD` sont definis, toute l'application sera protegee par une Basic Auth HTTP, sauf `GET /healthz`.
+
 ## 3) Verification
 
 - URL attendue: `https://<app-name>.azurewebsites.net`
@@ -49,4 +53,3 @@ cd server
 npm install
 npm start
 ```
-

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import crypto from "crypto";
 import { fileURLToPath } from "url";
 
 dotenv.config();
@@ -36,6 +37,8 @@ const {
   OPENAI_MODEL = "gpt-4.1-mini",
   REGION = "EUR",
   CUSTOMER = "anbservices",
+  DEMO_USERNAME = "",
+  DEMO_PASSWORD = "",
   PORT = 3001,
 } = process.env;
 
@@ -43,6 +46,45 @@ function requireEnv(name, value) {
   if (!value) throw new Error(`Missing env var: ${name}`);
   return value;
 }
+
+function safeEqual(a, b) {
+  const left = Buffer.from(String(a || ""), "utf8");
+  const right = Buffer.from(String(b || ""), "utf8");
+  if (left.length !== right.length) return false;
+  return crypto.timingSafeEqual(left, right);
+}
+
+function parseBasicAuth(header) {
+  if (!header || !header.startsWith("Basic ")) return null;
+  try {
+    const decoded = Buffer.from(header.slice(6), "base64").toString("utf8");
+    const separatorIndex = decoded.indexOf(":");
+    if (separatorIndex === -1) return null;
+    return {
+      username: decoded.slice(0, separatorIndex),
+      password: decoded.slice(separatorIndex + 1),
+    };
+  } catch {
+    return null;
+  }
+}
+
+const demoAuthEnabled = Boolean(DEMO_USERNAME && DEMO_PASSWORD);
+
+app.use((req, res, next) => {
+  if (!demoAuthEnabled || req.path === "/healthz") return next();
+
+  const credentials = parseBasicAuth(req.headers.authorization);
+  const authorized =
+    credentials &&
+    safeEqual(credentials.username, DEMO_USERNAME) &&
+    safeEqual(credentials.password, DEMO_PASSWORD);
+
+  if (authorized) return next();
+
+  res.setHeader("WWW-Authenticate", 'Basic realm="Alias Numbers Demo"');
+  return res.status(401).send("Authentication required");
+});
 
 app.use(express.static(webDir));
 
