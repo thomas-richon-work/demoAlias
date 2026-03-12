@@ -953,7 +953,7 @@
 					<div class="sim-side-panel">
 					  <h3 class="h6 mb-3">Paramètres de la démo</h3>
 					  <div class="mb-2">
-						<label for="simAgencyNumber" class="form-label">Numéro de l'agence</label>
+						<label for="simAgencyNumber" class="form-label">Numéro de l'agent immobillier</label>
 						<input id="simAgencyNumber" type="tel" inputmode="tel" class="form-control mono" value="+33 1 42 55 80 70" />
 						<div class="form-text">Modifiable à tout moment avant l'appel protégé.</div>
 					  </div>
@@ -1409,8 +1409,8 @@
 	  // ============================
 	  // Config
 	  // ============================
-	  //const API_BASE = "http://localhost:3001"; // proxy local
-	  const API_BASE = ""; // proxy local
+	  const isLocalhost = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+	  const API_BASE = isLocalhost ? "http://localhost:3001" : "";
 
 	  // ============================
 	  // Navbar navigation
