@@ -957,6 +957,15 @@
 		  linear-gradient(135deg, rgba(255,121,0,0.08), rgba(255,255,255,0) 55%),
 		  var(--bs-tertiary-bg);
 	  }
+	  .demo-hero-body {
+		margin-top: 0.75rem;
+	  }
+	  .demo-hero.collapsed .demo-hero-body {
+		display: none;
+	  }
+	  .demo-hero.collapsed {
+		padding-bottom: 1rem;
+	  }
 	  .demo-hero-grid {
 		display: grid;
 		gap: 1.25rem;
@@ -991,13 +1000,18 @@
 	  .demo-label {
 		display: inline-flex;
 		align-items: center;
-		padding: 0.35rem 0.65rem;
+		padding: 0.31rem 0.65rem;
 		background: #000;
 		color: #fff;
 		font-size: 0.75rem;
 		font-weight: 700;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
+	  }
+	  .demo-label-toggle {
+		border: 0;
+		appearance: none;
+		user-select: none;
 	  }
 	  .demo-hero h2 {
 		margin: 0.75rem 0 0.35rem;
@@ -1773,19 +1787,23 @@
 		  aria-labelledby="nav-alias"
 		  tabindex="0"
 		>
-		  <div class="demo-hero">
-			<div class="demo-hero-grid">
-			  <div>
-				<span class="demo-label">Demo Alias2Alias</span>
-				<h2>Association d’alias entre deux lignes</h2>
-				<p class="text-body-secondary">Gerer des Alias entre deux numeros fixes ou mobiles, tous operateurs francais confondus, depuis une interface unique ou depuis votre systeme via une API Rest/JSON ultra simple. Prise en charge des numeros etrangers BTalk prevue au T3 2026.</p>
-				<div class="mt-3">
-				  <a class="btn btn-outline-dark btn-sm" href="/docs.html" target="_blank" rel="noopener noreferrer">Documentation API</a>
+		  <div class="demo-hero" id="aliasHero">
+			<button type="button" class="demo-label demo-label-toggle" data-hero-target="aliasHero" aria-expanded="true" aria-controls="aliasHeroBody" aria-label="Replier le hero Alias2Alias">
+			  <span>Demo Alias2Alias</span>
+			</button>
+			<div class="demo-hero-body" id="aliasHeroBody">
+			  <div class="demo-hero-grid">
+				<div>
+				  <h2>Association d’alias entre deux lignes</h2>
+				  <p class="text-body-secondary">Gerer des Alias entre deux numeros fixes ou mobiles, tous operateurs francais confondus, depuis une interface unique ou depuis votre systeme via une API Rest/JSON ultra simple. Prise en charge des numeros etrangers BTalk prevue au T3 2026.</p>
+				  <div class="mt-3">
+					<a class="btn btn-outline-dark btn-sm" href="/docs.html" target="_blank" rel="noopener noreferrer">Documentation API</a>
+				  </div>
 				</div>
+				<figure class="demo-hero-media">
+				  <img src="/alias2alias.png" alt="Illustration de deux correspondants relies par une route miroir securisee" />
+				</figure>
 			  </div>
-			  <figure class="demo-hero-media">
-				<img src="/alias2alias.png" alt="Illustration de deux correspondants relies par une route miroir securisee" />
-			  </figure>
 			</div>
 		  </div>
 		  <div class="mt-3">
@@ -2011,16 +2029,23 @@
 		  aria-labelledby="nav-ctc"
 		  tabindex="0"
 		>
-		  <div class="demo-hero click2call-hero">
-			<div class="demo-hero-grid">
-			  <div>
-				<span class="demo-label">Demo Click2Call</span>
-				<h2>Déclenchement rapide d’un appel protégé en Click2Call</h2>
-				<p class="text-body-secondary">Simulation d’un parcours Click2Call entre un Agent terrain en intervention et un numéro d'un client depuis l'interface de l'agent. Le numéro du client n'est jamais visible de l'agent et inversement. La configuration permet de gerer les cas de rappel en cas d'absence et de renvoi vers une messagerie SpeechToText dynamiquement ou un numéro callcenter contextualisé.</p>
+		  <div class="demo-hero click2call-hero" id="ctcHero">
+			<button type="button" class="demo-label demo-label-toggle" data-hero-target="ctcHero" aria-expanded="true" aria-controls="ctcHeroBody" aria-label="Replier le hero Click2Call">
+			  <span>Demo Click2Call</span>
+			</button>
+			<div class="demo-hero-body" id="ctcHeroBody">
+			  <div class="demo-hero-grid">
+				<div>
+				  <h2>Déclenchement rapide d’un appel protégé en Click2Call</h2>
+				  <p class="text-body-secondary">Simulation d’un parcours Click2Call entre un Agent terrain en intervention et un numéro d'un client depuis l'interface de l'agent. Le numéro du client n'est jamais visible de l'agent et inversement. La configuration permet de gerer les cas de rappel en cas d'absence et de renvoi vers une messagerie SpeechToText dynamiquement ou un numéro callcenter contextualisé.</p>
+				  <div class="mt-3">
+					<a class="btn btn-outline-dark btn-sm" href="/clicktocall-docs.html" target="_blank" rel="noopener noreferrer">Documentation API</a>
+				  </div>
+				</div>
+				<figure class="demo-hero-media click2call-hero-media">
+				  <img class="click2call-hero-img" src="/click2call.png" alt="Illustration Click2Call sécurisé entre un agent et un client" />
+				</figure>
 			  </div>
-			  <figure class="demo-hero-media click2call-hero-media">
-				<img class="click2call-hero-img" src="/click2call.png" alt="Illustration Click2Call sécurisé entre un agent et un client" />
-			  </figure>
 			</div>
 		  </div>
 		  <ul class="nav nav-tabs" id="ctcInnerTabs" role="tablist">
@@ -2308,8 +2333,11 @@
 		  <div id="inboundRulesContent" class="col-12 d-none">
 			<div class="row g-3">
 			  <div class="col-12">
-				<label class="form-label">Délai avant redirection Message (minutes)</label>
-				<input id="inboundFailureDelayInput" type="number" min="0" class="form-control" />
+				<label class="form-label">Délai de rappel avant redirection</label>
+				<div class="input-group">
+				  <input id="inboundFailureDelayInput" type="number" min="0" class="form-control" />
+				  <span class="input-group-text">minutes</span>
+				</div>
 			  </div>
 			  <div class="col-12">
 				<label class="form-label">Message SpeechToText</label>
@@ -2536,6 +2564,16 @@
 
 	  window.addEventListener("hashchange", () => {
 		switchView(getViewFromHash(location.hash), false);
+	  });
+
+	  document.querySelectorAll("[data-hero-target]").forEach((button) => {
+		button.addEventListener("click", () => {
+		  const hero = document.getElementById(button.getAttribute("data-hero-target"));
+		  if (!hero) return;
+		  const collapsed = hero.classList.toggle("collapsed");
+		  button.setAttribute("aria-expanded", collapsed ? "false" : "true");
+		  button.setAttribute("aria-label", collapsed ? "Déplier le hero" : "Replier le hero");
+		});
 	  });
 
 	  // ============================
