@@ -71,6 +71,473 @@
 		border-color: #000;
 		color: #fff;
 	  }
+	  .delivery-view-shell {
+		display: grid;
+		gap: 1rem;
+	  }
+	  .delivery-view-toolbar {
+		display: flex;
+		justify-content: flex-end;
+	  }
+	  .bank-demo-shell {
+		display: grid;
+		gap: 1rem;
+	  }
+	  .bank-demo-toolbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	  }
+	  .bank-demo-grid {
+		width: 100%;
+	  }
+	  .bank-console-header {
+		display: flex;
+		align-items: start;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	  }
+	  .bank-console-title {
+		font-size: 1rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .bank-console-subtitle {
+		font-size: 0.82rem;
+		color: #6b6b70;
+		margin-top: 0.15rem;
+	  }
+	  .bank-engine-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.48rem 0.82rem;
+		border-radius: 999px;
+		font-size: 1.08rem;
+		font-weight: 700;
+		background: rgba(75, 180, 230, 0.12);
+		color: #00617f;
+	  }
+	  .bank-risk-chip {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.32rem 0.6rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		font-weight: 700;
+		background: rgba(220, 53, 69, 0.1);
+		color: #b02a37;
+	  }
+	  .bank-risk-chip.bank-risk-medium {
+		background: rgba(255, 121, 0, 0.14);
+		color: #b35a00;
+	  }
+	  .bank-alert-card {
+		border: 1px solid #eceef1;
+		border-radius: 0.95rem;
+		padding: 0.95rem;
+		background:
+		  radial-gradient(circle at top right, rgba(255, 121, 0, 0.1), transparent 34%),
+		  #fff;
+	  }
+	  .bank-alert-table-wrap {
+		border: 1px solid #eceef1;
+		border-radius: 0.95rem;
+		overflow: hidden;
+		background: #fff;
+	  }
+	  .bank-alert-table {
+		margin-bottom: 0;
+	  }
+	  .bank-alert-table tbody tr {
+		cursor: pointer;
+	  }
+	  .bank-alert-table tbody tr.table-active td {
+		background: rgba(17, 17, 17, 0.028);
+	  }
+	  .bank-alert-table tbody tr.bank-alert-detail-row {
+		cursor: default;
+	  }
+	  .bank-alert-table tbody tr.bank-alert-detail-row td {
+		background: #fff;
+		padding: 0.85rem;
+		border-top: 0;
+	  }
+	  .bank-alert-table .bank-risk-chip {
+		white-space: nowrap;
+	  }
+	  .bank-alert-card + .bank-alert-card {
+		margin-top: 0.9rem;
+	  }
+	  .bank-alert-label {
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #6b6b70;
+		margin-bottom: 0.35rem;
+	  }
+	  .bank-alert-title {
+		font-size: 0.96rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .bank-alert-text {
+		font-size: 0.82rem;
+		color: #4d4d53;
+		margin-top: 0.2rem;
+	  }
+	  .bank-alert-meta {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+		gap: 0.55rem;
+		margin-top: 0.55rem;
+	  }
+	  .bank-alert-meta-item {
+		padding: 0.55rem 0.65rem;
+		border-radius: 0.8rem;
+		background: #f7f8fa;
+		border: 1px solid #eceef1;
+	  }
+	  .bank-simswap-box {
+		margin-top: 0.65rem;
+		padding: 0.65rem 0.75rem;
+		border-radius: 0.9rem;
+		background: #fff3e8;
+		border: 1px solid rgba(255, 121, 0, 0.24);
+		color: #7a4a00;
+	  }
+	  .bank-simswap-title {
+		font-size: 0.76rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	  }
+	  .bank-simswap-text {
+		font-size: 0.78rem;
+		margin-top: 0.25rem;
+	  }
+	  .bank-signal-list {
+		margin-top: 0.65rem;
+	  }
+	  .bank-signal-list .list-group-item {
+		padding: 0.6rem 0.7rem;
+		border-color: #eceef1;
+		background: #f7f8fa;
+	  }
+	  .bank-signal-title {
+		font-size: 0.74rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: #3b3b40;
+	  }
+	  .bank-signal-text {
+		font-size: 0.79rem;
+		color: #4d4d53;
+		margin-top: 0.22rem;
+	  }
+	  .bank-detail-main {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 92px;
+		gap: 0.9rem;
+		align-items: start;
+		margin-top: 0.65rem;
+	  }
+	  .bank-global-score {
+		padding: 0.7rem 0.55rem;
+		border-radius: 0.9rem;
+		background: #111;
+		color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		gap: 0.55rem;
+		position: sticky;
+		top: 0.75rem;
+	  }
+	  .bank-global-score-label {
+		font-size: 0.66rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		opacity: 0.78;
+		text-align: center;
+	  }
+	  .bank-score-scale {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: 0.35rem;
+		width: 100%;
+	  }
+	  .bank-score-step {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2rem;
+		border-radius: 0.65rem;
+		background: rgba(255, 255, 255, 0.12);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		font-size: 0.88rem;
+		font-weight: 700;
+		opacity: 0.5;
+	  }
+	  .bank-score-step.level-1 {
+		background: rgba(255, 210, 0, 0.18);
+		color: #7a6500;
+		border-color: rgba(255, 210, 0, 0.28);
+	  }
+	  .bank-score-step.level-2 {
+		background: rgba(255, 121, 0, 0.18);
+		color: #b35a00;
+		border-color: rgba(255, 121, 0, 0.28);
+	  }
+	  .bank-score-step.level-3 {
+		background: rgba(220, 53, 69, 0.16);
+		color: #b02a37;
+		border-color: rgba(220, 53, 69, 0.28);
+	  }
+	  .bank-score-step.active {
+		opacity: 1;
+		box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.06);
+	  }
+	  @media (max-width: 991.98px) {
+		.bank-detail-main {
+		  grid-template-columns: 1fr;
+		}
+		.bank-global-score {
+		  position: static;
+		  flex-direction: row;
+		  justify-content: space-between;
+		  align-items: center;
+		  padding: 0.65rem 0.75rem;
+		}
+		.bank-score-scale {
+		  flex-direction: row;
+		  width: auto;
+		}
+		.bank-score-step {
+		  min-width: 2rem;
+		  min-height: 2rem;
+		}
+	  }
+	  .bank-alert-meta-label {
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #6b6b70;
+	  }
+	  .bank-alert-meta-value {
+		font-size: 0.84rem;
+		font-weight: 700;
+		margin-top: 0.22rem;
+	  }
+	  .bank-alert-actions {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.8rem;
+		margin-top: 0.65rem;
+	  }
+	  .bank-alert-helper {
+		font-size: 0.74rem;
+		color: #6b6b70;
+	  }
+	  .bank-alert-dropdown .dropdown-menu {
+		min-width: 280px;
+		padding: 0.4rem;
+		border-radius: 0.85rem;
+	  }
+	  .bank-alert-dropdown .dropdown-header {
+		font-size: 0.68rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #6b6b70;
+	  }
+	  .bank-alert-dropdown .dropdown-item {
+		border-radius: 0.65rem;
+		padding-block: 0.55rem;
+	  }
+	  .bank-alert-dropdown .dropdown-item small {
+		display: block;
+		color: #6b6b70;
+	  }
+	  .bank-queue {
+		display: grid;
+		gap: 0.9rem;
+		margin-top: 1rem;
+	  }
+	  .bank-queue-title {
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #6b6b70;
+	  }
+	  .bank-selected-callout {
+		margin-top: 0.95rem;
+		padding: 0.8rem 0.9rem;
+		border-radius: 0.85rem;
+		background: #fff7ed;
+		border: 1px solid rgba(255, 121, 0, 0.18);
+		font-size: 0.8rem;
+		color: #7a4a00;
+	  }
+	  .bank-metrics {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 0.65rem;
+		margin-top: 0.85rem;
+	  }
+	  .bank-metric {
+		padding: 0.75rem;
+		border-radius: 0.85rem;
+		background: #f7f8fa;
+		border: 1px solid #eceef1;
+	  }
+	  .bank-metric-label {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #6b6b70;
+	  }
+	  .bank-metric-value {
+		font-size: 0.88rem;
+		font-weight: 700;
+		margin-top: 0.2rem;
+	  }
+	  .bank-demo-controls {
+		display: grid;
+		gap: 0.8rem;
+		margin-top: 1rem;
+	  }
+	  .bank-demo-log {
+		margin-top: 0.9rem;
+		padding: 0.8rem 0.9rem;
+		border-radius: 0.85rem;
+		background: #fff7ed;
+		border: 1px solid rgba(255, 121, 0, 0.18);
+		font-size: 0.8rem;
+		color: #7a4a00;
+	  }
+	  .bank-client-app {
+		background: linear-gradient(180deg, #111827 0, #10151f 132px, rgba(255,255,255,0.98) 132px), #f5f6f8;
+	  }
+	  .bank-client-app .sim-portal-header {
+		background: linear-gradient(180deg, #111827, #1c2737);
+		border-bottom: 0;
+		padding: 2.05rem 1rem 0.75rem;
+	  }
+	  .bank-client-feed {
+		flex: 1;
+		padding: 0.9rem;
+		overflow: auto;
+		background:
+		  radial-gradient(circle at top left, rgba(75, 180, 230, 0.08), transparent 34%),
+		  #f4f5f7;
+	  }
+	  .bank-client-balance {
+		margin-top: 0.8rem;
+		border-radius: 1rem;
+		padding: 0.95rem;
+		background: linear-gradient(135deg, #111827, #243247);
+		color: #fff;
+	  }
+	  .bank-client-balance-label {
+		font-size: 0.72rem;
+		opacity: 0.8;
+	  }
+	  .bank-client-balance-value {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin-top: 0.18rem;
+	  }
+	  .bank-client-alert {
+		margin-top: 0.85rem;
+		border-radius: 0.95rem;
+		padding: 0.85rem;
+		background: #fff;
+		border: 1px solid #e5e7eb;
+		box-shadow: 0 10px 20px rgba(17, 17, 17, 0.04);
+	  }
+	  .bank-client-alert-title {
+		font-size: 0.86rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .bank-client-alert-text {
+		font-size: 0.77rem;
+		color: #4d4d53;
+		margin-top: 0.3rem;
+	  }
+	  .bank-client-risk {
+		margin-top: 0.7rem;
+		display: inline-flex;
+		align-items: center;
+		padding: 0.26rem 0.55rem;
+		border-radius: 999px;
+		font-size: 0.7rem;
+		font-weight: 700;
+		background: rgba(220, 53, 69, 0.12);
+		color: #b02a37;
+	  }
+	  .bank-client-status {
+		margin-top: 0.7rem;
+		font-size: 0.74rem;
+		font-weight: 700;
+		color: #146c43;
+	  }
+	  .bank-client-call {
+		margin-top: 0.85rem;
+		border-radius: 1rem;
+		padding: 0.9rem;
+		background: #111;
+		color: #fff;
+	  }
+	  .bank-client-call-label {
+		font-size: 0.7rem;
+		opacity: 0.72;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	  }
+	  .bank-client-call-title {
+		font-size: 0.96rem;
+		font-weight: 700;
+		margin-top: 0.25rem;
+	  }
+	  .bank-client-call-subtitle {
+		font-size: 0.76rem;
+		opacity: 0.82;
+		margin-top: 0.18rem;
+	  }
+	  .bank-client-call-number {
+		font-size: 0.92rem;
+		font-weight: 700;
+		margin-top: 0.45rem;
+		letter-spacing: 0.04em;
+	  }
+	  .bank-client-facts {
+		margin-top: 0.8rem;
+		display: grid;
+		gap: 0.5rem;
+	  }
+	  .bank-client-fact {
+		font-size: 0.76rem;
+		color: #252529;
+		display: flex;
+		justify-content: space-between;
+		gap: 0.75rem;
+	  }
+	  .bank-client-fact span:first-child {
+		color: #6b6b70;
+	  }
+	  @media (max-width: 991.98px) {
+		.bank-demo-grid {
+		  width: 100%;
+		}
+	  }
 	  .context-cards {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -2225,10 +2692,10 @@
 		  </div>
 		  <ul class="nav nav-tabs" id="ctcInnerTabs" role="tablist">
 			<li class="nav-item" role="presentation">
-			  <button class="nav-link active" id="ctc-agent-tab" data-bs-toggle="tab" data-bs-target="#ctc-agent-pane" type="button" role="tab" aria-controls="ctc-agent-pane" aria-selected="true">Vue Livreur</button>
+			  <button class="nav-link active" id="ctc-delivery-tab" data-bs-toggle="tab" data-bs-target="#ctc-delivery-pane" type="button" role="tab" aria-controls="ctc-delivery-pane" aria-selected="true">Service Livraison</button>
 			</li>
 			<li class="nav-item" role="presentation">
-			  <button class="nav-link" id="ctc-manager-tab" data-bs-toggle="tab" data-bs-target="#ctc-manager-pane" type="button" role="tab" aria-controls="ctc-manager-pane" aria-selected="false">Vue Gestionnaire</button>
+			  <button class="nav-link" id="ctc-bank-tab" data-bs-toggle="tab" data-bs-target="#ctc-bank-pane" type="button" role="tab" aria-controls="ctc-bank-pane" aria-selected="false">Service Banque</button>
 			</li>
 			<li class="nav-item ms-auto" role="presentation">
 			  <button class="nav-link" id="ctc-callcenter-tab" data-bs-toggle="tab" data-bs-target="#ctc-callcenter-pane" type="button" role="tab" aria-controls="ctc-callcenter-pane" aria-selected="false">Configuration Alias Numbers</button>
@@ -2293,88 +2760,152 @@
 			  </div>
 			</div>
 
-			<div class="tab-pane fade show active" id="ctc-agent-pane" role="tabpanel" aria-labelledby="ctc-agent-tab" tabindex="0">
-			  <div class="agent-mobile-wrap">
-				<div class="iphone-frame" aria-label="Simulateur iPhone">
-				  <div class="iphone-screen">
-					<div class="iphone-notch" aria-hidden="true"></div>
-					  <div class="mobile-app">
-						<div class="mobile-app-header">
-						  <div class="mobile-app-header-top">
-							<div class="mobile-app-header-copy">
-							  <div class="mobile-app-title-row">
-								<h3 class="mobile-app-title">Mes Interventions</h3>
-								<span id="mobileInterventionsBadge" class="mobile-app-badge d-none" aria-live="polite">0</span>
+			<div class="tab-pane fade show active" id="ctc-delivery-pane" role="tabpanel" aria-labelledby="ctc-delivery-tab" tabindex="0">
+			  <div class="delivery-view-shell">
+				<div class="delivery-view-toolbar">
+				  <div class="btn-group btn-group-sm view-toggle" role="group" aria-label="Changer de vue Service Livraison">
+					<button id="deliveryViewAgentBtn" type="button" class="btn btn-outline-secondary active" aria-pressed="true">Vue Livreur</button>
+					<button id="deliveryViewManagerBtn" type="button" class="btn btn-outline-secondary" aria-pressed="false">Vue Gestionnaire</button>
+				  </div>
+				</div>
+				<div id="deliveryAgentView">
+				  <div class="agent-mobile-wrap">
+					<div class="iphone-frame" aria-label="Simulateur iPhone">
+					  <div class="iphone-screen">
+						<div class="iphone-notch" aria-hidden="true"></div>
+						  <div class="mobile-app">
+							<div class="mobile-app-header">
+							  <div class="mobile-app-header-top">
+								<div class="mobile-app-header-copy">
+								  <div class="mobile-app-title-row">
+									<h3 class="mobile-app-title">Mes Interventions</h3>
+									<span id="mobileInterventionsBadge" class="mobile-app-badge d-none" aria-live="polite">0</span>
+								  </div>
+								  <div id="mobileAgentSubtitle" class="mobile-app-subtitle">Agent</div>
+								</div>
+								<div class="mobile-app-brand" aria-hidden="true">
+								  <img src="/rapidcolis_1.png" alt="Rapid Colis" />
+								</div>
 							  </div>
-							  <div id="mobileAgentSubtitle" class="mobile-app-subtitle">Agent</div>
 							</div>
-							<div class="mobile-app-brand" aria-hidden="true">
-							  <img src="/rapidcolis_1.png" alt="Rapid Colis" />
+						  <div class="mobile-list">
+							<div id="mobileInterventionsContainer">
+							  <div class="mobile-empty">
+								Aucune intervention pour le moment.
+								<div class="mt-2">La liste sera alimentee ensuite.</div>
+							  </div>
 							</div>
-						  </div>
-						</div>
-					  <div class="mobile-list">
-						<div id="mobileInterventionsContainer">
-						  <div class="mobile-empty">
-							Aucune intervention pour le moment.
-							<div class="mt-2">La liste sera alimentee ensuite.</div>
 						  </div>
 						</div>
 					  </div>
 					</div>
 				  </div>
+				  <div class="agent-selector-wrap">
+					<label for="agentContextSelect" class="form-label">Changer de Livreur</label>
+					<select id="agentContextSelect" class="form-select"></select>
+					<div class="form-text">Selectionnez un livreur pour charger ses interventions dans l'application mobile.</div>
+				  </div>
 				</div>
-			  </div>
-			  <div class="agent-selector-wrap">
-				<label for="agentContextSelect" class="form-label">Changer de Livreur</label>
-				<select id="agentContextSelect" class="form-select"></select>
-				<div class="form-text">Selectionnez un livreur pour charger ses interventions dans l'application mobile.</div>
-			  </div>
-			</div>
-
-			<div class="tab-pane fade" id="ctc-manager-pane" role="tabpanel" aria-labelledby="ctc-manager-tab" tabindex="0">
-			  <div class="mt-3">
-				<div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between gap-2 mb-2">
-				  <div class="d-flex align-items-center gap-3">
-					<h3 class="h5 mb-0">Liste des interventions</h3>
-					<div class="manager-brand" aria-hidden="true">
-					  <img src="/rapidcolis_2.png" alt="Rapid Colis" />
+				<div id="deliveryManagerView" class="d-none">
+				  <div class="mt-3">
+					<div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-sm-between gap-2 mb-2">
+					  <div class="d-flex align-items-center gap-3">
+						<h3 class="h5 mb-0">Liste des interventions</h3>
+						<div class="manager-brand" aria-hidden="true">
+						  <img src="/rapidcolis_2.png" alt="Rapid Colis" />
+						</div>
+					  </div>
+					  <div class="d-flex gap-2">
+						<button id="btnDeleteSelectedInterventions" type="button" class="btn btn-danger btn-sm" disabled>Supprimer sélection</button>
+						<button
+						  type="button"
+						  class="btn btn-primary btn-sm"
+						  data-bs-toggle="offcanvas"
+						  data-bs-target="#offcanvasIntervention"
+						  aria-controls="offcanvasIntervention"
+						>
+						  Ajouter une intervention
+						</button>
+					  </div>
+					</div>
+					<div class="table-responsive">
+					  <table class="table table-sm align-middle">
+						<thead>
+						  <tr>
+							<th scope="col" class="text-center" style="width: 1%;">
+							  <input id="selectAllInterventions" class="form-check-input" type="checkbox" aria-label="Tout sélectionner" />
+							</th>
+							<th scope="col" style="width: 170px;">Date</th>
+							<th scope="col">Type</th>
+							<th scope="col">Agent</th>
+							<th scope="col">Client</th>
+							<th scope="col">Telephone</th>
+							<th scope="col">Adresse</th>
+						  </tr>
+						</thead>
+						<tbody id="interventionTbody">
+						  <tr>
+							<td colspan="7" class="text-body-secondary">Aucune intervention pour le moment.</td>
+						  </tr>
+						</tbody>
+					  </table>
 					</div>
 				  </div>
-				  <div class="d-flex gap-2">
-					<button id="btnDeleteSelectedInterventions" type="button" class="btn btn-danger btn-sm" disabled>Supprimer sélection</button>
-					<button
-					  type="button"
-					  class="btn btn-primary btn-sm"
-					  data-bs-toggle="offcanvas"
-					  data-bs-target="#offcanvasIntervention"
-					  aria-controls="offcanvasIntervention"
-					>
-					  Ajouter une intervention
-					</button>
+				</div>
+			  </div>
+			</div>
+			<div class="tab-pane fade" id="ctc-bank-pane" role="tabpanel" aria-labelledby="ctc-bank-tab" tabindex="0">
+			  <div class="bank-demo-shell">
+				<div class="bank-demo-toolbar">
+				  <span class="bank-engine-pill">Fraud Engine Live</span>
+				  <div class="btn-group btn-group-sm view-toggle" role="group" aria-label="Changer de vue Service Banque">
+					<button id="bankViewBankBtn" type="button" class="btn btn-outline-secondary active" aria-pressed="true">Vue Banque</button>
+					<button id="bankViewClientBtn" type="button" class="btn btn-outline-secondary" aria-pressed="false">Vue Client</button>
 				  </div>
 				</div>
-				<div class="table-responsive">
-				  <table class="table table-sm align-middle">
-					<thead>
-					  <tr>
-						<th scope="col" class="text-center" style="width: 1%;">
-						  <input id="selectAllInterventions" class="form-check-input" type="checkbox" aria-label="Tout sélectionner" />
-						</th>
-						<th scope="col" style="width: 170px;">Date</th>
-						<th scope="col">Type</th>
-						<th scope="col">Agent</th>
-						<th scope="col">Client</th>
-						<th scope="col">Telephone</th>
-						<th scope="col">Adresse</th>
-					  </tr>
-					</thead>
-					<tbody id="interventionTbody">
-					  <tr>
-						<td colspan="7" class="text-body-secondary">Aucune intervention pour le moment.</td>
-					  </tr>
-					</tbody>
-				  </table>
+				<div class="bank-demo-grid">
+				  <div id="bankOpsView">
+					<div class="bank-console-header">
+					  <div>
+						<div class="bank-console-subtitle">Le moteur d’analyse fraude temps réel remonte les transactions anormales et la banque déclenche immédiatement le Click2Call vers le client.</div>
+					  </div>
+					</div>
+					<div class="bank-queue-title">Transactions suspectes à traiter</div>
+					<div class="bank-alert-table-wrap">
+					  <div class="table-responsive">
+						<table class="table table-hover align-middle bank-alert-table">
+						  <thead>
+							<tr>
+							  <th style="width: 1%;">#</th>
+							  <th>Client</th>
+							  <th>Carte</th>
+							  <th>Transaction</th>
+							  <th>Lieu</th>
+							  <th>Date de transaction</th>
+							  <th>Score fraude</th>
+							</tr>
+						  </thead>
+						  <tbody id="bankAlertsList"></tbody>
+						</table>
+					  </div>
+					</div>
+					<div id="bankSelectedCallout" class="bank-selected-callout">Sélectionnez un agent dans une alerte pour lancer immédiatement l’appel vers le client, sans afficher son numéro.</div>
+					<div id="bankOpsLog" class="bank-demo-log d-none"></div>
+				  </div>
+				  <div id="bankClientView" class="agent-mobile-wrap d-none">
+					<div class="iphone-frame" aria-label="Espace client bancaire">
+					  <div class="iphone-screen">
+						<div class="iphone-notch" aria-hidden="true"></div>
+						<div class="sim-portal-app bank-client-app">
+						  <div class="sim-portal-header">
+							<h3 class="sim-portal-title">Mon espace bancaire</h3>
+							<div class="sim-portal-subtitle">Sécurité et opérations sensibles</div>
+						  </div>
+						  <div id="bankClientFeed" class="bank-client-feed"></div>
+						</div>
+					  </div>
+					</div>
+				  </div>
 				</div>
 			  </div>
 			</div>
@@ -2837,6 +3368,7 @@
 	  const phoneShortcutPresets = [
 		{ label: "Thomas Richon", value: "+33 6 73 69 69 10", tag: "Demo" },
 		{ label: "Marine Boudot", value: "+33 6 73 09 96 35", tag: "Demo" },
+		{ label: "Hatilm Machrafi", value: "+33 6 70 55 84 35", tag: "Demo" },
 		{ label: "S25 Demo Android", value: "+33 6 30 85 34 80", tag: "Demo" },
 	  ];
 	  let savedPhoneShortcuts = loadSavedPhoneShortcuts();
@@ -3886,6 +4418,18 @@
 	  const contextsTableView = document.getElementById("contextsTableView");
 	  const contextsViewTable = document.getElementById("contextsViewTable");
 	  const contextsViewCards = document.getElementById("contextsViewCards");
+	  const deliveryViewAgentBtn = document.getElementById("deliveryViewAgentBtn");
+	  const deliveryViewManagerBtn = document.getElementById("deliveryViewManagerBtn");
+	  const deliveryAgentView = document.getElementById("deliveryAgentView");
+	  const deliveryManagerView = document.getElementById("deliveryManagerView");
+	  const bankViewBankBtn = document.getElementById("bankViewBankBtn");
+	  const bankViewClientBtn = document.getElementById("bankViewClientBtn");
+	  const bankOpsView = document.getElementById("bankOpsView");
+	  const bankClientView = document.getElementById("bankClientView");
+	  const bankClientFeed = document.getElementById("bankClientFeed");
+	  const bankAlertsList = document.getElementById("bankAlertsList");
+	  const bankSelectedCallout = document.getElementById("bankSelectedCallout");
+	  const bankOpsLog = document.getElementById("bankOpsLog");
 	  const agentContextSelect = document.getElementById("agentContextSelect");
 	  const interventionAgentSelect = document.getElementById("interventionAgentSelect");
 	  const interventionForm = document.getElementById("interventionForm");
@@ -3910,6 +4454,8 @@
 	  let expandedContextIds = new Set();
 	  let interventions = [];
 	  let selectedInterventionIds = new Set();
+	  let deliveryViewMode = window.localStorage.getItem("delivery-view-mode") === "manager" ? "manager" : "agent";
+	  let bankViewMode = window.localStorage.getItem("bank-view-mode") === "client" ? "client" : "bank";
 	  const contextCallsCache = new Map();
 	  const contextCallsLoading = new Set();
 	  const contextCallsError = new Map();
@@ -4009,6 +4555,188 @@
 		},
 		preferredRedirectionNumber: null,
 	  };
+	  const bankFraudAlertsDefaults = [
+		{
+		  id: "fraud-1",
+		  clientName: "Marie Dupont",
+		  cardType: "Visa",
+		  amount: "780€",
+		  location: "Barcelone",
+		  transactionDate: "16/03/2026 09:14",
+		  fraudScore: "élevé",
+		  reason: "Montant élevé à l'étranger sur une carte habituellement utilisée en France.",
+		  hiddenPhone: "+33 6 73 09 96 35",
+		  simSwapDetected: true,
+		  simSwapDelayText: "Changement de SIM détecté il y a 2 jours",
+		  deviceRiskText: "Nouveau device inconnu détecté sur la session de paiement.",
+		  suspiciousDeviceText: "Empreinte device considérée comme suspecte.",
+		  uxScoreText: "Vitesse de frappe et vitesse de scroll inhabituelles, pression écran instable.",
+		  behaviorRiskText: "Montant, pays, heure et type de paiement incohérents avec l'historique récent.",
+		  geoMismatchText: "La géolocalisation du device est incohérente avec la position de la transaction.",
+		  axisScores: {
+			device: "92 / 100",
+			simSwap: "87 / 100",
+			comportement: "95 / 100",
+			geolocalisation: "89 / 100",
+			historiqueClient: "91 / 100",
+			beneficiaire: "78 / 100",
+		  },
+		  status: "new",
+		  assignedContextId: "",
+		  assignedContextLabel: "",
+		},
+		{
+		  id: "fraud-1b",
+		  clientName: "Karim Benali",
+		  cardType: "Visa Business",
+		  amount: "3 420€",
+		  location: "Dubaï",
+		  transactionDate: "16/03/2026 09:21",
+		  fraudScore: "élevé",
+		  reason: "Tentative sur un pays inhabituel, sans déplacement client connu et avec MCC inhabituel.",
+		  hiddenPhone: "+33 6 73 69 69 10",
+		  simSwapDetected: false,
+		  simSwapDelayText: "",
+		  deviceRiskText: "Device déjà vu mais posture de sécurité abaissée.",
+		  suspiciousDeviceText: "Détection d'un environnement root/jailbreak probable.",
+		  uxScoreText: "Mouvements du doigt et habitudes de navigation légèrement dégradés.",
+		  behaviorRiskText: "Montant élevé, MCC inhabituel et séquence d'achat rare pour ce profil.",
+		  geoMismatchText: "Position device partiellement cohérente avec la transaction.",
+		  axisScores: {
+			device: "84 / 100",
+			simSwap: "18 / 100",
+			comportement: "88 / 100",
+			geolocalisation: "63 / 100",
+			historiqueClient: "79 / 100",
+			beneficiaire: "74 / 100",
+		  },
+		  status: "new",
+		  assignedContextId: "",
+		  assignedContextLabel: "",
+		},
+		{
+		  id: "fraud-2",
+		  clientName: "Nicolas Perrin",
+		  cardType: "Mastercard",
+		  amount: "1 240€",
+		  location: "Bucarest",
+		  transactionDate: "16/03/2026 09:33",
+		  fraudScore: "élevé",
+		  reason: "Pays inhabituel et séquence d'achats atypique en moins de 10 minutes.",
+		  hiddenPhone: "+33 6 73 69 69 10",
+		  simSwapDetected: true,
+		  simSwapDelayText: "Changement de SIM détecté il y a moins de 48h",
+		  deviceRiskText: "Nouveau device inconnu sur une carte habituellement utilisée depuis le même téléphone.",
+		  suspiciousDeviceText: "Émulateur / environnement dégradé suspecté.",
+		  uxScoreText: "Navigation accélérée et interactions tactiles très différentes des habitudes client.",
+		  behaviorRiskText: "Pays inhabituel, fréquence et heure de transaction incompatibles avec le profil.",
+		  geoMismatchText: "Distance incohérente entre position du mobile et position du commerçant.",
+		  axisScores: {
+			device: "96 / 100",
+			simSwap: "93 / 100",
+			comportement: "90 / 100",
+			geolocalisation: "94 / 100",
+			historiqueClient: "86 / 100",
+			beneficiaire: "71 / 100",
+		  },
+		  status: "new",
+		  assignedContextId: "",
+		  assignedContextLabel: "",
+		},
+		{
+		  id: "fraud-3",
+		  clientName: "Sophie Lambert",
+		  cardType: "Visa Premier",
+		  amount: "2 980€",
+		  location: "Montréal",
+		  transactionDate: "16/03/2026 10:02",
+		  fraudScore: "moyen",
+		  reason: "Comportement atypique détecté sur un canal e-commerce inhabituel.",
+		  hiddenPhone: "+33 6 30 85 34 80",
+		  simSwapDetected: false,
+		  simSwapDelayText: "",
+		  deviceRiskText: "Device déjà connu, mais niveau de confiance en légère baisse.",
+		  suspiciousDeviceText: "Aucun root/jailbreak détecté.",
+		  uxScoreText: "Vitesse de frappe et gestes tactiles hors zone de confiance.",
+		  behaviorRiskText: "Type de paiement et horaire atypiques sur ce canal e-commerce.",
+		  geoMismatchText: "Géolocalisation device légèrement éloignée du lieu marchand déclaré.",
+		  axisScores: {
+			device: "58 / 100",
+			simSwap: "12 / 100",
+			comportement: "81 / 100",
+			geolocalisation: "57 / 100",
+			historiqueClient: "76 / 100",
+			beneficiaire: "52 / 100",
+		  },
+		  status: "new",
+		  assignedContextId: "",
+		  assignedContextLabel: "",
+		},
+		{
+		  id: "fraud-4",
+		  clientName: "Élise Moreau",
+		  cardType: "Gold Mastercard",
+		  amount: "560€",
+		  location: "Lisbonne",
+		  transactionDate: "16/03/2026 10:18",
+		  fraudScore: "moyen",
+		  reason: "Transaction à l'étranger suivie d'un refus 3DS sur un site non habituel.",
+		  hiddenPhone: "+33 6 73 09 96 35",
+		  simSwapDetected: true,
+		  simSwapDelayText: "Changement de SIM détecté la veille de la transaction",
+		  deviceRiskText: "Nouveau device inconnu détecté sur la tentative 3DS.",
+		  suspiciousDeviceText: "Signal device suspect remonté par le SDK (émulateur possible).",
+		  uxScoreText: "Habitudes de navigation et pression écran très différentes du pattern attendu.",
+		  behaviorRiskText: "Refus 3DS, lieu et fréquence de tentative atypiques pour ce compte.",
+		  geoMismatchText: "Incohérence entre géolocalisation réseau et lieu de transaction.",
+		  axisScores: {
+			device: "91 / 100",
+			simSwap: "89 / 100",
+			comportement: "82 / 100",
+			geolocalisation: "86 / 100",
+			historiqueClient: "67 / 100",
+			beneficiaire: "48 / 100",
+		  },
+		  status: "new",
+		  assignedContextId: "",
+		  assignedContextLabel: "",
+		},
+		{
+		  id: "fraud-5",
+		  clientName: "Thomas Caron",
+		  cardType: "Visa Infinite",
+		  amount: "6 900€",
+		  location: "Singapour",
+		  transactionDate: "16/03/2026 10:41",
+		  fraudScore: "élevé",
+		  reason: "Montant très élevé, fuseau horaire atypique et panier marchand incohérent avec l'historique client.",
+		  hiddenPhone: "+33 6 30 85 34 80",
+		  simSwapDetected: false,
+		  simSwapDelayText: "",
+		  deviceRiskText: "Device inconnu sur une transaction très supérieure au panier moyen.",
+		  suspiciousDeviceText: "Aucun root détecté mais réputation device faible.",
+		  uxScoreText: "Session très courte, scroll rapide et séquence de validation inhabituelle.",
+		  behaviorRiskText: "Montant, bénéficiaire, heure et pays très éloignés des habitudes client.",
+		  geoMismatchText: "Position du device non cohérente avec la zone de transaction déclarée.",
+		  axisScores: {
+			device: "77 / 100",
+			simSwap: "14 / 100",
+			comportement: "97 / 100",
+			geolocalisation: "92 / 100",
+			historiqueClient: "94 / 100",
+			beneficiaire: "93 / 100",
+		  },
+		  status: "new",
+		  assignedContextId: "",
+		  assignedContextLabel: "",
+		},
+	  ];
+	  const bankDemoDefaults = {
+		selectedAlertId: "",
+		lastAction: "",
+	  };
+	  let bankFraudAlerts = bankFraudAlertsDefaults.map((item) => ({ ...item }));
+	  let bankDemoState = { ...bankDemoDefaults };
 
 	  function getByPath(obj, path) {
 		return String(path)
@@ -4231,6 +4959,330 @@
 		contextsViewTable.setAttribute("aria-pressed", showCards ? "false" : "true");
 		contextsViewCards.setAttribute("aria-pressed", showCards ? "true" : "false");
 		window.localStorage.setItem("contexts-display-mode", contextsDisplayMode);
+	  }
+
+	  function applyDeliveryViewMode() {
+		const showManager = deliveryViewMode === "manager";
+		if (deliveryAgentView) deliveryAgentView.classList.toggle("d-none", showManager);
+		if (deliveryManagerView) deliveryManagerView.classList.toggle("d-none", !showManager);
+		if (deliveryViewAgentBtn) {
+		  deliveryViewAgentBtn.classList.toggle("active", !showManager);
+		  deliveryViewAgentBtn.setAttribute("aria-pressed", showManager ? "false" : "true");
+		}
+		if (deliveryViewManagerBtn) {
+		  deliveryViewManagerBtn.classList.toggle("active", showManager);
+		  deliveryViewManagerBtn.setAttribute("aria-pressed", showManager ? "true" : "false");
+		}
+		window.localStorage.setItem("delivery-view-mode", deliveryViewMode);
+	  }
+
+	  function applyBankViewMode() {
+		const showClient = bankViewMode === "client";
+		if (bankOpsView) bankOpsView.classList.toggle("d-none", showClient);
+		if (bankClientView) bankClientView.classList.toggle("d-none", !showClient);
+		if (bankViewBankBtn) {
+		  bankViewBankBtn.classList.toggle("active", !showClient);
+		  bankViewBankBtn.setAttribute("aria-pressed", showClient ? "false" : "true");
+		}
+		if (bankViewClientBtn) {
+		  bankViewClientBtn.classList.toggle("active", showClient);
+		  bankViewClientBtn.setAttribute("aria-pressed", showClient ? "true" : "false");
+		}
+		window.localStorage.setItem("bank-view-mode", bankViewMode);
+	  }
+
+	  function getBankSelectedAlert() {
+		return bankFraudAlerts.find((item) => item.id === bankDemoState.selectedAlertId) || bankFraudAlerts[0] || null;
+	  }
+
+	  function getBankStatusLabel(status) {
+		if (status === "calling") return "Appel en cours";
+		if (status === "called") return "Client contacté";
+		return "À traiter";
+	  }
+
+	  function getBankStatusClass(status) {
+		if (status === "calling") return "care-chip-new";
+		if (status === "called") return "care-chip-ok";
+		return "care-chip-new";
+	  }
+
+	  function getBankEligibleContexts() {
+		return agentContexts.filter((row) =>
+		  String(pickContextValue(row, ["note"]) || "").toLowerCase().includes("banque")
+		);
+	  }
+
+	  function getBankRiskChipClass(fraudScore) {
+		return String(fraudScore || "").toLowerCase().includes("moyen") ? "bank-risk-chip bank-risk-medium" : "bank-risk-chip";
+	  }
+
+	  function getAntiFraudLevel(value) {
+		const num = Number(String(value || "").replace(/[^\d.]/g, ""));
+		if (!Number.isFinite(num)) return "1";
+		if (num >= 80) return "3";
+		if (num >= 45) return "2";
+		return "1";
+	  }
+
+	  function getGlobalRiskScore(axisScores) {
+		const values = Object.values(axisScores || {})
+		  .map((value) => Number(String(value || "").replace(/[^\d.]/g, "")))
+		  .filter((value) => Number.isFinite(value));
+		if (values.length === 0) return "1";
+		const avg = values.reduce((sum, value) => sum + value, 0) / values.length;
+		return getAntiFraudLevel(avg);
+	  }
+
+	  function maskPhoneForBank(phoneNumber) {
+		const formatted = formatPhoneFr(phoneNumber || "");
+		const digits = String(phoneNumber || "").replace(/\D/g, "");
+		if (!formatted || !digits || digits.length < 4) return "—";
+		const firstTwo = digits.slice(0, 2);
+		const lastTwo = digits.slice(-2);
+		return `+${firstTwo} •• •• •• ${lastTwo}`;
+	  }
+
+	  function renderBankAlertsList() {
+		if (!bankAlertsList) return;
+		bankAlertsList.innerHTML = bankFraudAlerts.map((alert, index) => {
+		  const isSelected = alert.id === bankDemoState.selectedAlertId;
+		  const contextItems = getBankEligibleContexts().map((row) => {
+			const id = String(pickContextValue(row, ["id"]));
+			const label = getAgentDisplayLabel(row);
+			return { id, label };
+		  });
+		  const dropdownItems = contextItems.length
+			? contextItems.map((context) => `
+				<button type="button" class="dropdown-item bank-agent-choice" data-alert-id="${escapeHtml(alert.id)}" data-context-id="${escapeHtml(context.id)}">
+				  ${escapeHtml(context.label)}
+				  <small>Lancer immédiatement le Click2Call</small>
+				</button>
+			  `).join("")
+			: `<div class="dropdown-item-text text-body-secondary">Aucun agent disponible</div>`;
+		  const simSwapMarkup = alert.simSwapDetected ? `
+			<div class="bank-simswap-box">
+			  <div class="bank-simswap-title">Vérification SimSwap</div>
+			  <div class="bank-simswap-text">${escapeHtml(alert.simSwapDelayText || "Changement de SIM détecté dans les 2 jours précédant la transaction.")}</div>
+			</div>
+		  ` : "";
+		  const signalItems = [
+			alert.simSwapDetected
+			  ? { title: "SimSwap", text: `${alert.simSwapDelayText || "Changement de SIM détecté récemment."} Le seuil d'alerte fort est dépassé.` }
+			  : null,
+			alert.suspiciousDeviceText
+			  ? { title: "Device suspect", text: `${alert.suspiciousDeviceText} Le seuil d'alerte fort est dépassé.` }
+			  : null,
+			alert.deviceRiskText
+			  ? { title: "Nouveau device", text: `${alert.deviceRiskText} Le seuil d'alerte fort est dépassé.` }
+			  : null,
+			alert.behaviorRiskText
+			  ? { title: "Analyse comportementale", text: `${alert.behaviorRiskText} Le seuil d'alerte fort est dépassé.` }
+			  : null,
+			alert.geoMismatchText
+			  ? { title: "Géolocalisation incohérente", text: `${alert.geoMismatchText} Le seuil d'alerte fort est dépassé.` }
+			  : null,
+			alert.uxScoreText
+			  ? { title: "Utilisation de l'interface", text: `${alert.uxScoreText} Le seuil d'alerte fort est dépassé.` }
+			  : null,
+		  ].filter(Boolean).slice(0, 3);
+		  const globalRiskScore = getGlobalRiskScore(alert.axisScores);
+		  return `
+			<tr class="${isSelected ? "table-active" : ""}" data-bank-alert-id="${escapeHtml(alert.id)}" aria-label="Afficher le détail de l'alerte ${index + 1}">
+			  <td class="mono">${index + 1}</td>
+			  <td>
+				<div><strong>${escapeHtml(alert.clientName)}</strong></div>
+				<div class="small text-body-secondary mono">${escapeHtml(maskPhoneForBank(alert.hiddenPhone))}</div>
+			  </td>
+			  <td>${escapeHtml(alert.cardType)}</td>
+			  <td class="mono">${escapeHtml(alert.amount)}</td>
+			  <td>${escapeHtml(alert.location)}</td>
+			  <td class="mono">${escapeHtml(alert.transactionDate || "—")}</td>
+			  <td><span class="${getBankRiskChipClass(alert.fraudScore)}">Score ${escapeHtml(alert.fraudScore)}</span></td>
+			</tr>
+			${isSelected ? `
+			  <tr class="bank-alert-detail-row">
+				<td colspan="7">
+				  <div>
+					<div class="bank-console-header mb-0">
+					  <div>
+						<div class="bank-alert-label">Détail alerte</div>
+					  </div>
+					  <span class="small text-body-secondary">${alert.assignedContextLabel ? `Pris en charge par ${escapeHtml(alert.assignedContextLabel)}` : "Analyse détaillée"}</span>
+					</div>
+					<div class="bank-alert-text"><strong>Contexte : ${escapeHtml(alert.reason)}</strong></div>
+					<div class="bank-detail-main">
+					  <div>
+						${simSwapMarkup && !signalItems.some((item) => item.title === "SimSwap") ? simSwapMarkup : ""}
+						<div class="bank-signal-list list-group">
+						  ${signalItems.map((item, signalIndex) => `
+							<div class="list-group-item">
+							  <div class="bank-signal-title">${signalIndex + 1}. ${escapeHtml(item.title)}</div>
+							  <div class="bank-signal-text">${escapeHtml(item.text)}</div>
+							</div>
+						  `).join("")}
+						</div>
+					  </div>
+					  <div class="bank-global-score">
+						<div class="bank-global-score-label">Risk score global</div>
+						<div class="bank-score-scale" aria-label="Échelle de risque global">
+						  <div class="bank-score-step level-1 ${globalRiskScore === "1" ? "active" : ""}">1</div>
+						  <div class="bank-score-step level-2 ${globalRiskScore === "2" ? "active" : ""}">2</div>
+						  <div class="bank-score-step level-3 ${globalRiskScore === "3" ? "active" : ""}">3</div>
+						</div>
+					  </div>
+					</div>
+					<div class="bank-alert-actions">
+					  <div class="bank-alert-helper">
+						${alert.assignedContextLabel ? `Pris en charge par ${escapeHtml(alert.assignedContextLabel)}.` : "Choisissez l’agent qui prendra en charge l’alerte et lancez un appel protégé immédiatement."}
+					  </div>
+					  <div class="dropdown bank-alert-dropdown">
+						<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  Choisir l'agent et appeler
+						</button>
+						<div class="dropdown-menu dropdown-menu-end">
+						  <div class="dropdown-header">Cellule ou agent bancaire</div>
+						  ${dropdownItems}
+						</div>
+					  </div>
+					</div>
+				  </div>
+				</td>
+			  </tr>
+			` : ""}
+		  `;
+		}).join("");
+	  }
+
+	  function renderBankClientFeed() {
+		if (!bankClientFeed) return;
+		const selectedAlert = getBankSelectedAlert();
+		if (!selectedAlert) {
+		  bankClientFeed.innerHTML = "";
+		  return;
+		}
+		const statusText =
+		  selectedAlert.status === "calling" ? "Votre banque tente de vous joindre" :
+		  selectedAlert.status === "called" ? "Un analyste fraude vous a contacté" :
+		  "Vérification requise";
+		const callBox = selectedAlert.status === "new"
+		  ? `
+			<div class="bank-client-call">
+			  <div class="bank-client-call-label">Alerte sécurité</div>
+			  <div class="bank-client-call-title">Un conseiller peut vous appeler</div>
+			  <div class="bank-client-call-subtitle">La banque peut déclencher un appel sortant sans que votre numéro soit exposé aux équipes opérationnelles.</div>
+			</div>
+		  `
+		  : `
+			<div class="bank-client-call">
+			  <div class="bank-client-call-label">${selectedAlert.status === "calling" ? "Appel entrant" : "Dernier contact"}</div>
+			  <div class="bank-client-call-title">${escapeHtml(selectedAlert.assignedContextLabel || "Cellule fraude bancaire")}</div>
+			  <div class="bank-client-call-subtitle">La banque vous contacte au sujet d'une transaction détectée comme inhabituelle.</div>
+			  <div class="bank-client-call-number mono">${escapeHtml(selectedAlert.cardType)} · ${escapeHtml(selectedAlert.amount)} · ${escapeHtml(selectedAlert.location)}</div>
+			</div>
+		  `;
+		bankClientFeed.innerHTML = `
+		  <div class="bank-client-balance">
+			<div class="bank-client-balance-label">Compte courant</div>
+			<div class="bank-client-balance-value">12 480,35 €</div>
+		  </div>
+		  <div class="bank-client-alert">
+			<h4 class="bank-client-alert-title">Transaction à vérifier</h4>
+			<div class="bank-client-alert-text">${escapeHtml(selectedAlert.reason)}</div>
+			<div class="bank-client-risk">Score fraude ${escapeHtml(selectedAlert.fraudScore)}</div>
+			<div class="bank-client-facts">
+			  <div class="bank-client-fact"><span>Client</span><strong>${escapeHtml(selectedAlert.clientName)}</strong></div>
+			  <div class="bank-client-fact"><span>Carte</span><strong>${escapeHtml(selectedAlert.cardType)}</strong></div>
+			  <div class="bank-client-fact"><span>Transaction</span><strong>${escapeHtml(selectedAlert.amount)}</strong></div>
+			  <div class="bank-client-fact"><span>Lieu</span><strong>${escapeHtml(selectedAlert.location)}</strong></div>
+			</div>
+			<div class="bank-client-status">${escapeHtml(statusText)}</div>
+		  </div>
+		  ${callBox}
+		`;
+	  }
+
+	  function renderBankDemo() {
+		renderBankAlertsList();
+		const selectedAlert = getBankSelectedAlert();
+		if (bankSelectedCallout) {
+		  bankSelectedCallout.textContent = selectedAlert
+			? (
+				selectedAlert.status === "new"
+				  ? `Alerte sélectionnée : ${selectedAlert.clientName}. Le numéro du client reste masqué ; choisissez directement l’agent qui doit lancer l’appel.`
+				  : `${selectedAlert.clientName} est pris en charge par ${selectedAlert.assignedContextLabel || "la cellule fraude"}.`
+			  )
+			: "Sélectionnez une alerte à traiter.";
+		}
+		if (bankOpsLog) {
+		  const hasLog = Boolean(bankDemoState.lastAction);
+		  bankOpsLog.textContent = bankDemoState.lastAction || "";
+		  bankOpsLog.classList.toggle("d-none", !hasLog);
+		}
+		renderBankClientFeed();
+	  }
+
+	  async function launchBankClickToCall(alertId, contextId) {
+		const alert = bankFraudAlerts.find((item) => item.id === alertId);
+		const selectedContext = getBankEligibleContexts().find((row) => String(pickContextValue(row, ["id"])) === contextId);
+		const normalizedPhone = normalizePhone(alert?.hiddenPhone || "");
+		if (!alert || !contextId || !selectedContext || !looksLikePhone(normalizedPhone)) {
+		  showToast("Alerte ou agent bancaire indisponible");
+		  return;
+		}
+
+		const number = normalizedPhone.replace(/^\+/, "");
+		bankDemoState.selectedAlertId = alert.id;
+		bankFraudAlerts = bankFraudAlerts.map((item) => item.id === alert.id
+		  ? {
+			  ...item,
+			  status: "calling",
+			  assignedContextId: contextId,
+			  assignedContextLabel: getAgentDisplayLabel(selectedContext),
+			}
+		  : item
+		);
+		bankDemoState.lastAction = `Appel en cours pour ${alert.clientName} via ${getAgentDisplayLabel(selectedContext)}. Le numéro client reste masqué dans l’interface banque.`;
+		renderBankDemo();
+
+		try {
+		  const r = await fetch(
+			`${API_BASE}/api/agent-contexts/${encodeURIComponent(contextId)}/click-to-call?number=${encodeURIComponent(number)}`,
+			{
+			  method: "POST",
+			  headers: { "Content-Type": "application/json" },
+			  body: JSON.stringify({ note: "Rappel bancaire sur opération sensible" }),
+			}
+		  );
+		  const data = await r.json().catch(() => ({}));
+		  if (!r.ok || !data?.ok) {
+			console.error("Bank ClickToCall error:", data);
+			bankFraudAlerts = bankFraudAlerts.map((item) => item.id === alert.id
+			  ? { ...item, status: "new", assignedContextId: "", assignedContextLabel: "" }
+			  : item
+			);
+			bankDemoState.lastAction = `Échec du déclenchement d'appel pour ${alert.clientName}.`;
+			renderBankDemo();
+			showToast("Échec ClickToCall banque");
+			return;
+		  }
+		  bankFraudAlerts = bankFraudAlerts.map((item) => item.id === alert.id
+			? { ...item, status: "called" }
+			: item
+		  );
+		  bankDemoState.lastAction = `ClickToCall lancé pour ${alert.clientName} par ${getAgentDisplayLabel(selectedContext)}.`;
+		  renderBankDemo();
+		  showToast(`ClickToCall banque lancé pour ${alert.clientName}`);
+		} catch (e) {
+		  console.error(e);
+		  bankFraudAlerts = bankFraudAlerts.map((item) => item.id === alert.id
+			? { ...item, status: "new", assignedContextId: "", assignedContextLabel: "" }
+			: item
+		  );
+		  bankDemoState.lastAction = `Échec du déclenchement d'appel pour ${alert.clientName}.`;
+		  renderBankDemo();
+		  showToast("Échec ClickToCall banque");
+		}
 	  }
 
 	  function updateDeleteSelectedContextsButton() {
@@ -4689,6 +5741,7 @@
 		  setContextsState("empty");
 		  renderAgentSelectors();
 		  renderMobileInterventions();
+		  renderBankDemo();
 		  syncAgentPreview();
 		  updateDeleteSelectedContextsButton();
 		  syncSelectAllContextsCheckbox();
@@ -4850,6 +5903,7 @@
 		}
 		renderAgentSelectors();
 		renderMobileInterventions();
+		renderBankDemo();
 		syncAgentPreview();
 		updateDeleteSelectedContextsButton();
 		syncSelectAllContextsCheckbox();
@@ -4930,6 +5984,48 @@
 		contextsDisplayMode = "cards";
 		applyContextsDisplayMode();
 	  });
+	  if (deliveryViewAgentBtn) {
+		deliveryViewAgentBtn.addEventListener("click", () => {
+		  deliveryViewMode = "agent";
+		  applyDeliveryViewMode();
+		});
+	  }
+	  if (deliveryViewManagerBtn) {
+		deliveryViewManagerBtn.addEventListener("click", () => {
+		  deliveryViewMode = "manager";
+		  applyDeliveryViewMode();
+		});
+	  }
+	  if (bankViewBankBtn) {
+		bankViewBankBtn.addEventListener("click", () => {
+		  bankViewMode = "bank";
+		  applyBankViewMode();
+		});
+	  }
+	  if (bankViewClientBtn) {
+		bankViewClientBtn.addEventListener("click", () => {
+		  bankViewMode = "client";
+		  applyBankViewMode();
+		});
+	  }
+	  if (bankAlertsList) {
+		bankAlertsList.addEventListener("click", (event) => {
+		  const trigger = event.target.closest(".bank-agent-choice");
+		  if (trigger) {
+			event.preventDefault();
+			event.stopPropagation();
+			launchBankClickToCall(trigger.dataset.alertId, trigger.dataset.contextId);
+			return;
+		  }
+		  const card = event.target.closest("[data-bank-alert-id]");
+		  if (card) {
+			const clickedId = card.dataset.bankAlertId || "";
+			bankDemoState.selectedAlertId =
+			  bankDemoState.selectedAlertId === clickedId ? "" : clickedId;
+			renderBankDemo();
+		  }
+		});
+	  }
 
 	  selectAllContexts.addEventListener("change", () => {
 		const checked = selectAllContexts.checked;
@@ -5140,6 +6236,9 @@
 	  setCareAccountPanelState("nanny", false);
 	  setCareAccountPanelState("family", false);
 	  syncAgentPreview();
+	  applyDeliveryViewMode();
+	  applyBankViewMode();
+	  renderBankDemo();
 	  loadAgentContexts();
 	  switchView(getViewFromHash(location.hash), false);
 	  setState("loading");
