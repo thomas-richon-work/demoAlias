@@ -822,6 +822,12 @@
 		background: #111;
 		color: #fff;
 	  }
+	  .care-alias-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.7rem;
+	  }
 	  .care-alias-label {
 		font-size: 0.72rem;
 		opacity: 0.8;
@@ -832,6 +838,31 @@
 		font-weight: 700;
 		letter-spacing: 0.04em;
 	  }
+	  .care-alias-qr-wrap {
+		flex: 0 0 auto;
+	  }
+	  .care-alias-qr-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.18rem;
+		border-radius: 0.55rem;
+		background: #fff;
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		text-decoration: none;
+	  }
+	  .care-alias-qr-link:hover,
+	  .care-alias-qr-link:focus-visible {
+		background: #fff;
+		text-decoration: none;
+	  }
+	  .care-alias-qr-image {
+		width: 2.9rem;
+		height: 2.9rem;
+		display: block;
+		border-radius: 0.2rem;
+		background: #fff;
+	  }
 	  .care-empty-box {
 		padding: 0.8rem;
 		border: 1px dashed #d7d9df;
@@ -840,6 +871,36 @@
 		font-size: 0.78rem;
 		color: #6b6b70;
 		text-align: center;
+	  }
+	  .demo-alias-inline {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+	  }
+	  .demo-alias-inline .tag-md {
+		flex: 0 1 auto;
+	  }
+	  .demo-alias-qr-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.14rem;
+		border-radius: 0.5rem;
+		background: #fff;
+		border: 1px solid rgba(17, 17, 17, 0.08);
+		text-decoration: none;
+	  }
+	  .demo-alias-qr-link:hover,
+	  .demo-alias-qr-link:focus-visible {
+		background: #fff;
+		text-decoration: none;
+	  }
+	  .demo-alias-qr-image {
+		display: block;
+		width: 2.8rem;
+		height: 2.8rem;
+		border-radius: 0.18rem;
+		background: #fff;
 	  }
 	  .care-side-note {
 		font-size: 0.82rem;
@@ -1012,6 +1073,120 @@
 		border: 0;
 		appearance: none;
 		user-select: none;
+	  }
+	  .phone-shortcut-picker {
+		position: fixed;
+		z-index: 1095;
+		width: min(22rem, calc(100vw - 1.5rem));
+		border: 1px solid var(--bs-border-color);
+		border-radius: 0.75rem;
+		background: var(--bs-body-bg);
+		box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+		overflow: hidden;
+	  }
+	  .phone-shortcut-picker-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		padding: 0.8rem 0.95rem;
+		background: var(--bs-secondary-bg);
+		border-bottom: 1px solid var(--bs-border-color);
+	  }
+	  .phone-shortcut-picker-title {
+		font-size: 0.84rem;
+		font-weight: 700;
+		margin: 0;
+	  }
+	  .phone-shortcut-picker-hint {
+		font-size: 0.72rem;
+		color: var(--bs-secondary-color);
+		margin: 0;
+	  }
+	  .phone-shortcut-picker-list {
+		display: grid;
+		gap: 0;
+		padding: 0.35rem 0;
+		max-height: 18rem;
+		overflow: auto;
+	  }
+	  .phone-shortcut-option {
+		width: 100%;
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.8rem;
+		padding: 0.75rem 0.95rem;
+		border: 0;
+		background: transparent;
+		text-align: left;
+	  }
+	  .phone-shortcut-option:hover,
+	  .phone-shortcut-option:focus-visible {
+		background: rgba(255, 121, 0, 0.08);
+	  }
+	  .phone-shortcut-option-label {
+		font-size: 0.86rem;
+		font-weight: 700;
+		line-height: 1.15;
+		margin: 0;
+	  }
+	  .phone-shortcut-option-value {
+		font-size: 0.78rem;
+		color: var(--bs-secondary-color);
+		line-height: 1.15;
+		margin: 0.2rem 0 0;
+	  }
+	  .phone-shortcut-option-tag {
+		flex: 0 0 auto;
+		padding: 0.18rem 0.42rem;
+		border-radius: 999px;
+		background: rgba(255, 121, 0, 0.12);
+		color: #b35a00;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+	  }
+	  .phone-shortcut-option-main {
+		flex: 1 1 auto;
+		min-width: 0;
+	  }
+	  .phone-shortcut-option-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		flex: 0 0 auto;
+	  }
+	  .phone-shortcut-option-remove {
+		width: 1.5rem;
+		height: 1.5rem;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: 0;
+		border-radius: 999px;
+		background: transparent;
+		color: var(--bs-secondary-color);
+	  }
+	  .phone-shortcut-option-remove:hover,
+	  .phone-shortcut-option-remove:focus-visible {
+		background: rgba(0, 0, 0, 0.06);
+		color: var(--bs-emphasis-color);
+	  }
+	  .phone-shortcut-picker-footer {
+		padding: 0.85rem 0.95rem 0.95rem;
+		background: var(--bs-secondary-bg);
+		border-top: 1px solid var(--bs-border-color);
+	  }
+	  .phone-shortcut-picker-footer .form-label {
+		font-size: 0.76rem;
+		font-weight: 700;
+		margin-bottom: 0.45rem;
+	  }
+	  .phone-shortcut-picker-footer .form-text {
+		font-size: 0.72rem;
 	  }
 	  .demo-hero h2 {
 		margin: 0.75rem 0 0.35rem;
@@ -1918,7 +2093,7 @@
 						  </div>
 						  <div id="simClientAliasWrap" class="d-none">
 							<div class="form-label mb-1">N° Alias du client</div>
-							<div id="simClientAliasToken" class="tag-md alias-tag-medium mono">—</div>
+							<div id="simClientAliasToken" class="demo-alias-inline"><span class="tag-md alias-tag-medium mono">—</span></div>
 						  </div>
 						</div>
 					  </div>
@@ -2658,6 +2833,213 @@
 		el.value = formatPhoneFr(normalized);
 	  }
 
+	  const phoneShortcutStorageKey = "alias-demo-phone-shortcuts";
+	  const phoneShortcutPresets = [
+		{ label: "Thomas Richon", value: "+33 6 73 69 69 10", tag: "Demo" },
+		{ label: "Marine Boudot", value: "+33 6 73 09 96 35", tag: "Demo" },
+		{ label: "S25 Demo Android", value: "+33 6 30 85 34 80", tag: "Demo" },
+	  ];
+	  let savedPhoneShortcuts = loadSavedPhoneShortcuts();
+
+	  let phoneShortcutPickerEl = null;
+	  let phoneShortcutPickerInput = null;
+
+	  function loadSavedPhoneShortcuts() {
+		try {
+		  const raw = window.localStorage.getItem(phoneShortcutStorageKey);
+		  const parsed = raw ? JSON.parse(raw) : [];
+		  return Array.isArray(parsed)
+			? parsed.filter((item) => item && item.label && item.value)
+			: [];
+		} catch {
+		  return [];
+		}
+	  }
+
+	  function persistSavedPhoneShortcuts() {
+		window.localStorage.setItem(
+		  phoneShortcutStorageKey,
+		  JSON.stringify(savedPhoneShortcuts)
+		);
+	  }
+
+	  function getAllPhoneShortcuts() {
+		return [...phoneShortcutPresets, ...savedPhoneShortcuts];
+	  }
+
+	  function isPhoneShortcutInput(el) {
+		return el instanceof HTMLInputElement && el.type === "tel" && !el.disabled && !el.readOnly;
+	  }
+
+	  function setPhoneInputValue(input, phoneValue) {
+		if (!isPhoneShortcutInput(input)) return;
+		input.value = formatPhoneFr(normalizePhone(phoneValue));
+		input.dispatchEvent(new Event("input", { bubbles: true }));
+		input.dispatchEvent(new Event("change", { bubbles: true }));
+		input.focus();
+		input.setSelectionRange(input.value.length, input.value.length);
+	  }
+
+	  function closePhoneShortcutPicker() {
+		if (phoneShortcutPickerEl) phoneShortcutPickerEl.remove();
+		phoneShortcutPickerEl = null;
+		phoneShortcutPickerInput = null;
+	  }
+
+	  function positionPhoneShortcutPicker(input, picker) {
+		const rect = input.getBoundingClientRect();
+		const top = Math.min(
+		  window.innerHeight - picker.offsetHeight - 12,
+		  rect.bottom + 8
+		);
+		const left = Math.min(
+		  window.innerWidth - picker.offsetWidth - 12,
+		  Math.max(12, rect.left)
+		);
+		picker.style.top = `${Math.max(12, top)}px`;
+		picker.style.left = `${left}px`;
+	  }
+
+	  function openPhoneShortcutPicker(input) {
+		if (!isPhoneShortcutInput(input)) return;
+		closePhoneShortcutPicker();
+
+		const picker = document.createElement("div");
+		picker.className = "phone-shortcut-picker";
+		picker.innerHTML = `
+		  <div class="phone-shortcut-picker-header">
+			<div>
+			  <p class="phone-shortcut-picker-title mb-0">Saisie rapide de numéro démo</p>
+			  <p class="phone-shortcut-picker-hint mb-0">Sélection rapide pour remplir ce champ</p>
+			</div>
+		  </div>
+		  <div class="phone-shortcut-picker-list"></div>
+		  <div class="phone-shortcut-picker-footer">
+			<label for="phoneShortcutLabelInput" class="form-label">Enregistrer le numéro courant</label>
+			<div class="input-group input-group-sm">
+			  <input id="phoneShortcutLabelInput" type="text" class="form-control" maxlength="40" placeholder="Ex: Mon mobile Thomas" />
+			  <button id="phoneShortcutSaveBtn" type="button" class="btn btn-outline-secondary">Sauvegarder</button>
+			</div>
+			<div class="form-text">Le numéro du champ actif sera ajouté à cette liste dans ce navigateur.</div>
+		  </div>
+		`;
+
+		const list = picker.querySelector(".phone-shortcut-picker-list");
+		const labelInput = picker.querySelector("#phoneShortcutLabelInput");
+		const saveBtn = picker.querySelector("#phoneShortcutSaveBtn");
+
+		function renderShortcutList() {
+		  list.innerHTML = "";
+		  getAllPhoneShortcuts().forEach((preset, index) => {
+			const option = document.createElement("button");
+			option.type = "button";
+			option.className = "phone-shortcut-option";
+			option.innerHTML = `
+			  <div class="phone-shortcut-option-main">
+				<p class="phone-shortcut-option-label">${escapeHtml(preset.label)}</p>
+				<p class="phone-shortcut-option-value mono">${escapeHtml(formatPhoneFr(preset.value))}</p>
+			  </div>
+			  <div class="phone-shortcut-option-actions">
+				<span class="phone-shortcut-option-tag">${escapeHtml(preset.tag)}</span>
+				${preset.tag === "Perso" ? '<span class="phone-shortcut-option-remove" aria-hidden="true">×</span>' : ""}
+			  </div>
+			`;
+			option.addEventListener("click", () => {
+			  setPhoneInputValue(input, preset.value);
+			  closePhoneShortcutPicker();
+			});
+			if (preset.tag === "Perso") {
+			  const removeBtn = option.querySelector(".phone-shortcut-option-remove");
+			  removeBtn.addEventListener("click", (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				const savedIndex = index - phoneShortcutPresets.length;
+				if (savedIndex < 0) return;
+				savedPhoneShortcuts.splice(savedIndex, 1);
+				persistSavedPhoneShortcuts();
+				renderShortcutList();
+				positionPhoneShortcutPicker(input, picker);
+			  });
+			}
+			list.appendChild(option);
+		  });
+		}
+
+		function saveCurrentShortcut() {
+		  const label = String(labelInput.value || "").trim();
+		  const value = normalizePhone(input.value);
+		  if (!label || !looksLikePhone(value)) return;
+
+		  const existingIndex = savedPhoneShortcuts.findIndex((item) => item.label === label);
+		  const nextItem = { label, value: formatPhoneFr(value), tag: "Perso" };
+		  if (existingIndex >= 0) savedPhoneShortcuts[existingIndex] = nextItem;
+		  else savedPhoneShortcuts.unshift(nextItem);
+		  persistSavedPhoneShortcuts();
+		  labelInput.value = "";
+		  renderShortcutList();
+		  positionPhoneShortcutPicker(input, picker);
+		}
+
+		saveBtn.addEventListener("click", saveCurrentShortcut);
+		labelInput.addEventListener("keydown", (event) => {
+		  if (event.key !== "Enter") return;
+		  event.preventDefault();
+		  saveCurrentShortcut();
+		});
+
+		renderShortcutList();
+
+		document.body.appendChild(picker);
+		positionPhoneShortcutPicker(input, picker);
+
+		phoneShortcutPickerEl = picker;
+		phoneShortcutPickerInput = input;
+	  }
+
+	  document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape" && phoneShortcutPickerEl) {
+		  closePhoneShortcutPicker();
+		  return;
+		}
+
+		const activeInput = document.activeElement;
+		if (!isPhoneShortcutInput(activeInput)) return;
+		if (event.repeat) return;
+		if (!(event.ctrlKey && event.shiftKey)) return;
+		if (event.key !== "Shift" && event.key !== "Control") return;
+
+		event.preventDefault();
+		if (phoneShortcutPickerEl && phoneShortcutPickerInput === activeInput) {
+		  closePhoneShortcutPicker();
+		  return;
+		}
+		openPhoneShortcutPicker(activeInput);
+	  });
+
+	  document.addEventListener("mousedown", (event) => {
+		if (!phoneShortcutPickerEl) return;
+		const target = event.target;
+		if (
+		  phoneShortcutPickerEl.contains(target) ||
+		  target === phoneShortcutPickerInput
+		) {
+		  return;
+		}
+		closePhoneShortcutPicker();
+	  });
+
+	  window.addEventListener("resize", () => {
+		if (phoneShortcutPickerEl && phoneShortcutPickerInput) {
+		  positionPhoneShortcutPicker(phoneShortcutPickerInput, phoneShortcutPickerEl);
+		}
+	  });
+
+	  window.addEventListener("scroll", () => {
+		if (phoneShortcutPickerEl && phoneShortcutPickerInput) {
+		  positionPhoneShortcutPicker(phoneShortcutPickerInput, phoneShortcutPickerEl);
+		}
+	  }, true);
+
 	  function enableTooltips() {
 		document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
 		  const existing = boosted.Tooltip.getInstance(el);
@@ -2790,7 +3172,10 @@
 			${isAccepted ? `
 			  <div class="care-alias-box">
 				<div class="care-alias-label">Numéro alias de la famille</div>
-				<div class="care-alias-number mono">${escapeHtml(familyAlias)}</div>
+				<div class="care-alias-row">
+				  <div class="care-alias-number mono">${escapeHtml(familyAlias)}</div>
+				  ${renderCareAliasQr(familyAlias, "la famille")}
+				</div>
 			  </div>
 			` : `
 			  <button id="careCallBtn" type="button" class="btn btn-primary btn-sm w-100 mt-3" ${isCreatingAlias ? "disabled" : ""}>${isCreatingAlias ? "Création de l'alias..." : "Accepter et afficher le numéro alias"}</button>
@@ -2818,7 +3203,10 @@
 			${isAccepted ? `
 			  <div class="care-alias-box">
 				<div class="care-alias-label">Numéro alias de la nounou</div>
-				<div class="care-alias-number mono">${escapeHtml(nannyAlias)}</div>
+				<div class="care-alias-row">
+				  <div class="care-alias-number mono">${escapeHtml(nannyAlias)}</div>
+				  ${renderCareAliasQr(nannyAlias, "la nounou")}
+				</div>
 			  </div>
 			` : `
 			  <div class="care-empty-box mt-3">
@@ -2841,6 +3229,49 @@
 		if (careFamilyPersonalNumberInput) {
 		  careFamilyPersonalNumberInput.value = formatPhoneFr(careScenario.familyPersonalNumber);
 		}
+	  }
+
+	  function buildTelLink(phoneNumber) {
+		const normalized = normalizePhone(phoneNumber || "");
+		return normalized ? `tel:${normalized}` : "";
+	  }
+
+	  function buildQrCodeUrl(phoneNumber) {
+		const telLink = buildTelLink(phoneNumber);
+		if (!telLink) return "";
+		return `https://api.qrserver.com/v1/create-qr-code/?size=176x176&margin=0&data=${encodeURIComponent(telLink)}`;
+	  }
+
+	  function renderCareAliasQr(phoneNumber, personLabel) {
+		const telLink = buildTelLink(phoneNumber);
+		const qrCodeUrl = buildQrCodeUrl(phoneNumber);
+		if (!telLink || !qrCodeUrl) return "";
+
+		return `
+		  <div class="care-alias-qr-wrap">
+			<a class="care-alias-qr-link" href="${escapeHtml(telLink)}" aria-label="Appeler ${escapeHtml(personLabel)} via le numéro alias">
+			  <img class="care-alias-qr-image" src="${escapeHtml(qrCodeUrl)}" alt="QR code pour appeler ${escapeHtml(personLabel)} via le numéro alias" loading="lazy" />
+			</a>
+		  </div>
+		`;
+	  }
+
+	  function renderInlineAliasWithQr(phoneNumber, label) {
+		const formatted = formatPhoneFr(phoneNumber || "—");
+		const telLink = buildTelLink(phoneNumber);
+		const qrCodeUrl = buildQrCodeUrl(phoneNumber);
+		if (!telLink || !qrCodeUrl || formatted === "—") {
+		  return `<span class="tag-md alias-tag-medium mono">${escapeHtml(formatted)}</span>`;
+		}
+
+		return `
+		  <span class="demo-alias-inline">
+			<span class="tag-md alias-tag-medium mono">${escapeHtml(formatted)}</span>
+			<a class="demo-alias-qr-link" href="${escapeHtml(telLink)}" aria-label="Appeler ${escapeHtml(label)} via le numéro alias">
+			  <img class="demo-alias-qr-image" src="${escapeHtml(qrCodeUrl)}" alt="QR code pour appeler ${escapeHtml(label)} via le numéro alias" loading="lazy" />
+			</a>
+		  </span>
+		`;
 	  }
 
 	  async function createCareProtectedAlias() {
@@ -2938,7 +3369,7 @@
 			<div class="sim-listing-meta mb-3">Agence: ${escapeHtml(listing.agency)}</div>
 			<button type="button" class="btn btn-primary btn-sm w-100" data-action="call-protected">Appeler l'agence en protegeant votre numero personnel</button>
 			<div class="mt-3 text-center">
-			  ${aliasToCall ? `<div class="small text-body-secondary mb-1">N° Alias de l'agence</div><span class="tag-md alias-tag-medium mono">${escapeHtml(aliasToCall)}</span>` : ""}
+			  ${aliasToCall ? `<div class="small text-body-secondary mb-1">N° Alias de l'agence</div>${renderInlineAliasWithQr(aliasToCall, "l'agence")}` : ""}
 			</div>
 		  </div>
 		`;
@@ -3005,7 +3436,7 @@
 		  }
 		  if (simClientAliasWrap && simClientAliasToken && clientAlias !== "—") {
 			simClientAliasWrap.classList.remove("d-none");
-			simClientAliasToken.textContent = clientAlias;
+			simClientAliasToken.innerHTML = renderInlineAliasWithQr(clientAlias, "le client");
 		  }
 		  simCallModal?.hide();
 		  renderSimulationPortal();
